@@ -245,8 +245,8 @@
 <a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./news.html">最新消息</a>
 <button style="background:#F9BD2A;color:#0d0d0d;font-weight:700;border-radius:9999px;padding:10px 24px;font-size:14px;transition:filter 0.2s,transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.filter='brightness(1.1)';this.style.boxShadow='0 8px 24px -4px rgba(249,189,42,0.5)';this.style.transform='translateY(-1px)'" onmouseout="this.style.filter='';this.style.boxShadow='';this.style.transform=''" onclick="window.location.href='./booking.html'">立即預約</button>
 </div>
-<button class="md:hidden text-white/60">
-<span class="material-symbols-outlined">menu</span>
+<button id="mobile-menu-btn" class="md:hidden text-white/70 hover:text-primary transition-colors focus:outline-none" aria-label="開啟選單">
+<span class="material-symbols-outlined text-[28px]">menu</span>
 </button>
 </div>
 </nav>
@@ -456,6 +456,20 @@
         </p>
 </div>
 </footer>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[999] bg-[#121212]/95 backdrop-blur-lg flex flex-col justify-center items-center gap-8 opacity-0 pointer-events-none transition-all duration-300">
+  <button id="mobile-menu-close" class="absolute top-6 right-8 text-white/60 hover:text-primary transition-colors focus:outline-none" aria-label="關閉選單">
+    <span class="material-symbols-outlined text-3xl">close</span>
+  </button>
+  <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./index.html">首頁</a>
+  <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./about.html">關於我們</a>
+  <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./quote.html">維修項目</a>
+  <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
+  <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
+  <button class="bg-primary text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
+</div>
+
 <script>
     function handleBooking() {
         const btn = event.currentTarget;
@@ -480,8 +494,43 @@
         });
     });
 
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('top-nav');
+        if (nav) {
+            if (window.scrollY > 20) {
+                nav.style.background = 'rgba(13,13,13,0.88)';
+                nav.style.paddingTop = '12px';
+                nav.style.paddingBottom = '12px';
+                nav.style.boxShadow = '0 1px 0 rgba(255,255,255,0.05)';
+            } else {
+                nav.style.background = 'rgba(13,13,13,0.5)';
+                nav.style.paddingTop = '16px';
+                nav.style.paddingBottom = '16px';
+                nav.style.boxShadow = 'none';
+            }
+        }
+    }, { passive: true });
+
+    // ─── Mobile menu logic ───
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        });
+    }
+    if (mobileMenuClose && mobileMenu) {
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        });
+    }
+
     // ─── 自訂滑鼠游標邏輯 ───
-    if (window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    if (!isTouchDevice && window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const cursorDot = document.createElement('div');
         cursorDot.id = 'cursor-dot';
         const cursorRing = document.createElement('div');
@@ -520,20 +569,24 @@
     }
 
     // ─── 統一區塊登場動畫邏輯 ───
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
-            }
+    if (!window.IntersectionObserver) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    } else {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.08,
+            rootMargin: "0px 0px -40px 0px"
         });
-    }, {
-        root: null,
-        threshold: 0.08,
-        rootMargin: "0px 0px -40px 0px"
-    });
 
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
 </script>
 <script src="./chatbot.js"></script>
 </body></html>
