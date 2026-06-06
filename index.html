@@ -269,6 +269,46 @@
   @media (prefers-reduced-motion: reduce) {
     #cursor-dot, #cursor-ring { display: none !important; }
   }
+
+  /* ─── 百萬級企業 SaaS 視覺張力優化 ─── */
+  /* 1. 微互動流光按鈕 */
+  .btn-glow-shimmer {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(90deg, #F9BD2A, #fcd05b, #F9BD2A) !important;
+      background-size: 200% auto !important;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+      box-shadow: 0 8px 20px -4px rgba(249,189,42,0.3) !important;
+  }
+  .btn-glow-shimmer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -150%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: skewX(-25deg);
+      pointer-events: none;
+  }
+  .btn-glow-shimmer:hover {
+      background-position: right center !important;
+      box-shadow: 0 16px 36px -4px rgba(249,189,42,0.5), 0 4px 12px rgba(249,189,42,0.2) !important;
+      transform: translateY(-2px) scale(1.01) !important;
+  }
+  .btn-glow-shimmer:hover::before {
+      left: 150%;
+      transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .btn-glow-shimmer:active {
+      transform: translateY(0px) scale(0.98) !important;
+  }
+
+  /* 輸入框聚焦內陰影與發光 */
+  input:focus, select:focus, textarea:focus {
+      outline: none !important;
+      border-color: #F9BD2A !important;
+      box-shadow: 0 0 0 3px rgba(249, 189, 42, 0.2), inset 0 2px 4px rgba(0,0,0,0.6) !important;
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  }
 </style>
 </head>
 <body>
@@ -293,7 +333,7 @@
     </div>
     <!-- CTA -->
     <div class="flex items-center gap-4">
-      <button class="btn-primary px-6 py-2.5 text-sm font-bold tracking-wide hidden md:block" onclick="window.location.href='./booking.html'">立即預約</button>
+      <button class="btn-primary btn-glow-shimmer px-6 py-2.5 text-sm font-bold tracking-wide hidden md:block" onclick="window.location.href='./booking.html'">立即預約</button>
       <button id="mobile-menu-btn" class="md:hidden text-white/70 hover:text-primary transition-colors focus:outline-none" aria-label="開啟選單">
         <span class="material-symbols-outlined text-[28px]">menu</span>
       </button>
@@ -338,7 +378,7 @@
 
       <!-- CTAs -->
       <div class="flex flex-wrap gap-4 pt-2 reveal visible reveal-delay-3">
-        <button class="btn-primary px-8 py-4 text-base font-bold"
+        <button class="btn-primary btn-glow-shimmer px-8 py-4 text-base font-bold"
                 onclick="window.location.href='./booking.html'">
           立即預約維修
         </button>
@@ -601,7 +641,7 @@
   <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./quote.html">維修項目</a>
   <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
   <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
-  <button class="bg-primary text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
+  <button class="bg-primary btn-glow-shimmer text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
 </div>
 
 <script>

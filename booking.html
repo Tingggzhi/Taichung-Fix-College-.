@@ -228,6 +228,61 @@
                 transition: none !important;
             }
         }
+
+        /* ─── 百萬級企業 SaaS 視覺張力優化 ─── */
+        /* 1. 微互動流光按鈕 */
+        .btn-glow-shimmer {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(90deg, #F9BD2A, #fcd05b, #F9BD2A) !important;
+            background-size: 200% auto !important;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            box-shadow: 0 8px 20px -4px rgba(249,189,42,0.3) !important;
+        }
+        .btn-glow-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            transform: skewX(-25deg);
+            pointer-events: none;
+        }
+        .btn-glow-shimmer:hover {
+            background-position: right center !important;
+            box-shadow: 0 16px 36px -4px rgba(249,189,42,0.5), 0 4px 12px rgba(249,189,42,0.2) !important;
+            transform: translateY(-2px) scale(1.01) !important;
+        }
+        .btn-glow-shimmer:hover::before {
+            left: 150%;
+            transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .btn-glow-shimmer:active {
+            transform: translateY(0px) scale(0.98) !important;
+        }
+
+        /* 輸入框聚焦內陰影與發光 */
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            border-color: #F9BD2A !important;
+            box-shadow: 0 0 0 3px rgba(249, 189, 42, 0.2), inset 0 2px 4px rgba(0,0,0,0.6) !important;
+            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        /* 2. Toast 動畫 */
+        @keyframes toast-in {
+            from {
+                transform: translateX(120%) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+        .animate-toast-in {
+            animation: toast-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen selection:bg-primary/30">
@@ -381,7 +436,7 @@
                         點擊按鈕後，系統將為您生成 <span class="font-bold text-primary">專屬診斷代碼</span>，請在跳轉至 LINE 後直接傳送該訊息，技師將立即為您鎖定材料。
                     </p>
 </div>
-<button class="w-full bg-primary text-on-primary py-5 rounded-xl font-headline-md text-headline-md font-bold flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-primary/20" onclick="handleBooking()" type="button">
+<button class="w-full btn-glow-shimmer text-on-primary py-5 rounded-xl font-headline-md text-headline-md font-bold flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-lg" onclick="handleBooking()" type="button">
                     送出診斷並預約 (跳轉至 LINE)
                     <span class="material-symbols-outlined">forum</span>
 </button>
@@ -421,6 +476,69 @@
 <img class="w-full h-48 object-cover rounded-xl mb-4 border border-outline" data-alt="A macro cinematic shot of a clean, high-tech electronics repair workstation at Fix College. Precise micro-tools, a precision screwdriver set, and an open iPhone with intricate internal circuits are visible on a professional anti-static mat. The lighting is focused and cool-toned, with golden yellow accents from the brand palette reflecting on metallic surfaces. The atmosphere is professional, clinical, and high-end, representing technical mastery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDrLixkomsP-nLUKyyufnkN0jFXUoWQfeDoPVc4_SYoUl3_OUV6JtfADb0VaPZP6AT5zPsFNYOHYnp47cK2xc_yXNI6uLxMvJ7YTTvitHKJedxCUPBfCMqRy2KPjP6HMqj6oOSiqnUsGRT0oiDSdspDooJ-eKK3_7LTMGNmgdvtQQmrduoBRCQC-8wLuafSVNiIiVXFRQRD3cUQhx8M7zT8VQGPGRzbU6a9hCfG03sloVUDeofc9IEWlBTUAeDQE64UuclGScb1dQ">
 <p class="text-xs text-on-surface-variant italic">台中 Apple 維修旗艦店 - 修學院</p>
 </div>
+
+<!-- 數據視覺化偽裝圖表 -->
+<div class="mt-8 pt-8 border-t border-outline">
+  <h4 class="font-label-md text-label-md text-primary mb-4 uppercase tracking-widest flex items-center gap-2">
+    <span class="material-symbols-outlined text-[18px] animate-pulse">monitoring</span>
+    當季維修數據與材料指數
+  </h4>
+  <div class="bg-surface-container-low/50 rounded-xl p-5 border border-outline/50 relative overflow-hidden">
+    <!-- SVG Chart -->
+    <svg viewBox="0 0 300 150" class="w-full h-auto overflow-visible">
+      <defs>
+        <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F9BD2A" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#F9BD2A" stop-opacity="0.0" />
+        </linearGradient>
+        <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#F9BD2A" stop-opacity="0.4" />
+          <stop offset="50%" stop-color="#F9BD2A" stop-opacity="1" />
+          <stop offset="100%" stop-color="#F9BD2A" stop-opacity="0.6" />
+        </linearGradient>
+      </defs>
+      <!-- Grid Grid Lines -->
+      <line x1="30" y1="20" x2="290" y2="20" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
+      <line x1="30" y1="60" x2="290" y2="60" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
+      <line x1="30" y1="100" x2="290" y2="100" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3,3" />
+      <line x1="30" y1="130" x2="290" y2="130" stroke="rgba(255,255,255,0.15)" />
+      
+      <!-- Chart Line Area -->
+      <path d="M 30 130 Q 70 80 110 95 T 190 45 T 250 75 T 290 35 L 290 130 Z" fill="url(#chart-grad)" />
+      
+      <!-- Chart Line -->
+      <path d="M 30 130 Q 70 80 110 95 T 190 45 T 250 75 T 290 35" fill="none" stroke="url(#line-grad)" stroke-width="2.5" />
+      
+      <!-- Reference points -->
+      <circle cx="110" cy="95" r="4" fill="#F9BD2A" />
+      <circle cx="190" cy="45" r="4" fill="#F9BD2A" class="animate-ping" style="transform-origin: 190px 45px;" />
+      <circle cx="190" cy="45" r="4" fill="#FFFFFF" />
+      <circle cx="290" cy="35" r="3" fill="#F9BD2A" />
+      
+      <!-- Labels -->
+      <text x="10" y="25" fill="rgba(255,255,255,0.3)" font-size="8" font-family="monospace">100%</text>
+      <text x="10" y="65" fill="rgba(255,255,255,0.3)" font-size="8" font-family="monospace">50%</text>
+      <text x="10" y="105" fill="rgba(255,255,255,0.3)" font-size="8" font-family="monospace">20%</text>
+      <text x="10" y="134" fill="rgba(255,255,255,0.3)" font-size="8" font-family="monospace">0%</text>
+      
+      <text x="30" y="145" fill="rgba(255,255,255,0.4)" font-size="8" font-family="monospace">MAR</text>
+      <text x="110" y="145" fill="rgba(255,255,255,0.4)" font-size="8" font-family="monospace">APR</text>
+      <text x="190" y="145" fill="#F9BD2A" font-size="8" font-family="monospace" font-weight="bold">MAY</text>
+      <text x="260" y="145" fill="rgba(255,255,255,0.4)" font-size="8" font-family="monospace">JUN(EST)</text>
+    </svg>
+    
+    <!-- Legend Details -->
+    <div class="mt-4 grid grid-cols-2 gap-3 border-t border-outline/30 pt-4 text-[11px] font-mono">
+      <div>
+        <p class="text-white/40 text-[10px]">故障維修量能 (Capacity)</p>
+        <p class="text-primary font-bold text-xs">穩定充足 <span class="text-green-500 text-[10px]">▼ 正常</span></p>
+      </div>
+      <div>
+        <p class="text-white/40 text-[10px]">當季材料指數 (Material Index)</p>
+        <p class="text-white font-bold text-xs">98.2% <span class="text-primary text-[10px]">▲ 充足</span></p>
+      </div>
+    </div>
+  </div>
 </div>
 </aside>
 </div>
@@ -470,21 +588,110 @@
   <button class="bg-primary text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
 </div>
 
+<!-- Processing Overlay -->
+<div id="processing-overlay" class="fixed inset-0 z-[1000] bg-background/90 backdrop-blur-md flex flex-col justify-center items-center gap-6 opacity-0 pointer-events-none transition-all duration-300">
+  <div class="w-12 h-12 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
+  <div class="text-center font-mono space-y-2.5">
+    <div id="process-step-1" class="text-primary/40 text-xs h-4"></div>
+    <div id="process-step-2" class="text-primary/60 text-xs h-4"></div>
+    <div id="process-step-3" class="text-primary font-bold text-sm h-6"></div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="fixed top-24 right-8 z-[1000] pointer-events-none flex flex-col gap-3"></div>
+
 <script>
     function handleBooking() {
-        const btn = event.currentTarget;
-        const originalContent = btn.innerHTML;
-        btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> 正在生成診斷代碼...';
-        btn.disabled = true;
-
-        const code = 'FIX-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        const btn = event.currentTarget || document.querySelector('.btn-glow-shimmer');
+        const overlay = document.getElementById('processing-overlay');
+        const step1 = document.getElementById('process-step-1');
+        const step2 = document.getElementById('process-step-2');
+        const step3 = document.getElementById('process-step-3');
+        const toastContainer = document.getElementById('toast-container');
         
-        setTimeout(() => {
+        if (!overlay || !toastContainer) {
+            const code = 'FIX-' + Math.random().toString(36).substring(2, 8).toUpperCase();
             alert('診斷代碼：' + code + '\n\n即將跳轉至官方 LINE，請將代碼傳送給技師。');
-            btn.innerHTML = originalContent;
-            btn.disabled = false;
             window.open('https://lin.ee/VxZ90dt', '_blank');
-        }, 1000);
+            return;
+        }
+
+        btn.disabled = true;
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100', 'pointer-events-auto');
+
+        step1.innerHTML = '';
+        step2.innerHTML = '';
+        step3.innerHTML = '';
+
+        setTimeout(() => {
+            step1.innerHTML = '⚡ [系統初始化] 正在分析設備型號與修復量能...';
+        }, 0);
+
+        setTimeout(() => {
+            step2.innerHTML = '🔍 [數據比對] 正在檢索全台向上旗艦店庫存現料...';
+        }, 400);
+
+        setTimeout(() => {
+            step3.innerHTML = '🤖 [AI 診斷中] 正在生成初步報價與最佳修復排程...';
+        }, 800);
+
+        setTimeout(() => {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            btn.disabled = false;
+
+            const code = 'FIX-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+            const toast = document.createElement('div');
+            toast.className = 'glass border border-primary/30 p-4 rounded-xl flex flex-col gap-2 shadow-2xl pointer-events-auto animate-toast-in max-w-sm';
+            toast.style.background = 'rgba(20,20,20,0.96)';
+            toast.style.backdropFilter = 'blur(16px)';
+            toast.style.webkitBackdropFilter = 'blur(16px)';
+            toast.innerHTML = `
+                <div class="flex items-center justify-between gap-8 border-b border-outline pb-2">
+                    <span class="font-mono text-xs text-green-500 font-bold flex items-center gap-1.5">
+                        <span class="size-2 rounded-full bg-green-500 animate-ping"></span>
+                        [SUCCESS] 診斷代碼已生成
+                    </span>
+                    <span class="text-white/40 text-[10px] font-mono">ID: #TCF-2026</span>
+                </div>
+                <div class="font-mono text-sm text-white/90 py-1">
+                    您的專屬代碼：<span class="text-primary font-bold tracking-wider">${code}</span>
+                </div>
+                <div class="text-[11px] text-white/50 leading-normal">
+                    系統將在 <span id="toast-countdown">3</span> 秒後自動跳轉官方 LINE，請將此代碼傳送給技師以鎖定材料。
+                </div>
+                <div class="flex gap-2 mt-2">
+                    <button class="bg-primary text-on-primary font-bold text-xs px-4 py-2 rounded-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-1" onclick="window.open('https://lin.ee/VxZ90dt', '_blank')">
+                        手動跳轉 <span class="material-symbols-outlined text-xs" style="font-size:12px;">open_in_new</span>
+                    </button>
+                    <button class="border border-outline hover:bg-white/5 text-white/70 text-xs px-3 py-2 rounded-lg transition-all" onclick="this.closest('.glass').remove()">
+                        關閉
+                    </button>
+                </div>
+            `;
+            toastContainer.appendChild(toast);
+
+            let seconds = 3;
+            const interval = setInterval(() => {
+                seconds--;
+                const countdownEl = toast.querySelector('#toast-countdown');
+                if (countdownEl) countdownEl.innerText = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    window.open('https://lin.ee/VxZ90dt', '_blank');
+                    setTimeout(() => {
+                        toast.style.transition = 'opacity 0.5s ease';
+                        toast.style.opacity = '0';
+                        setTimeout(() => toast.remove(), 500);
+                    }, 2000);
+                }
+            }, 1000);
+
+        }, 1300);
     }
 
     document.querySelectorAll('.diagnosis-card').forEach(card => {
