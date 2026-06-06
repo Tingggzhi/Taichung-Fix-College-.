@@ -1,502 +1,689 @@
-<!DOCTYPE html><html class="dark" lang="zh-TW" style=""><head>
+<!DOCTYPE html><html class="dark" lang="zh-TW"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>修學院 FIX COLLEGE | 台中 Apple 維修旗艦店</title>
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<title>修學院 FIX COLLEGE｜台中 Apple 維修旗艦 · 透明 · 專業 · 終身保固</title>
+<meta name="description" content="台中最值得信賴的 Apple 維修旗艦店。BSMI 認證電池、原廠工藝、明碼標價，電池與保護貼提供終身保固。立即預約，當日完成。">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-error-container": "#ffdad6",
-                    "surface-container-highest": "#353534",
-                    "surface-bright": "#393939",
-                    "secondary-fixed-dim": "#c8c6c5",
-                    "primary-fixed": "#F9BD2A",
-                    "primary-container": "#F9BD2A",
-                    "primary": "#F9BD2A",
-                    "on-primary-container": "#121212",
-                    "on-surface-variant": "#FFFFFF",
-                    "on-primary-fixed-variant": "#121212",
-                    "on-tertiary-fixed-variant": "#46464b",
-                    "on-background": "#FFFFFF",
-                    "on-secondary-fixed-variant": "#474746",
-                    "tertiary-container": "#c7c6cb",
-                    "on-surface": "#FFFFFF",
-                    "tertiary": "#e3e2e7",
-                    "surface-container-lowest": "#0e0e0e",
-                    "surface": "#121212",
-                    "on-tertiary": "#2f3034",
-                    "surface-container-high": "#2a2a2a",
-                    "secondary-fixed": "#e5e2e1",
-                    "error-container": "#93000a",
-                    "tertiary-fixed-dim": "#c6c6cb",
-                    "inverse-surface": "#ffffff",
-                    "secondary": "#c8c6c5",
-                    "inverse-on-surface": "#121212",
-                    "surface-variant": "#2E2E2E",
-                    "surface-tint": "#F9BD2A",
-                    "on-error": "#690005",
-                    "outline-variant": "#4f4533",
-                    "on-tertiary-fixed": "#1a1b1f",
-                    "on-secondary-fixed": "#1c1b1b",
-                    "secondary-container": "#474746",
-                    "surface-dim": "#121212",
-                    "primary-fixed-dim": "#F9BD2A",
-                    "tertiary-fixed": "#e3e2e7",
-                    "error": "#ffb4ab",
-                    "on-secondary-container": "#b7b5b4",
-                    "background": "#121212",
-                    "on-secondary": "#313030",
-                    "surface-container-low": "#131313",
-                    "on-tertiary-container": "#525257",
-                    "on-primary": "#121212",
-                    "on-primary-fixed": "#121212",
-                    "outline": "#2E2E2E",
-                    "inverse-primary": "#F9BD2A",
-                    "surface-container": "#1c1b1b"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "gutter": "24px",
-                    "container-max": "1200px",
-                    "margin-desktop": "40px",
-                    "margin-mobile": "16px",
-                    "unit": "8px"
-            },
-            "fontFamily": {
-                    "body-md": ["Inter"],
-                    "headline-lg-mobile": ["Montserrat"],
-                    "headline-md": ["Montserrat"],
-                    "body-lg": ["Inter"],
-                    "label-md": ["Inter"],
-                    "display-lg": ["Montserrat"],
-                    "headline-lg": ["Montserrat"],
-                    "label-sm": ["Inter"]
-            },
-            "fontSize": {
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
-            }
-          },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#F9BD2A",
+          "primary-dim": "#c9961e",
+          "background": "#0d0d0d",
+          "surface": "#141414",
+          "surface-2": "#1a1a1a",
+          "surface-3": "#222222",
+          "on-surface": "#FFFFFF",
+          "on-surface-variant": "#a0a0a0",
+          "outline": "#333333",
+          "outline-variant": "#2a2a2a",
         },
-      }
-    </script>
-<style>
-      body {
-        background-color: #121212;
-        color: #FFFFFF;
-        -webkit-font-smoothing: antialiased;
-      }
-      .glass-card {
-        background: rgba(26, 26, 26, 0.6);
-        backdrop-filter: blur(20px);
-        border: 1px solid #2E2E2E;
-      }
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-      .premium-gradient {
-        background: linear-gradient(135deg, rgba(249, 189, 24, 0.1) 0%, rgba(18, 18, 18, 0) 100%);
-      }
-      
-      /* Scroll Reveal Animations */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s cubic-bezier(0.21, 1.02, 0.73, 1), transform 0.8s cubic-bezier(0.21, 1.02, 0.73, 1);
-      }
-      .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* Shimmering Gold Effect */
-      .shimmer-gold {
-        background: linear-gradient(
-          to right,
-          #ffffff 20%,
-          #F9BD2A 40%,
-          #F9BD2A 60%,
-          #ffffff 80%
-        );
-        background-size: 200% auto;
-        color: transparent;
-        -webkit-background-clip: text;
-        background-clip: text;
-        animation: shimmer 5s linear infinite;
-      }
-      @keyframes shimmer {
-        to { background-position: 200% center; }
-      }
-
-      /* Hero Zoom Animation */
-      @keyframes heroZoom {
-        from { transform: scale(1.1); }
-        to { transform: scale(1); }
-      }
-      .animate-hero-zoom {
-        animation: heroZoom 10s ease-out forwards;
-      }
-
-      /* Interactive Background */
-      #bg-particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        pointer-events: none;
-        opacity: 0.3;
-      }
-
-      /* Magnetic/Pulse Button */
-      .btn-pulse:hover {
-        box-shadow: 0 0 25px rgba(249, 189, 42, 0.6);
-        animation: pulse-glow 2s infinite;
-      }
-      @keyframes pulse-glow {
-        0% { transform: scale(1); box-shadow: 0 0 15px rgba(249, 189, 42, 0.4); }
-        50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(249, 189, 42, 0.7); }
-        100% { transform: scale(1); box-shadow: 0 0 15px rgba(249, 189, 42, 0.4); }
-      }
-
-      /* Card Hover Effect */
-      .tilt-card {
-        transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-      }
-      .tilt-card:hover {
-        transform: translateY(-8px) scale(1.01);
-        border-color: #F9BD2A;
-        box-shadow: 0 10px 40px -10px rgba(249, 189, 42, 0.3);
-      }
-
-      /* Accessibility */
-      @media (prefers-reduced-motion: reduce) {
-        *, ::before, ::after {
-          animation-delay: -1ms !important;
-          animation-duration: 1ms !important;
-          animation-iteration-count: 1 !important;
-          background-attachment: initial !important;
-          scroll-behavior: auto !important;
-          transition-duration: 0s !important;
-          transition-delay: 0s !important;
+        fontFamily: {
+          "display": ["Bricolage Grotesque", "sans-serif"],
+          "body": ["Inter", "sans-serif"],
+        },
+        spacing: {
+          "nav-h": "72px",
         }
-        .reveal { opacity: 1; transform: none; }
-        .animate-hero-zoom { animation: none; transform: none; }
-        .shimmer-gold { background: none; color: white; -webkit-text-fill-color: white; }
       }
-    </style>
-</head>
-<body class="font-body-md text-body-md overflow-x-hidden">
-<canvas id="bg-particles"></canvas>
-<!-- TopNavBar -->
-<nav class="docked full-width top-0 sticky z-50 transition-all duration-500 py-4 bg-transparent border-b border-transparent" id="top-nav">
-<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto">
-<div class="flex items-center gap-4">
-<img alt="修學院 Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ">
-</div>
-<div class="hidden md:flex items-center gap-8">
-<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-200" href="./index.html">首頁</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./about.html">關於我們</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./quote.html">維修項目</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
-</div>
-<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full font-bold transition-all btn-pulse hover:brightness-110 active:scale-95" onclick="window.location.href='./booking.html'">
-            立即預約
-        </button>
-</div>
-</nav>
-<main>
-<!-- Hero Section -->
-<section class="relative min-h-[85vh] flex items-center overflow-hidden">
-<div class="absolute inset-0 z-0">
-<div class="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent z-10"></div>
-<img alt="Professional close-up photography of a technician repairing an iPhone" class="w-full h-full object-cover object-center animate-hero-zoom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGIK-F6eSk3mIpCBxZih0odN43RhneSS3utKmF7DORI9LxPOw93ibtdwXWAsUFYxJJT2xyvy67aqK8zOyZ96P7ygp0ybfcoeXztu7MbDVYztFYrXe6XFekOT9axNxjh9QVLkWg1hSNcskSd70teW78kdABr5WyvstcTAWla02p4xpMMxykKwU57WSQ3JzPHXuzB1jtTDr0QdKWjJ-UzHawWbuh0CBXu11J0iq59OtwYdpBtrueS_xYpunQqw9L83-syv8jkqDmw-E">
-</div>
-<div class="relative z-20 max-w-container-max mx-auto px-margin-desktop w-full">
-<div class="max-w-2xl space-y-6 reveal active">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary">
-<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">台中旗艦旗艦店 • 創立於 2022</span>
-</div>
-<h1 class="font-display-lg text-display-lg leading-tight shimmer-gold">
-                    專業現場維修<br>快速、透明、安心</h1>
-<p class="font-body-lg text-body-lg text-white/80 max-w-xl">
-                    修學院透過『電池與保護貼終身保固』，為您的手機提供最長遠的防護。專注於 Apple 硬體工藝，提供原廠等級的高階修復。
-                </p>
-<div class="flex flex-wrap gap-4 pt-4">
-<button class="bg-[#F9BD2A] text-[#121212] px-8 py-4 rounded-xl font-bold font-label-md text-label-md shadow-lg shadow-primary/20 btn-pulse transition-all" onclick="window.location.href='./booking.html'">
-                        立即預約維修
-                    </button>
-<button class="border border-[#2E2E2E] text-white px-8 py-4 rounded-xl font-bold font-label-md text-label-md hover:bg-white/5 transition-colors">
-                        查看價目表
-                    </button>
-</div>
-</div>
-</div>
-</section>
-<!-- Trust Badges -->
-<section class="bg-surface-container-low py-12 border-y border-surface-variant relative z-10">
-<div class="max-w-container-max mx-auto px-margin-desktop flex flex-wrap justify-center md:justify-between items-center gap-12 reveal">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-4xl">verified</span>
-<div>
-<p class="font-headline-md text-headline-md text-white">2022</p>
-<p class="font-label-sm text-label-sm text-white/60">台中創立之極致誠信</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-4xl">star</span>
-<div>
-<p class="font-headline-md text-headline-md text-white">5.0 Rating</p>
-<p class="font-label-sm text-label-sm text-white/60">Google Map 零負評口碑</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-4xl">security</span>
-<div>
-<p class="font-headline-md text-headline-md text-white">BSMI</p>
-<p class="font-label-sm text-label-sm text-white/60">經濟部國家安全認證</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-4xl">sync_saved_locally</span>
-<div>
-<p class="font-headline-md text-headline-md text-white">終身保固</p>
-<p class="font-label-sm text-label-sm text-white/60">電池與保護貼無限次出保</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Key Features Bento Grid -->
-<section class="py-24 max-w-container-max mx-auto px-margin-desktop">
-<div class="mb-16 space-y-4 text-center reveal">
-<h2 class="font-headline-lg text-headline-lg text-white">為什麼選擇修學院？</h2>
-<div class="w-20 h-1 bg-primary mx-auto"></div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<!-- Large Feature -->
-<div class="md:col-span-8 glass-card tilt-card rounded-2xl p-12 relative overflow-hidden group reveal">
-<div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
-<div class="relative z-10 flex flex-col h-full justify-between gap-8">
-<div class="space-y-4">
-<span class="material-symbols-outlined text-primary text-5xl">handyman</span>
-<h3 class="font-headline-lg text-headline-lg text-white">原廠等級半價透明收費</h3>
-<p class="font-body-lg text-body-lg text-white/70 max-w-md">
-                            我們使用頂級原件，並透過標準化作業流程優化效率，將省下的溢價直接回饋給消費者。價格完全公開透明，絕無隱藏費用。
-                        </p>
-</div>
-<div class="flex items-center gap-4">
-<div class="h-[1px] flex-grow bg-surface-variant"></div>
-<span class="font-label-md text-label-md text-primary">了解維修價目</span>
-</div>
-</div>
-</div>
-<!-- Small Feature 1 -->
-<div class="md:col-span-4 glass-card tilt-card rounded-2xl p-8 border-t-2 border-t-primary flex flex-col gap-6 reveal">
-<span class="material-symbols-outlined text-primary text-4xl">battery_charging_full</span>
-<h3 class="font-headline-md text-headline-md text-white">經濟部 BSMI 安全認證電池</h3>
-<p class="font-body-md text-body-md text-white/70">
-                    安全不容妥協。我們僅採用經過國家級安全認證的高容量電池，並提供業界最長『終身保固』承諾。
-                </p>
-</div>
-<!-- Small Feature 2 -->
-<div class="md:col-span-5 glass-card tilt-card rounded-2xl p-8 flex flex-col gap-6 reveal">
-<span class="material-symbols-outlined text-primary text-4xl">transfer_within_a_station</span>
-<h3 class="font-headline-md text-headline-md text-white">保護貼隨機轉移權限</h3>
-<p class="font-body-md text-body-md text-white/70">
-                    業界首創！保固權限跟隨手機，而非個人。即使二手轉讓，新機主依然享有保護貼出保權益。
-                </p>
-</div>
-<!-- Promo Image Card -->
-<div class="md:col-span-7 rounded-2xl overflow-hidden relative min-h-[300px] border border-surface-variant reveal">
-<img alt="Professional Apple repair workstation at 修學院" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpX2r7LExXxBgPVGrKFnKNq46OP7t7lp1gOx4bz_pp18dODRp49yPwTZiawlLHZcgakDFfzIWz4g1Nn9c_TyxgprwEFamacKzT-VRnK36Q30swd5U456PSglGHq2Rz9z7scDHZQLkUZdv4N4QhVEN5VtM8XFnnuP5lB9nVxTAZYbvpRpIzEFrWlQI0NCKDKLbZMh-1fCoxpUP-TzziiHFdSrU5_w5WBSaoSp9HQGi_2qvkGlX-PNF5JO-7cEmXzGqPWtopcpPdx2I">
-<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end p-8">
-<div class="text-white">
-<h4 class="font-headline-md text-headline-md font-bold tracking-wider text-primary">台中向上旗艦店</h4>
-<p class="font-body-md text-body-md text-white/80">為您提供最極致的維修體驗</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- CTA Section -->
-<section class="py-24 bg-surface-container-lowest border-y border-surface-variant">
-<div class="max-w-container-max mx-auto px-margin-desktop text-center space-y-8 reveal">
-<h2 class="font-display-lg text-display-lg text-white shimmer-gold">準備好讓您的裝置重生了嗎？</h2>
-<p class="font-body-lg text-body-lg text-white/70 max-w-2xl mx-auto">
-                加入上萬名滿意顧客的行列，體驗專業、透明、且有終身保障的維修服務。
-            </p>
-<div class="flex justify-center gap-6">
-<button class="bg-[#F9BD2A] text-[#121212] px-12 py-5 rounded-xl font-bold font-headline-md text-headline-md btn-pulse transition-all shadow-xl shadow-primary/20" onclick="window.location.href='./booking.html'">
-                    立即預約
-                </button>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="full-width border-t border-surface-variant bg-surface-container-lowest">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-12 max-w-container-max mx-auto reveal">
-<div class="md:col-span-2 space-y-6">
-<div class="flex items-center gap-3">
-<img alt="修學院 Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ">
-<span class="font-headline-md text-headline-md text-white">修學員 FIX COLLEGE</span>
-</div>
-<p class="font-body-md text-body-md text-white/60 max-w-md">
-                台中專業 Apple 維修首選。誠信經營、價格透明，我們不僅修復您的手機，更修復您對維修業界的信任。
-            </p>
-<div class="flex gap-4">
-<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">face_nod</span>
-</a>
-<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">photo_camera</span>
-</a>
-</div>
-</div>
-<div class="space-y-4">
-<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest">快速連結</h4>
-<ul class="space-y-2">
-<li><a class="font-body-md text-body-md text-white/60 hover:text-white transition-colors" href="#">隱私權政策</a></li>
-<li><a class="font-body-md text-body-md text-white/60 hover:text-white transition-colors" href="#">服務條款</a></li>
-<li><a class="font-body-md text-body-md text-white/60 hover:text-white transition-colors" href="#">常見問題解答</a></li>
-</ul>
-</div>
-<div class="space-y-4">
-<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest">聯繫資訊</h4>
-<ul class="space-y-2">
-<li class="flex gap-2 text-white/60 font-body-md text-body-md">
-<span class="material-symbols-outlined text-[20px]">location_on</span>
-                    台中市西區向上路一段 (向上旗艦店)
-                </li>
-<li class="flex gap-2 text-white/60 font-body-md text-body-md">
-<span class="material-symbols-outlined text-[20px]">phone_iphone</span>
-                    04-XXXX-XXXX
-                </li>
-</ul>
-</div>
-</div>
-<div class="border-t border-surface-variant py-6 text-center">
-<p class="font-body-md text-body-md text-white/40">
-            © 2022 修學員 FIX COLLEGE. All Rights Reserved. Taichung Apple Repair Flagship.
-        </p>
-</div>
-</footer>
-<script>
-    // Scroll Reveal Observer
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // Nav Background on Scroll
-    window.onscroll = function() {
-        const nav = document.getElementById('top-nav');
-        if (window.pageYOffset > 50) {
-            nav.classList.add('bg-surface/90', 'backdrop-blur-xl', 'py-2', 'border-surface-variant');
-            nav.classList.remove('bg-transparent', 'py-4', 'border-transparent');
-        } else {
-            nav.classList.add('bg-transparent', 'py-4', 'border-transparent');
-            nav.classList.remove('bg-surface/90', 'backdrop-blur-xl', 'py-2', 'border-surface-variant');
-        }
-    };
-
-    // Particles Background
-    const canvas = document.getElementById('bg-particles');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
     }
-    
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2;
-            this.speedX = (Math.random() - 0.5) * 0.3;
-            this.speedY = (Math.random() - 0.5) * 0.3;
-            this.opacity = Math.random() * 0.5;
-        }
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-        }
-        draw() {
-            ctx.fillStyle = `rgba(249, 189, 42, ${this.opacity})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    function initParticles() {
-        particles = [];
-        for (let i = 0; i < 80; i++) {
-            particles.push(new Particle());
-        }
-    }
-
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animateParticles);
-    }
-
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        initParticles();
-        animateParticles();
-    }
-
-    // Magnetic Button Effect (Simple variant)
-    document.querySelectorAll('.btn-pulse').forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-        });
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = `translate(0px, 0px)`;
-        });
-    });
+  }
 </script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #0d0d0d;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── Noise texture overlay ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ─── Canvas particles ─── */
+  #bg-particles {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    z-index: 0; pointer-events:none; opacity:0.25;
+  }
+
+  /* ─── Nav ─── */
+  #top-nav {
+    transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+  }
+  #top-nav.scrolled {
+    background: rgba(13,13,13,0.88) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  /* ─── Shimmer Gold text ─── */
+  .shimmer-gold {
+    background: linear-gradient(90deg, #fff 0%, #fff 25%, #F9BD2A 50%, #fff 75%, #fff 100%);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: -300% center; } }
+
+  /* ─── Glow text ─── */
+  .glow-text { text-shadow: 0 0 40px rgba(249,189,42,0.4); }
+
+  /* ─── Scroll Reveal ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── Glass card ─── */
+  .glass {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* ─── Hover card ─── */
+  .hover-card {
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+  }
+  .hover-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(249,189,42,0.3) !important;
+    box-shadow: 0 20px 60px -15px rgba(249,189,42,0.15);
+  }
+
+  /* ─── Primary button ─── */
+  .btn-primary {
+    background: #F9BD2A;
+    color: #0d0d0d;
+    font-weight: 700;
+    border-radius: 9999px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 0 0 0 rgba(249,189,42,0);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 8px 32px -4px rgba(249,189,42,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* ─── Secondary button ─── */
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    border-radius: 9999px;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(249,189,42,0.5);
+    background: rgba(249,189,42,0.06);
+    transform: translateY(-1px);
+  }
+  .btn-ghost:active { transform: scale(0.97); }
+
+  /* ─── Hero Image ─── */
+  .hero-zoom { animation: heroZoom 14s ease-out forwards; }
+  @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+  /* ─── Badge pill ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    border: 1px solid rgba(249,189,42,0.25);
+    background: rgba(249,189,42,0.08);
+    color: #F9BD2A;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Stat counter ─── */
+  .stat-glow { text-shadow: 0 0 30px rgba(249,189,42,0.5); }
+
+  /* ─── Horizontal divider line ─── */
+  .line-gold { height: 2px; background: linear-gradient(90deg, transparent, #F9BD2A 50%, transparent); }
+
+  /* ─── Material icons ─── */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  /* ─── Accessibility ─── */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 1ms !important;
+      transition-duration: 0ms !important;
+    }
+    .reveal { opacity:1; transform:none; }
+    .shimmer-gold { background: none; color: #F9BD2A; -webkit-text-fill-color: #F9BD2A; }
+    .hero-zoom { animation: none; }
+  }
+
+  /* ─── 自訂滑鼠游標樣式 ─── */
+  @media (hover: hover) {
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+    
+    #cursor-dot {
+      position: fixed;
+      top: -4px;
+      left: -4px;
+      width: 8px;
+      height: 8px;
+      background-color: #F9BD2A;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      will-change: transform;
+      transition: transform 0.08s linear;
+    }
+
+    #cursor-ring {
+      position: fixed;
+      top: -20px;
+      left: -20px;
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid rgba(249, 189, 42, 0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      will-change: transform;
+      transition: width 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                  height 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                  top 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                  left 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                  background-color 0.25s ease,
+                  border-color 0.25s ease;
+    }
+
+    #cursor-ring.hover {
+      width: 60px;
+      height: 60px;
+      top: -30px;
+      left: -30px;
+      border-color: rgba(249, 189, 42, 1);
+      background-color: rgba(249, 189, 42, 0.08);
+    }
+  }
+
+  /* ─── 按鈕 Hover 高級縮放與陰影漸變 ─── */
+  a, button, .btn-primary, .btn-ghost {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                background-color 0.3s ease, 
+                border-color 0.3s ease, 
+                filter 0.3s ease !important;
+  }
+
+  @media (hover: hover) {
+    a:hover, button:hover, .btn-primary:hover, .btn-ghost:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 30px -4px rgba(249, 189, 42, 0.3),
+                  0 4px 12px -2px rgba(249, 189, 42, 0.15) !important;
+    }
+    a:active, button:active, .btn-primary:active, .btn-ghost:active {
+      transform: translateY(0px) scale(0.98) !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #cursor-dot, #cursor-ring { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particle background -->
+<canvas id="bg-particles"></canvas>
+
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav class="w-full top-0 sticky z-50 py-5 border-b border-transparent" id="top-nav">
+  <div class="flex justify-between items-center w-full px-10 max-w-[1200px] mx-auto">
+    <!-- Logo -->
+    <a href="./index.html" class="flex items-center gap-3 group" aria-label="修學院首頁">
+      <img alt="修學院 Logo" class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ">
+    </a>
+    <!-- Nav Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a class="text-sm font-semibold text-primary border-b-2 border-primary pb-0.5 transition-colors" href="./index.html">首頁</a>
+      <a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./about.html">關於我們</a>
+      <a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./quote.html">維修項目</a>
+      <a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./faq.html">常見問題</a>
+      <a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./news.html">最新消息</a>
+    </div>
+    <!-- CTA -->
+    <button class="btn-primary px-6 py-2.5 text-sm font-bold tracking-wide" onclick="window.location.href='./booking.html'">立即預約</button>
+  </div>
+</nav>
+
+<main class="relative z-10">
+
+<!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+<section class="relative min-h-[92vh] flex items-center overflow-hidden">
+  <!-- BG Image -->
+  <div class="absolute inset-0 z-0">
+    <img alt="修學院職人維修 Apple 手機" class="w-full h-full object-cover object-center hero-zoom opacity-85"
+      src="./vedio/gif.gif">
+    <!-- Gradient overlays -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-[#0d0d0d]/75 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-50"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-[1200px] mx-auto px-10 w-full py-20">
+    <div class="max-w-2xl space-y-7">
+      <!-- Badge -->
+      <div class="badge reveal visible">
+        <span class="material-symbols-outlined text-[14px]" style="font-variation-settings:'FILL' 1">star</span>
+        台中旗艦店 · 創立於 2022
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-display font-bold leading-[1.08] tracking-tight reveal visible reveal-delay-1"
+          style="font-size: clamp(2.8rem, 6vw, 4.5rem)">
+        專業現場維修<br>
+        <span class="shimmer-gold glow-text">快速、透明、安心</span>
+      </h1>
+
+      <!-- Sub -->
+      <p class="text-white/65 text-lg leading-relaxed max-w-xl reveal visible reveal-delay-2">
+        修學院透過『電池與保護貼終身保固』，為您的手機提供最長遠的防護。<br>
+        專注於 Apple 硬體工藝，提供原廠等級的高階修復。
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4 pt-2 reveal visible reveal-delay-3">
+        <button class="btn-primary px-8 py-4 text-base font-bold"
+                onclick="window.location.href='./booking.html'">
+          立即預約維修
+        </button>
+        <button class="btn-ghost px-8 py-4 text-base"
+                onclick="window.location.href='./quote.html'">
+          查看價目表
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40 animate-bounce">
+    <span class="material-symbols-outlined text-white text-2xl">keyboard_arrow_down</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ TRUST STRIP ═══════════════════════════════════════ -->
+<section class="border-y border-outline-variant py-10 bg-surface/50 backdrop-blur-md">
+  <div class="max-w-[1200px] mx-auto px-10">
+    <div class="flex flex-wrap justify-center md:justify-between items-center gap-10 reveal">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1">verified</span>
+        <div>
+          <p class="text-white font-bold text-lg font-display">2022</p>
+          <p class="text-white/50 text-xs font-medium tracking-wide">台中創立 · 口碑誠信</p>
+        </div>
+      </div>
+      <div class="w-px h-10 bg-outline hidden md:block"></div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1">star</span>
+        <div>
+          <p class="text-white font-bold text-lg font-display">5.0 ★</p>
+          <p class="text-white/50 text-xs font-medium tracking-wide">Google Map 零負評</p>
+        </div>
+      </div>
+      <div class="w-px h-10 bg-outline hidden md:block"></div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1">security</span>
+        <div>
+          <p class="text-white font-bold text-lg font-display">BSMI</p>
+          <p class="text-white/50 text-xs font-medium tracking-wide">經濟部國家安全認證</p>
+        </div>
+      </div>
+      <div class="w-px h-10 bg-outline hidden md:block"></div>
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1">all_inclusive</span>
+        <div>
+          <p class="text-white font-bold text-lg font-display">終身保固</p>
+          <p class="text-white/50 text-xs font-medium tracking-wide">電池與保護貼無限出保</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ WHY US ═══════════════════════════════════════ -->
+<section class="py-28 max-w-[1200px] mx-auto px-10">
+  <!-- Section header -->
+  <div class="mb-16 space-y-4 reveal">
+    <div class="badge">Core Values</div>
+    <h2 class="font-display font-bold text-4xl md:text-5xl text-white leading-tight mt-3">
+      為什麼選擇<br><span class="text-primary">修學院？</span>
+    </h2>
+    <p class="text-white/50 text-lg max-w-md">打破維修業不透明的慣例，用誠信與工藝重新定義您的維修體驗。</p>
+  </div>
+
+  <!-- Bento Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+
+    <!-- ★ Large card 1 -->
+    <div class="md:col-span-7 glass hover-card rounded-2xl p-10 relative overflow-hidden group reveal">
+      <div class="absolute -right-24 -top-24 w-80 h-80 bg-primary/8 rounded-full blur-3xl group-hover:bg-primary/14 transition-colors duration-700 pointer-events-none"></div>
+      <div class="relative z-10 h-full flex flex-col justify-between gap-8">
+        <div class="space-y-4">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-primary/10 border border-primary/20">
+            <span class="material-symbols-outlined text-primary text-3xl">handyman</span>
+          </div>
+          <h3 class="font-display font-bold text-2xl text-white">原廠等級 · 半價透明收費</h3>
+          <p class="text-white/55 text-base leading-relaxed max-w-md">
+            頂級原廠零件搭配標準化作業流程，將省下的溢價完整回饋給您。<br>
+            每一筆費用明碼標價，維修前確認，沒有任何隱藏費用。
+          </p>
+        </div>
+        <a href="./quote.html" class="inline-flex items-center gap-2 text-primary text-sm font-semibold group/link hover:gap-3 transition-all duration-200">
+          了解維修價目
+          <span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover/link:translate-x-1">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Small card 1 -->
+    <div class="md:col-span-5 glass hover-card rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden group reveal reveal-delay-1" style="border-top: 2px solid #F9BD2A;">
+      <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 border border-primary/20">
+        <span class="material-symbols-outlined text-primary text-2xl">battery_charging_full</span>
+      </div>
+      <div>
+        <h3 class="font-display font-bold text-xl text-white mb-2">BSMI 安全認證電池</h3>
+        <p class="text-white/55 text-sm leading-relaxed">
+          安全不容妥協。採用通過國家 BSMI 認證的高容量電池，並提供業界最長「終身保固」承諾，讓您一次搞定。
+        </p>
+      </div>
+    </div>
+
+    <!-- ★ Image card -->
+    <div class="md:col-span-6 rounded-2xl overflow-hidden relative min-h-[280px] border border-outline hover-card reveal reveal-delay-2">
+      <img alt="修學院台中向上旗艦店" class="w-full h-full object-cover object-center"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpX2r7LExXxBgPVGrKFnKNq46OP7t7lp1gOx4bz_pp18dODRp49yPwTZiawlLHZcgakDFfzIWz4g1Nn9c_TyxgprwEFamacKzT-VRnK36Q30swd5U456PSglGHq2Rz9z7scDHZQLkUZdv4N4QhVEN5VtM8XFnnuP5lB9nVxTAZYbvpRpIzEFrWlQI0NCKDKLbZMh-1fCoxpUP-TzziiHFdSrU5_w5WBSaoSp9HQGi_2qvkGlX-PNF5JO-7cEmXzGqPWtopcpPdx2I">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-8">
+        <div>
+          <p class="text-primary text-xs font-bold uppercase tracking-widest mb-1">Taiwan · Taichung</p>
+          <h4 class="font-display font-bold text-xl text-white">台中向上旗艦店</h4>
+          <p class="text-white/65 text-sm mt-1">為您提供最極致的維修體驗</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Small card 2 -->
+    <div class="md:col-span-6 glass hover-card rounded-2xl p-8 flex flex-col gap-6 reveal reveal-delay-3">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 border border-primary/20">
+        <span class="material-symbols-outlined text-primary text-2xl">transfer_within_a_station</span>
+      </div>
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 mb-3">
+          <span class="text-primary text-[11px] font-bold uppercase tracking-widest">業界首創</span>
+        </div>
+        <h3 class="font-display font-bold text-xl text-white mb-2">保護貼隨機轉移權限</h3>
+        <p class="text-white/55 text-sm leading-relaxed">
+          保固跟隨手機而非個人。即使二手轉讓，新機主依然享有保護貼終身出保的全額權益。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ STATS ═══════════════════════════════════════ -->
+<section class="py-20 border-y border-outline-variant">
+  <div class="max-w-[1200px] mx-auto px-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
+      <div class="space-y-2">
+        <p class="font-display font-bold text-5xl text-primary stat-glow">3+</p>
+        <p class="text-white/50 text-sm font-medium">年深耕台中</p>
+      </div>
+      <div class="space-y-2">
+        <p class="font-display font-bold text-5xl text-primary stat-glow">5.0</p>
+        <p class="text-white/50 text-sm font-medium">Google 評分</p>
+      </div>
+      <div class="space-y-2">
+        <p class="font-display font-bold text-5xl text-primary stat-glow">100%</p>
+        <p class="text-white/50 text-sm font-medium">透明標價</p>
+      </div>
+      <div class="space-y-2">
+        <p class="font-display font-bold text-5xl text-primary stat-glow">∞</p>
+        <p class="text-white/50 text-sm font-medium">終身保固次數</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
+<section class="py-28 relative overflow-hidden">
+  <!-- BG glow -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px]"></div>
+  </div>
+  <div class="relative z-10 max-w-[1200px] mx-auto px-10 text-center space-y-8 reveal">
+    <div class="badge mx-auto">準備好了嗎？</div>
+    <h2 class="font-display font-bold leading-tight shimmer-gold" style="font-size: clamp(2.2rem, 5vw, 3.8rem)">
+      讓您的裝置重生
+    </h2>
+    <p class="text-white/55 text-lg max-w-xl mx-auto">
+      加入數千名滿意顧客，體驗專業、透明、有終身保障的維修服務。
+    </p>
+    <div class="flex justify-center gap-4 flex-wrap pt-2">
+      <button class="btn-primary px-12 py-5 text-base font-bold"
+              onclick="window.location.href='./booking.html'">
+        立即預約
+      </button>
+      <button class="btn-ghost px-8 py-5 text-sm"
+              onclick="window.location.href='./news.html'">
+        最新消息
+      </button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer class="border-t border-outline bg-surface/60 backdrop-blur-md">
+  <div class="max-w-[1200px] mx-auto px-10 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="md:col-span-2 space-y-5">
+      <div class="flex items-center gap-3">
+        <img alt="修學院 Logo" class="h-7 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ">
+        <span class="font-display font-bold text-white text-base">修學院 FIX COLLEGE</span>
+      </div>
+      <p class="text-white/45 text-sm leading-relaxed max-w-sm">
+        台中 Apple 維修旗艦店，職人匠心。誠信經營、價格透明，修復您的手機，也修復您對維修業界的信任。
+      </p>
+      <div class="flex gap-3">
+        <a href="https://www.facebook.com/RepairAppleTaichungg/?locale=zh_TW" target="_blank" class="w-9 h-9 glass rounded-full flex items-center justify-center text-white/50 hover:text-primary hover:border-primary/30 transition-all duration-200 border border-outline" aria-label="Facebook">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://lin.ee/VxZ90dt" target="_blank" class="w-9 h-9 glass rounded-full flex items-center justify-center text-white/50 hover:text-primary hover:border-primary/30 transition-all duration-200 border border-outline" aria-label="LINE">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.597.39.084.922.258 1.057.592.122.303.08.777.039 1.083l-.17 1.027c-.052.312-.252 1.22.108 1.332.36.113 1.192-.496 1.666-.889.444-.368 2.052-1.688 2.802-2.302 2.215-.224 4.148-1.579 5.378-3.693 2.062-2.158 3.018-4.527 3.018-6.917zm-16.126 3.12h-2.124a.601.601 0 01-.601-.601v-4.248a.601.601 0 01.601-.601h2.124a.601.601 0 01.601.601.601.601 0 01-.601.601h-1.523v1.201h1.523a.601.601 0 01.601.601.601.601 0 01-.601.601h-1.523v1.244h1.523a.601.601 0 01.601.601.601.601 0 01-.601.601zm4.184 0a.601.601 0 01-.601-.601v-4.248a.601.601 0 011.202 0v3.647h1.464a.601.601 0 01.601.601.601.601 0 01-.601.601h-2.065zm3.896 0a.601.601 0 01-.601-.601v-4.248a.601.601 0 011.202 0v4.248a.601.601 0 01-.601.601zm5.82 0h-2.26a.601.601 0 01-.601-.601v-4.248a.601.601 0 01.601-.601h2.26a.601.601 0 01.601.601.601.601 0 01-.601.601h-1.659v1.201h1.659a.601.601 0 01.601.601.601.601 0 01-.601.601h-1.659v1.244h1.659a.601.601 0 01.601.601.601.601 0 01-.601.601z"/></svg>
+        </a>
+        <a href="https://maps.app.goo.gl/BGJK9m2nUucCvtiU6" class="w-9 h-9 glass rounded-full flex items-center justify-center text-white/50 hover:text-primary hover:border-primary/30 transition-all duration-200 border border-outline" target="_blank" aria-label="Google 地圖">
+          <span class="material-symbols-outlined text-[16px]">location_on</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <h4 class="text-xs font-bold uppercase tracking-widest text-primary">快速連結</h4>
+      <ul class="space-y-2.5">
+        <li><a class="text-white/50 text-sm hover:text-white transition-colors" href="./about.html">關於我們</a></li>
+        <li><a class="text-white/50 text-sm hover:text-white transition-colors" href="./quote.html">維修項目</a></li>
+        <li><a class="text-white/50 text-sm hover:text-white transition-colors" href="./faq.html">常見問題</a></li>
+        <li><a class="text-white/50 text-sm hover:text-white transition-colors" href="./news.html">最新消息</a></li>
+        <li><a class="text-white/50 text-sm hover:text-white transition-colors" href="./booking.html">立即預約</a></li>
+      </ul>
+    </div>
+
+    <div class="space-y-4">
+      <h4 class="text-xs font-bold uppercase tracking-widest text-primary">聯絡資訊</h4>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-2 text-white/50 text-sm">
+          <span class="material-symbols-outlined text-[16px] mt-0.5 text-primary/70">location_on</span>
+          台中市西區向上路一段<br>（向上旗艦店）
+        </li>
+        <li class="flex items-center gap-2 text-white/50 text-sm">
+          <span class="material-symbols-outlined text-[16px] text-primary/70">schedule</span>
+          09:00 – 21:00（每日）
+        </li>
+        <li class="flex items-center gap-2 text-white/50 text-sm">
+          <span class="material-symbols-outlined text-[16px] text-primary/70">phone_iphone</span>
+          04-XXXX-XXXX
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-outline max-w-[1200px] mx-auto px-10 py-5 flex flex-col md:flex-row justify-between items-center gap-3">
+    <p class="text-white/30 text-xs">© 2022 修學院 FIX COLLEGE. All Rights Reserved. Taichung Apple Repair Flagship.</p>
+    <div class="flex gap-4">
+      <a href="#" class="text-white/30 text-xs hover:text-white/60 transition-colors">隱私權政策</a>
+      <a href="#" class="text-white/30 text-xs hover:text-white/60 transition-colors">服務條款</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── Scroll reveal ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ─── Nav scroll effect ───
+const nav = document.getElementById('top-nav');
+const onScroll = () => {
+  if (window.scrollY > 60) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+};
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// ─── Particle system ───
+const canvas = document.getElementById('bg-particles');
+const ctx = canvas.getContext('2d');
+let W = canvas.width = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.r = Math.random() * 1.5 + 0.3;
+    this.vx = (Math.random() - 0.5) * 0.25;
+    this.vy = (Math.random() - 0.5) * 0.25;
+    this.o = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(249,189,42,${this.o})`;
+    ctx.fill();
+  }
+}
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const particles = Array.from({ length: 70 }, () => new Particle());
+  const loop = () => {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(loop);
+  };
+  loop();
+}
+
+// ─── 自訂滑鼠游標邏輯 ───
+if (window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const cursorDot = document.createElement('div');
+  cursorDot.id = 'cursor-dot';
+  const cursorRing = document.createElement('div');
+  cursorRing.id = 'cursor-ring';
+  document.body.append(cursorDot, cursorRing);
+
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+  });
+
+  const updateRing = () => {
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    requestAnimationFrame(updateRing);
+  };
+  updateRing();
+
+  const addCursorHoverListeners = () => {
+    document.querySelectorAll('a, button, .interactive-target, input, select, textarea').forEach(el => {
+      if (el.dataset.cursorBound) return;
+      el.dataset.cursorBound = "true";
+      el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+    });
+  };
+  addCursorHoverListeners();
+
+  const mutationObserver = new MutationObserver(addCursorHoverListeners);
+  mutationObserver.observe(document.body, { childList: true, subtree: true });
+}
+</script>
+<script src="./chatbot.js"></script>
 </body></html>

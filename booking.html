@@ -121,36 +121,142 @@
             background-color: #121212;
             color: #FFFFFF;
         }
+
+        /* ─── 自訂滑鼠游標樣式 ─── */
+        @media (hover: hover) {
+            *, *::before, *::after {
+                cursor: none !important;
+            }
+            
+            #cursor-dot {
+                position: fixed;
+                top: -4px;
+                left: -4px;
+                width: 8px;
+                height: 8px;
+                background-color: #F9BD2A;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99999;
+                will-change: transform;
+                transition: transform 0.08s linear;
+            }
+
+            #cursor-ring {
+                position: fixed;
+                top: -20px;
+                left: -20px;
+                width: 40px;
+                height: 40px;
+                border: 1.5px solid rgba(249, 189, 42, 0.6);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99998;
+                will-change: transform;
+                transition: width 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            height 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            top 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            left 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            background-color 0.25s ease,
+                            border-color 0.25s ease;
+            }
+
+            #cursor-ring.hover {
+                width: 60px;
+                height: 60px;
+                top: -30px;
+                left: -30px;
+                border-color: rgba(249, 189, 42, 1);
+                background-color: rgba(249, 189, 42, 0.08);
+            }
+        }
+
+        /* ─── 按鈕 Hover 高級縮放與陰影漸變 ─── */
+        a, button, .btn-primary, .btn-ghost, .diagnosis-card {
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.3s ease, 
+                        border-color 0.3s ease, 
+                        filter 0.3s ease !important;
+        }
+
+        @media (hover: hover) {
+            a:hover, button:hover, .btn-primary:hover, .btn-ghost:hover, .diagnosis-card:hover {
+                transform: translateY(-2px) scale(1.02);
+                box-shadow: 0 12px 30px -4px rgba(249, 189, 42, 0.3),
+                            0 4px 12px -2px rgba(249, 189, 42, 0.15) !important;
+            }
+            a:active, button:active, .btn-primary:active, .btn-ghost:active, .diagnosis-card:active {
+                transform: translateY(0px) scale(0.98) !important;
+            }
+        }
+
+        /* ─── 區塊登場動畫 (Fade-in up) ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        @media (hover: none) {
+            *, *::before, *::after { cursor: auto !important; }
+            #cursor-dot, #cursor-ring { display: none !important; }
+            a:hover, button:hover, .diagnosis-card:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { cursor: auto !important; }
+            #cursor-dot, #cursor-ring { display: none !important; }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen selection:bg-primary/30">
 <!-- TopNavBar -->
-<nav class="docked full-width top-0 sticky z-50 bg-surface/90 dark:bg-surface/90 backdrop-blur-xl border-b border-outline">
-<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
-<div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface tracking-tighter">
-            修學院 <span class="text-primary">FIX COLLEGE</span>
-</div>
+<nav class="w-full top-0 sticky z-50 py-4 border-b border-transparent transition-all duration-400" id="top-nav" style="background:rgba(13,13,13,0.5);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
+<div class="flex justify-between items-center w-full px-10 max-w-[1200px] mx-auto">
+<a href="./index.html" class="flex items-center gap-3 group" aria-label="修學院首頁">
+<img alt="修學院 Logo" class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ"/>
+</a>
 <div class="hidden md:flex gap-8 items-center">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./index.html">首頁</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./about.html">關於我們</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./quote.html">維修項目</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md text-label-md font-bold scale-95 active:opacity-80 transition-all" onclick="window.location.href='./booking.html'">
-                立即預約
-            </button>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./index.html">首頁</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./about.html">關於我們</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./quote.html">維修項目</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./faq.html">常見問題</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./news.html">最新消息</a>
+<button style="background:#F9BD2A;color:#0d0d0d;font-weight:700;border-radius:9999px;padding:10px 24px;font-size:14px;transition:filter 0.2s,transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.filter='brightness(1.1)';this.style.boxShadow='0 8px 24px -4px rgba(249,189,42,0.5)';this.style.transform='translateY(-1px)'" onmouseout="this.style.filter='';this.style.boxShadow='';this.style.transform=''" onclick="window.location.href='./booking.html'">立即預約</button>
 </div>
-<button class="md:hidden text-on-surface">
+<button class="md:hidden text-white/60">
 <span class="material-symbols-outlined">menu</span>
 </button>
 </div>
 </nav>
+
 <main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-20 relative">
 <!-- Background Accents -->
 <div class="absolute top-0 right-0 -z-10 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
 <div class="absolute bottom-0 left-0 -z-10 w-64 h-64 bg-primary/5 rounded-full blur-[80px]"></div>
 <!-- Header Section -->
-<div class="max-w-3xl mb-12">
+<div class="max-w-3xl mb-12 reveal">
 <h1 class="font-display-lg text-display-lg text-on-surface mb-4 tracking-tight">
             立即預約 / <span class="text-primary">線上初步診斷</span>
 </h1>
@@ -160,7 +266,7 @@
 </div>
 <!-- Booking Form Container -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-<form class="lg:col-span-8 space-y-10" id="bookingForm">
+<form class="lg:col-span-8 space-y-10 reveal reveal-delay-1" id="bookingForm">
 <!-- Step 1: Device Model -->
 <section class="space-y-6">
 <div class="flex items-center gap-3">
@@ -275,7 +381,7 @@
                         點擊按鈕後，系統將為您生成 <span class="font-bold text-primary">專屬診斷代碼</span>，請在跳轉至 LINE 後直接傳送該訊息，技師將立即為您鎖定材料。
                     </p>
 </div>
-<button class="w-full bg-primary text-on-primary py-5 rounded-xl font-headline-md text-headline-md font-bold flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'" type="button">
+<button class="w-full bg-primary text-on-primary py-5 rounded-xl font-headline-md text-headline-md font-bold flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-primary/20" onclick="handleBooking()" type="button">
                     送出診斷並預約 (跳轉至 LINE)
                     <span class="material-symbols-outlined">forum</span>
 </button>
@@ -285,7 +391,7 @@
 </div>
 </form>
 <!-- Sidebar Info -->
-<aside class="lg:col-span-4 space-y-6">
+<aside class="lg:col-span-4 space-y-6 reveal reveal-delay-2">
 <div class="glass-panel rounded-2xl p-8 sticky top-28 bg-[#1A1A1A]">
 <h3 class="font-headline-md text-headline-md text-on-surface mb-6">為什麼選擇預約？</h3>
 <ul class="space-y-6">
@@ -333,14 +439,14 @@
 <ul class="space-y-2">
 <li><a class="font-body-md text-body-md text-on-secondary-container hover:text-on-surface transition-colors" href="#">服務條款</a></li>
 <li><a class="font-body-md text-body-md text-on-secondary-container hover:text-on-surface transition-colors" href="#">隱私權政策</a></li>
-<li><a class="font-body-md text-body-md text-on-secondary-container hover:text-on-surface transition-colors" href="https://maps.google.com/?q=台中市西屯區">Google 地圖</a></li>
+<li><a class="font-body-md text-body-md text-on-secondary-container hover:text-on-surface transition-colors" href="https://maps.app.goo.gl/BGJK9m2nUucCvtiU6" target="_blank">Google 地圖</a></li>
 </ul>
 </div>
 <div>
 <h4 class="font-label-md text-label-md text-primary mb-4 uppercase tracking-widest">社群追蹤</h4>
 <div class="flex gap-4">
-<a class="text-on-secondary-container hover:text-on-surface transition-colors" href="#">Facebook</a>
-<a class="text-on-secondary-container hover:text-on-surface transition-colors" href="#">Instagram</a>
+<a class="text-on-secondary-container hover:text-on-surface transition-colors" href="https://www.facebook.com/RepairAppleTaichungg/?locale=zh_TW" target="_blank">Facebook</a>
+<a class="text-on-secondary-container hover:text-on-surface transition-colors" href="https://lin.ee/VxZ90dt" target="_blank">LINE</a>
 </div>
 </div>
 </div>
@@ -363,6 +469,7 @@
             alert('診斷代碼：' + code + '\n\n即將跳轉至官方 LINE，請將代碼傳送給技師。');
             btn.innerHTML = originalContent;
             btn.disabled = false;
+            window.open('https://lin.ee/VxZ90dt', '_blank');
         }, 1000);
     }
 
@@ -372,5 +479,61 @@
             setTimeout(() => this.classList.remove('scale-95'), 100);
         });
     });
+
+    // ─── 自訂滑鼠游標邏輯 ───
+    if (window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const cursorDot = document.createElement('div');
+        cursorDot.id = 'cursor-dot';
+        const cursorRing = document.createElement('div');
+        cursorRing.id = 'cursor-ring';
+        document.body.append(cursorDot, cursorRing);
+
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        });
+
+        const updateRing = () => {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+            requestAnimationFrame(updateRing);
+        };
+        updateRing();
+
+        const addCursorHoverListeners = () => {
+            document.querySelectorAll('a, button, .interactive-target, input, select, textarea, .diagnosis-card').forEach(el => {
+                if (el.dataset.cursorBound) return;
+                el.dataset.cursorBound = "true";
+                el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+            });
+        };
+        addCursorHoverListeners();
+
+        const mutationObserver = new MutationObserver(addCursorHoverListeners);
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // ─── 統一區塊登場動畫邏輯 ───
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: null,
+        threshold: 0.08,
+        rootMargin: "0px 0px -40px 0px"
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
+<script src="./chatbot.js"></script>
 </body></html>

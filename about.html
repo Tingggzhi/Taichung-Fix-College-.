@@ -111,30 +111,137 @@
         .timeline-line {
             background: linear-gradient(180deg, #f9bd2a 0%, #2e2e2e 100%);
         }
+
+        /* ─── 自訂滑鼠游標樣式 ─── */
+        @media (hover: hover) {
+            *, *::before, *::after {
+                cursor: none !important;
+            }
+            
+            #cursor-dot {
+                position: fixed;
+                top: -4px;
+                left: -4px;
+                width: 8px;
+                height: 8px;
+                background-color: #F9BD2A;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99999;
+                will-change: transform;
+                transition: transform 0.08s linear;
+            }
+
+            #cursor-ring {
+                position: fixed;
+                top: -20px;
+                left: -20px;
+                width: 40px;
+                height: 40px;
+                border: 1.5px solid rgba(249, 189, 42, 0.6);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99998;
+                will-change: transform;
+                transition: width 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            height 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            top 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            left 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                            background-color 0.25s ease,
+                            border-color 0.25s ease;
+            }
+
+            #cursor-ring.hover {
+                width: 60px;
+                height: 60px;
+                top: -30px;
+                left: -30px;
+                border-color: rgba(249, 189, 42, 1);
+                background-color: rgba(249, 189, 42, 0.08);
+            }
+        }
+
+        /* ─── 按鈕 Hover 高級縮放與陰影漸變 ─── */
+        a, button, .btn-primary, .btn-ghost {
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.3s ease, 
+                        border-color 0.3s ease, 
+                        filter 0.3s ease !important;
+        }
+
+        @media (hover: hover) {
+            a:hover, button:hover, .btn-primary:hover, .btn-ghost:hover {
+                transform: translateY(-2px) scale(1.02);
+                box-shadow: 0 12px 30px -4px rgba(249, 189, 42, 0.3),
+                            0 4px 12px -2px rgba(249, 189, 42, 0.15) !important;
+            }
+            a:active, button:active, .btn-primary:active, .btn-ghost:active {
+                transform: translateY(0px) scale(0.98) !important;
+            }
+        }
+
+        /* ─── 區塊登場動畫 (Fade-in up) ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        @media (hover: none) {
+            *, *::before, *::after { cursor: auto !important; }
+            #cursor-dot, #cursor-ring { display: none !important; }
+            a:hover, button:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { cursor: auto !important; }
+            #cursor-dot, #cursor-ring { display: none !important; }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden">
 <!-- TopNavBar -->
-<header class="docked full-width top-0 sticky z-50 bg-surface/80 glass-nav border-b border-surface-variant">
-<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
-<div class="font-headline-md text-headline-md font-bold text-on-surface">修學院 FIX COLLEGE</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./index.html">首頁</a>
-<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="./about.html">關於我們</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./quote.html">維修項目</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
-</nav>
-<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md hover:opacity-90 transition-all scale-95 active:opacity-80" onclick="window.location.href='./booking.html'">
-                立即預約
-            </button>
+<nav class="w-full top-0 sticky z-50 py-4 border-b border-transparent transition-all duration-400" id="top-nav" style="background:rgba(13,13,13,0.5);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
+<div class="flex justify-between items-center w-full px-10 max-w-[1200px] mx-auto">
+<a href="./index.html" class="flex items-center gap-3 group" aria-label="修學院首頁">
+<img alt="修學院 Logo" class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ"/>
+</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./index.html">首頁</a>
+<a class="text-sm font-semibold text-[#F9BD2A] border-b-2 border-[#F9BD2A] pb-0.5" href="./about.html">關於我們</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./quote.html">維修項目</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./faq.html">常見問題</a>
+<a class="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200" href="./news.html">最新消息</a>
 </div>
-</header>
+<button style="background:#F9BD2A;color:#0d0d0d;font-weight:700;border-radius:9999px;padding:10px 24px;font-size:14px;transition:filter 0.2s,transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.filter='brightness(1.1)';this.style.boxShadow='0 8px 24px -4px rgba(249,189,42,0.5)';this.style.transform='translateY(-1px)'" onmouseout="this.style.filter='';this.style.boxShadow='';this.style.transform=''" onclick="window.location.href='./booking.html'">立即預約</button>
+</div>
+</nav>
 <main>
 <!-- Hero Section / Philosophy Intro -->
-<section class="relative min-h-[716px] flex items-center pt-24 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden transition-all duration-1000 opacity-100">
+<section class="relative min-h-[716px] flex items-center pt-24 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
-<div class="space-y-8">
+<div class="space-y-8 reveal">
 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container border border-primary/20 text-primary-fixed-dim font-label-sm uppercase tracking-widest">
                         Professional Repair Excellence
                     </div>
@@ -161,16 +268,16 @@
 </div>
 </div>
 </div>
-<div class="relative group">
+<div class="relative group reveal reveal-delay-2">
 <div class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
 <img alt="Fix College Professional Repair" class="rounded-2xl border border-outline-variant shadow-2xl relative z-10 w-full aspect-[4/3] object-cover" data-alt="A cinematic close-up of a technician's hands using a high-precision screwdriver to repair an iPhone's internal motherboard. The lighting is moody and focused, highlighting the golden metallic traces of the circuit board and the sleek silver tools. The atmosphere is professional, clean, and technologically advanced, using a palette of deep blacks and sharp golden highlights to convey premium craftsmanship and surgical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMzIbypX9wZ-V9W8IBAFKzcfgbQhADTi0uur50hfKE0ucks8ssVNu98SrP9UaYoe-E0jTp2bbzLo0bk1ib5c86dU4S_-5cXwBMJhCZWeU7y15vHw3cQAh4Tgeq8k8VaTXQlxahjeelSdZ1FQOoSj1ayxyHF6sn421lkwDIHih649M9liXUF_08KGsJlC4jGXYN48UqXI5W_j0v1VHhXWLcOpvzCAwNZB_jWRx7ewst1Vw57yGPEP71dZgPbSYF1ATHqAbAsH4JDaU">
 </div>
 </div>
 </section>
 <!-- Milestones Section: Interactive Timeline -->
-<section class="py-24 bg-surface-container-lowest transition-all duration-1000 opacity-100">
+<section class="py-24 bg-surface-container-lowest">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="text-center mb-16 space-y-4">
+<div class="text-center mb-16 space-y-4 reveal">
 <h2 class="font-headline-lg text-headline-lg text-on-surface">修學院的里程碑</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">從台中出發，我們持續在技術與服務上追求極致</p>
 </div>
@@ -181,28 +288,28 @@
 <!-- 2022 -->
 <div class="relative flex flex-col md:flex-row items-center">
 <div class="flex-1 md:text-right md:pr-12 mb-8 md:mb-0">
-<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group">
+<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal">
 <div class="text-primary font-headline-md mb-2">2022-06-14</div>
 <h3 class="text-on-surface font-headline-md mb-4">正式創立</h3>
 <p class="text-on-surface-variant font-body-md">修學院正式進駐台中向上商圈，致力於建立全新的 Apple 維修服務標準。首創「面對面即時維修」流程，消除客戶對零件調包的疑慮。</p>
 </div>
 </div>
 <div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block"></div>
-<div class="flex-1 md:pl-12 w-full">
+<div class="flex-1 md:pl-12 w-full reveal reveal-delay-2">
 <img alt="https://lh3.googleusercontent.com/aida-public/AB6AXuAfNv1_Sr-xEKcW9wLtDoAFazM4otOmL5JW8cYES71qbZJ2EVxXDmqHHyxdje9Oq1FYCGwjRwZSFJbWzOWtMG40NhYtDkryWFea8s7UHt5BJLnApAOiGb8EL_-QOfYiImWLs5IuiE2XTmm2-bYvV5KHdRUKW5bKGXSLxFMkHUECesFcgAIJiZqUQO4SIWoIR5HLGaaKTAhs0k2MbYp1_d-nsAY_s5pSXu3Adqqwul41QM_TW6pP-GEUvDV2nxKG7xQMSBu-J_lvuSs" class="rounded-xl object-cover aspect-video w-full hover:grayscale-0 transition-all duration-500 border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfNv1_Sr-xEKcW9wLtDoAFazM4otOmL5JW8cYES71qbZJ2EVxXDmqHHyxdje9Oq1FYCGwjRwZSFJbWzOWtMG40NhYtDkryWFea8s7UHt5BJLnApAOiGb8EL_-QOfYiImWLs5IuiE2XTmm2-bYvV5KHdRUKW5bKGXSLxFMkHUECesFcgAIJiZqUQO4SIWoIR5HLGaaKTAhs0k2MbYp1_d-nsAY_s5pSXu3Adqqwul41QM_TW6pP-GEUvDV2nxKG7xQMSBu-J_lvuSs">
 </div>
 </div>
 <!-- 2023 -->
 <div class="relative flex flex-col md:flex-row-reverse items-center">
 <div class="flex-1 md:text-left md:pl-12 mb-8 md:mb-0">
-<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all">
+<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all reveal">
 <div class="text-primary font-headline-md mb-2">2023</div>
 <h3 class="text-on-surface font-headline-md mb-4">五星誠信標章</h3>
 <p class="text-on-surface-variant font-body-md">榮獲 Google Map 5星誠信評價維修指標店家。透過透明價格與高品質零件，在競爭激烈的台中維修市場中贏得超過千位客戶的真實肯定。</p>
 </div>
 </div>
 <div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block"></div>
-<div class="flex-1 md:pr-12 w-full">
+<div class="flex-1 md:pr-12 w-full reveal reveal-delay-2">
 <div class="grid grid-cols-2 gap-4">
 <img alt="Teamwork" class="rounded-xl border border-outline-variant grayscale hover:grayscale-0 transition-all duration-500" data-alt="A high-quality image of a team of tech experts collaborating in a modern workshop environment. Warm yellow highlights contrast with deep charcoal tones. The team is dressed in professional black attire, using tablets and specialized tools. The scene radiates authority, teamwork, and reliability in a high-tech service setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCND9mZGxZAshbtwc84xWcWbvFmPax1McpBpkXzT9CN4cqdKImlPuNGtB9Z0SeFHMPGRNRQRvz5NwrSSn0ZX_s1ycTqbdkjwcKJprcW4YwzdSYGZeUUQvrKc1BwT-CJMdqtpl77uorSet15-H6J5dTapSlRsCLigUgu0uzlgzbO5W1I-xVpr6AU3GAp5GpoX0upmEikqNkra0_8SrrVsyUrTMedQf083bGFrh9sXuKhvJGa9sU3XyHtaNf9DMOsHcbAJzSTvy5XlEg">
 <div class="bg-surface-container rounded-xl border border-primary/20 flex flex-col items-center justify-center p-4">
@@ -216,14 +323,14 @@
 <!-- 2026 -->
 <div class="relative flex flex-col md:flex-row items-center">
 <div class="flex-1 md:text-right md:pr-12 mb-8 md:mb-0">
-<div class="bg-surface-container p-8 rounded-2xl border border-primary border-dashed hover:bg-surface-variant transition-all">
+<div class="bg-surface-container p-8 rounded-2xl border border-primary border-dashed hover:bg-surface-variant transition-all reveal">
 <div class="text-primary font-headline-md mb-2">2026</div>
 <h3 class="text-on-surface font-headline-md mb-4">數位轉型未來</h3>
 <p class="text-on-surface-variant font-body-md">官方多頁式 CRM 系統與終身保固查詢平台上線。客戶可即時透過雲端查詢維修履歷、保固期限與各項維修數據，實現全數位化透明管理。</p>
 </div>
 </div>
 <div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block"></div>
-<div class="flex-1 md:pl-12 w-full">
+<div class="flex-1 md:pl-12 w-full reveal reveal-delay-2">
 <div class="bg-surface-container-high rounded-xl border border-outline-variant p-2">
 <div class="bg-surface rounded-lg p-6 flex flex-col gap-4">
 <div class="h-4 w-1/3 bg-surface-variant rounded"></div>
@@ -242,14 +349,14 @@
 </div>
 </section>
 <!-- Trust Anchors: Bento Grid -->
-<section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto transition-all duration-1000 opacity-100">
-<div class="text-center mb-16 space-y-4">
+<section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-16 space-y-4 reveal">
 <h2 class="font-headline-lg text-headline-lg text-on-surface">信任支柱</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">我們不只是維修，更是您最可靠的技術顧問</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 <!-- Anchor 1 -->
-<div class="md:col-span-2 bg-surface-container p-8 rounded-2xl border border-outline-variant relative overflow-hidden group">
+<div class="md:col-span-2 bg-surface-container p-8 rounded-2xl border border-outline-variant relative overflow-hidden group reveal">
 <div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
 <div class="flex flex-col h-full justify-between gap-8 relative z-10">
 <div class="space-y-4">
@@ -263,7 +370,7 @@
 </div>
 </div>
 <!-- Anchor 2 -->
-<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant relative overflow-hidden flex flex-col gap-6">
+<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant relative overflow-hidden flex flex-col gap-6 reveal reveal-delay-1">
 <div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
 <span class="material-symbols-outlined text-primary text-4xl">verified_user</span>
 <h3 class="text-on-surface font-headline-md">專業認證零件</h3>
@@ -278,7 +385,7 @@
 </div>
 </div>
 <!-- Anchor 3 -->
-<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant relative overflow-hidden flex flex-col gap-6">
+<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant relative overflow-hidden flex flex-col gap-6 reveal reveal-delay-2">
 <div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
 <span class="material-symbols-outlined text-primary text-4xl">handshake</span>
 <h3 class="text-on-surface font-headline-md">終身保固承諾</h3>
@@ -292,7 +399,7 @@
 </div>
 </div>
 <!-- Anchor 4: Updated CTA Section -->
-<div class="md:col-span-2 bg-surface-container p-8 rounded-2xl border border-primary/30 relative overflow-hidden flex items-center">
+<div class="md:col-span-2 bg-surface-container p-8 rounded-2xl border border-primary/30 relative overflow-hidden flex items-center reveal reveal-delay-3">
 <div class="absolute -right-20 -bottom-20 opacity-5">
 <span class="material-symbols-outlined text-[300px] text-primary">settings_suggest</span>
 </div>
@@ -335,17 +442,17 @@
 <nav class="flex flex-col gap-3">
 <a class="text-on-secondary-container hover:text-on-surface transition-colors font-body-md" href="#">隱私權政策</a>
 <a class="text-on-secondary-container hover:text-on-surface transition-colors font-body-md" href="#">服務條款</a>
-<a class="text-on-secondary-container hover:text-on-surface transition-colors font-body-md" href="https://maps.google.com/?q=台中市西屯區">Google 地圖</a>
+<a class="text-on-secondary-container hover:text-on-surface transition-colors font-body-md" href="https://maps.app.goo.gl/BGJK9m2nUucCvtiU6" target="_blank">Google 地圖</a>
 </nav>
 </div>
 <div class="space-y-4">
 <div class="text-on-surface font-label-md uppercase tracking-widest">社群追蹤</div>
 <div class="flex gap-4">
-<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary/10 transition-colors" href="https://www.facebook.com/RepairAppleTaichungg/?locale=zh_TW" target="_blank" title="Facebook">
 <span class="material-symbols-outlined text-on-surface text-xl">face_nod</span>
 </a>
-<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
-<span class="material-symbols-outlined text-on-surface text-xl">camera</span>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary/10 transition-colors" href="https://lin.ee/VxZ90dt" target="_blank" title="LINE">
+<span class="material-symbols-outlined text-on-surface text-xl">chat</span>
 </a>
 </div>
 </div>
@@ -364,29 +471,60 @@
     }
 </style>
 <script>
-        // Scroll Animation logic
-        const observerOptions = {
-            threshold: 0.1
-        };
+// ─── 自訂滑鼠游標邏輯 ───
+if (window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const cursorDot = document.createElement('div');
+  cursorDot.id = 'cursor-dot';
+  const cursorRing = document.createElement('div');
+  cursorRing.id = 'cursor-ring';
+  document.body.append(cursorDot, cursorRing);
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100');
-                    entry.target.classList.remove('opacity-0', 'translate-y-10');
-                }
-            });
-        }, observerOptions);
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
 
-        document.querySelectorAll('section').forEach(section => {
-            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
-            observer.observe(section);
-        });
-    </script>
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+  });
 
+  const updateRing = () => {
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    requestAnimationFrame(updateRing);
+  };
+  updateRing();
 
+  const addCursorHoverListeners = () => {
+    document.querySelectorAll('a, button, .interactive-target, input, select, textarea').forEach(el => {
+      if (el.dataset.cursorBound) return;
+      el.dataset.cursorBound = "true";
+      el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+    });
+  };
+  addCursorHoverListeners();
 
+  const mutationObserver = new MutationObserver(addCursorHoverListeners);
+  mutationObserver.observe(document.body, { childList: true, subtree: true });
+}
 
+// ─── 統一區塊登場動畫邏輯 ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  root: null,
+  threshold: 0.08,
+  rootMargin: "0px 0px -40px 0px"
+});
 
-
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+<script src="./chatbot.js"></script>
 </body></html>
