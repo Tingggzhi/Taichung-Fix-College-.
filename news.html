@@ -1,0 +1,386 @@
+<!DOCTYPE html><html class="dark" lang="zh-TW"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e2e2e2",
+                        "inverse-primary": "#795900",
+                        "outline-variant": "#4f4633",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "background": "#121212",
+                        "surface": "#121212",
+                        "secondary-container": "#2A2A2A",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#f9bd23",
+                        "surface-dim": "#121212",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#2f3131",
+                        "primary-container": "#FFC32A",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-secondary": "#2f3131",
+                        "surface-container": "#222222",
+                        "on-primary-container": "#000000",
+                        "on-surface": "#FFFFFF",
+                        "on-tertiary-container": "#E5E5E5",
+                        "outline": "#404040",
+                        "on-surface-variant": "#A0A0A0",
+                        "tertiary": "#E5E5E5",
+                        "surface-tint": "#FFC32A",
+                        "on-secondary-container": "#FFFFFF",
+                        "surface-container-lowest": "#0A0A0A",
+                        "secondary-fixed": "#FFFFFF",
+                        "on-error": "#FFFFFF",
+                        "error-container": "#4A0002",
+                        "surface-container-highest": "#383838",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-primary-fixed-variant": "#332600",
+                        "tertiary-container": "#333333",
+                        "surface-container-high": "#2C2C2C",
+                        "on-secondary-fixed": "#121212",
+                        "surface-bright": "#2A2A2A",
+                        "secondary": "#FFFFFF",
+                        "primary": "#FFC32A",
+                        "error": "#FF453A",
+                        "on-primary": "#000000",
+                        "primary-fixed": "#FFC32A",
+                        "on-background": "#FFFFFF",
+                        "secondary-fixed-dim": "#E5E5E5",
+                        "on-primary-fixed": "#000000",
+                        "surface-variant": "#222222",
+                        "on-tertiary-fixed-variant": "#454747"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 2px 2px, #404040 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .gradient-overlay {
+            background: linear-gradient(180deg, rgba(18,18,18,0) 0%, rgba(18,18,18,0.95) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased">
+<!-- Shared Header: TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-outline-variant bg-background/80 backdrop-blur-md px-6 md:px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-on-surface text-lg font-bold leading-tight tracking-[-0.015em] font-display-lg">修學院</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-primary text-sm font-medium leading-normal hover:text-primary-fixed-dim transition-colors" href="./news.html">最新消息</a>
+<a class="text-on-surface-variant text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">維修服務</a>
+<a class="text-on-surface-variant text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">職人專欄</a>
+<a class="text-on-surface-variant text-sm font-medium leading-normal hover:text-primary transition-colors" href="./about.html">關於我們</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 md:gap-8">
+<label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden border border-outline-variant">
+<div class="text-on-surface-variant flex bg-surface-container items-center justify-center pl-4" data-icon="search">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-on-surface focus:outline-0 focus:ring-0 border-none bg-surface-container h-full placeholder:text-on-surface-variant px-4 pl-2 text-sm font-normal" placeholder="搜尋文章或服務" value="">
+</div>
+</label>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-on-primary text-sm font-bold leading-normal tracking-[0.015em] hover:scale-105 transition-transform active:scale-95" onclick="window.location.href='./booking.html'">
+<span class="truncate">預約維修</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col w-full max-w-[1200px] mx-auto">
+<!-- Hero Section -->
+<section class="relative w-full py-16 px-6 md:py-24 md:px-10 overflow-hidden">
+<div class="absolute inset-0 hero-pattern opacity-20"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="relative z-10 flex flex-col items-center text-center gap-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant">
+<span class="size-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-xs font-semibold text-primary tracking-widest uppercase">Latest News</span>
+</div>
+<h1 class="text-on-surface text-4xl md:text-6xl font-display-lg max-w-3xl">最新活動與職人專欄</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl font-body-md">
+                    探索最前線的科技維修新知，掌握限時專屬優惠，為您的行動生活提供最強力的後援。
+                </p>
+</div>
+</section>
+<!-- Featured Promotions Grid -->
+<section class="px-6 md:px-10 py-12">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-2xl md:text-3xl font-display-lg text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+                    限時促銷活動
+                </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Promo Card 1 -->
+<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A professional close-up of a MacBook Pro being serviced on a clean, anti-static black technician mat. The internal components are visible with high-precision screwdrivers resting nearby. The lighting is dramatic and moody, with a strong focus on the gold-toned interior hardware and the sleek metallic shell, matching the dark and gold premium UI aesthetic of the Repair Academy brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdpY0wNyHRlutYX8oKFi5-483l-NdXLqtdehhAPGq2g317UOt4l9_XYR4lEZO18BrjokmkOrgDkf1nBgm-m9XYNm6-QFevQdq8zRZGZtXv0rXNhqZW5dmhOAKcp2rFunM97VLnZkNRADMx2_d6xRwIKmioWlwndAk5yZ3OdRZQv5R3NSWQFJ_PffBdj0q9fjEIHkVsyih7HBZa94cg9bHb8jNPk77L-w7nATBtidrPVg5VUElBBfPCAkCbxBGtaEc2SskqdSUlFnw">
+<div class="absolute inset-0 gradient-overlay"></div>
+<div class="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
+<div class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit">Summer Deal</div>
+<h3 class="text-xl font-bold text-on-surface leading-tight">MacBook 換電池優惠 <br><span class="text-primary">$500 off</span></h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">使用原廠規格電池，並享有 180 天完整保固服務。</p>
+<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Promo Card 2 -->
+<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A macro shot of an iPhone battery with visible BSMI certification marking. The battery is placed on a dark textured surface illuminated by a focused golden light beam that highlights the metallic details and safety labels. The environment is tech-focused and clinical, conveying reliability and high standards of quality in repair services, consistent with the Pure Dark and Gold edition design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANZ0AzXk1UOAOxoXiTHovfoS3oQoz_ZQeFPzQE8eDUiMmCNar2qB9fix90yY8ZcoCoPO84WxrChHDf_XxDzO6HF8t3WrHxrun-ADbwP_pe-5Zd0_wcwIwEB6YiI6FMawevoN0SL_OJoNBRdbf7W0VYH2GT4mSHaAYyqOKC0gj4YnrCAmaWkCcKA9uCmjdD3nf7bddlIiB17BjBECDouovGiytU9M9mESCm0K70PvlRXzqhho-br6caDFAKmFZkDXsFHcJizVx1kOE">
+<div class="absolute inset-0 gradient-overlay"></div>
+<div class="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
+<div class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit">Certified Parts</div>
+<h3 class="text-xl font-bold text-on-surface leading-tight">iPhone BSMI 認證電池<br><span class="text-primary">$300 off</span></h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">安全第一！全面採用 BSMI 認證零件，延長手機壽命。</p>
+<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Promo Card 3 -->
+<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A technician using a high-pressure air duster and specialized cleaning tools on an open MacBook. Dust particles are caught in a cinematic spotlight against a dark background, emphasizing the meticulous cleaning process. The overall mood is sophisticated and professional, using a deep monochromatic palette with warm gold highlights to evoke trust and premium service quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCboqGD15oLijMcKwsEibdiz3kbaCmVcVfHNR2C1cMJdnB-wciCY4aLGL1bfjR3FlhgDTKlebT1cJOqJQWLKhPPGHDqoW12-IJguCqmDtD7mR58OMkIpTudZkw3gQF-X-IzuvB6RjjhIcGN5iNvhEfpPm28g5eU5RFl1u9ZsREAHvUJmSHBO_v0_sk2OfMvy42T8MhEKlicHaMgVcfY3snEj3IjUUTWdIyEtXZurv5MbedlwsvHrxJrME_jzSPvAsQpgZ6t8hHeoUM">
+<div class="absolute inset-0 gradient-overlay"></div>
+<div class="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
+<div class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit">Free Service</div>
+<h3 class="text-xl font-bold text-on-surface leading-tight">MacBook <br><span class="text-primary">免費健檢與清潔</span></h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">預約任何維修服務，即贈送價值 $1,200 的全機深層清潔與散熱膏更換。</p>
+<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Article List Section -->
+<section class="px-6 md:px-10 py-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+<div>
+<h2 class="text-2xl md:text-3xl font-display-lg text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="history_edu">history_edu</span>
+                        職人專欄文章
+                    </h2>
+<p class="text-on-surface-variant mt-1">由 10 年經驗以上維修技師撰寫的實用指南</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-lg bg-surface-container-high border border-outline text-on-surface text-sm font-medium hover:bg-surface-container-highest transition-colors">最新發佈</button>
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-colors">維修百科</button>
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-colors">清潔保養</button>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Article Item 1 -->
+<article class="group flex flex-col md:flex-row gap-6 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-full md:w-64 h-40 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Close-up of a high-resolution smartphone screen displaying a battery health diagnostic chart with green and yellow indicators. The phone is held by a hand in a dimly lit environment, with soft bokeh background lights. The color scheme is dominated by deep charcoal grays and glowing amber accents, creating a high-tech atmosphere that fits the Pro-Tech Flagship design aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr9UKKRogHJUtL_5v4C_xzgQQnmUGiVWjrVrETMpfupEJd3mMkyGIUofs7XgvRBHX-0EUuhPm7OBG-hksAFj9FuGFgLjKeiFZku6ufhysUNaSphku14jA9w8UT_TlK-huWfUIrlWSlF6D_VIB2wF4N8t_JHG9iVI96GAvgndmrc73bM5oVoLf15CgE_eMoIAiWmXuyA2Y_iXY2cTfheU7ooz-2UFglqgUpmOdHBgYm4317Co7MMdE8nwhZu0k4EWEanj98mUICGGQ">
+</div>
+<div class="flex flex-col justify-between py-1">
+<div class="space-y-2">
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-bold">iPhone 維修</span>
+<span>2024年3月15日</span>
+<span>5 分鐘閱讀</span>
+</div>
+<h3 class="text-xl font-bold group-hover:text-primary transition-colors">如何自行檢查 iPhone 電池健康度與更換時機？</h3>
+<p class="text-on-surface-variant line-clamp-2">電池健康度掉到 80% 以下就該換了嗎？除了看百分比，我們還會教你觀察是否有電池膨脹或螢幕局部變色的警訊...</p>
+</div>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-[14px]" data-icon="person">person</span>
+</div>
+<span class="text-sm font-medium">維修長 阿誠</span>
+</div>
+<span class="flex items-center gap-1 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span> 1,280 次觀看
+                            </span>
+</div>
+</div>
+</article>
+<!-- Article Item 2 -->
+<article class="group flex flex-col md:flex-row gap-6 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-full md:w-64 h-40 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A MacBook logic board with visible water droplet damage near tiny electronic components. The image uses macro photography to show the intricate circuitry with a shallow depth of field. Cold blue and dark grey tones contrast with warm golden light that highlights critical damage zones, designed to look professional and educational within the Repair Academy's premium dark UI environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ3ZNi6mz0AqGQ4Wxgqx3IIK-a23JeI3jvv_eprDtOVwmXAE2hQcCK746ZAsiOh72hzCAdfBAShAvSeGdeTsRW0O1QLvogdjSDdmA6n5CkUAHQZmVsLz849nFDcbStFtEHD-LklHcBSlJUJoSc6bwodfyJu0B6H5_9k0loqCGRTOqKL4kUbPNcL-BuWpmJH5gkJG4Zsp96PdSJscXpDCMbSkLojuERP_ni4w9yff0wFu1LRkOqT8zFFplvjDcUSVZ2HlvYuijUEa8">
+</div>
+<div class="flex flex-col justify-between py-1">
+<div class="space-y-2">
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-bold">MacBook 指南</span>
+<span>2024年3月10日</span>
+<span>8 分鐘閱讀</span>
+</div>
+<h3 class="text-xl font-bold group-hover:text-primary transition-colors">MacBook 進水緊急救援手冊：這三個動作千萬別做</h3>
+<p class="text-on-surface-variant line-clamp-2">剛倒翻咖啡嗎？第一步不是吹風機！本文詳細解析黃金救援三小時內該如何自救，避免主機板產生不可逆的氧化腐蝕...</p>
+</div>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-[14px]" data-icon="person">person</span>
+</div>
+<span class="text-sm font-medium">技術副總 Jack</span>
+</div>
+<span class="flex items-center gap-1 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span> 2,540 次觀看
+                            </span>
+</div>
+</div>
+</article>
+</div>
+<div class="mt-10 text-center">
+<button class="px-8 py-3 rounded-lg border border-primary text-primary font-bold hover:bg-primary/10 transition-colors">
+                    查看所有文章
+                </button>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="px-6 md:px-10 py-16">
+<div class="relative w-full rounded-2xl overflow-hidden bg-surface-container-high border border-outline-variant p-8 md:p-16 text-center">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="A sophisticated background pattern consisting of abstract circuit board paths and electronic connection nodes. The visual style is minimalist and high-tech, using a subtle gradient from deep obsidian black to a dark charcoal gray with glowing gold highlights at the connection points. It serves as a decorative, atmospheric layer for a premium repair service website." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6rp_519mMeBdHezNVXphp0kfuT89WCN5ZUmTgWFttG6Ou2Hp4-pMo3kNwtN7HvU5d5TUwSfdgaZQZLFCO3FaXt4uCQrrwNkppeu_LJxItB9qZkXdLCz_s34WwPS71kk9N_5-RUOmGyXt_1kia2egGxBV1F8GRFrvE2k1hWAxq4TYJYtaYbbKeOJLQBgzS8bnex9JZUCPaWyT8SlAtTNK6jy4lSunt8eF8wESNnm_x3dF7DWDnAw34uP5bKGcOOnIk646vIwrw2oY">
+</div>
+<div class="relative z-10 space-y-8">
+<h2 class="text-3xl md:text-5xl font-display-lg text-on-surface">還在為電子設備煩惱？</h2>
+<p class="text-on-surface-variant text-lg max-w-xl mx-auto">
+                        立即領取本月限時維修優惠券，交給專業職人為您的愛機重新注入生命力。
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="w-full sm:w-auto px-10 py-4 rounded-xl bg-primary text-on-primary font-bold text-lg hover:scale-105 transition-transform" onclick="window.location.href='./booking.html'">
+                            立即領取優惠預約維修
+                        </button>
+<button class="w-full sm:w-auto px-10 py-4 rounded-xl border border-outline text-on-surface font-bold text-lg hover:bg-surface-container-highest transition-colors">
+                            線上即時諮詢
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-outline-variant bg-surface-container-lowest px-6 md:px-10 py-12 mt-12">
+<div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-on-surface text-2xl font-bold font-display-lg">修學院</h2>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                    提供專業、透明、快速的 3C 設備維修服務。每一台機器都值得被細心對待。
+                </p>
+<div class="flex gap-4">
+<a class="size-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="facebook">face_nod</span>
+</a>
+<a class="size-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_display">smart_display</span>
+</a>
+<a class="size-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="camera_alt">camera_alt</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-on-surface font-bold mb-6">服務項目</h4>
+<ul class="space-y-4 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">iPhone 維修</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">MacBook 維修</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">iPad 維修</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">清潔與保養</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-on-surface font-bold mb-6">關於我們</h4>
+<ul class="space-y-4 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">品牌故事</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">職人精神</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">服務門市</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">聯絡我們</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-on-surface font-bold mb-6">聯絡資訊</h4>
+<ul class="space-y-4 text-sm text-on-surface-variant">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="call">call</span>
+                        02-1234-5678
+                    </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="location_on">location_on</span>
+                        台北市信義區忠孝東路五段 101 號
+                    </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="schedule">schedule</span>
+                        週一至週日 11:00 - 21:00
+                    </li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto mt-12 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-on-surface-variant/60">
+<p>© 2024 修學院 Repair Academy. All Rights Reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">隱私權政策</a>
+<a class="hover:text-primary transition-colors" href="#">服務條款</a>
+</div>
+</div>
+</footer>
+<script>
+        // Optional: Simple fade-in effect on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('article, .group').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

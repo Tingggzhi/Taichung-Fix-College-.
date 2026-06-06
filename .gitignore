@@ -1,0 +1,13 @@
+# Stitch temporary zip and extract folders
+stitch_all/
+stitch_all_2/
+stitch_design/
+*.zip
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+package-lock.json

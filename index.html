@@ -1,0 +1,502 @@
+<!DOCTYPE html><html class="dark" lang="zh-TW" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>修學院 FIX COLLEGE | 台中 Apple 維修旗艦店</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#393939",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "primary-fixed": "#F9BD2A",
+                    "primary-container": "#F9BD2A",
+                    "primary": "#F9BD2A",
+                    "on-primary-container": "#121212",
+                    "on-surface-variant": "#FFFFFF",
+                    "on-primary-fixed-variant": "#121212",
+                    "on-tertiary-fixed-variant": "#46464b",
+                    "on-background": "#FFFFFF",
+                    "on-secondary-fixed-variant": "#474746",
+                    "tertiary-container": "#c7c6cb",
+                    "on-surface": "#FFFFFF",
+                    "tertiary": "#e3e2e7",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface": "#121212",
+                    "on-tertiary": "#2f3034",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary-fixed": "#e5e2e1",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#c6c6cb",
+                    "inverse-surface": "#ffffff",
+                    "secondary": "#c8c6c5",
+                    "inverse-on-surface": "#121212",
+                    "surface-variant": "#2E2E2E",
+                    "surface-tint": "#F9BD2A",
+                    "on-error": "#690005",
+                    "outline-variant": "#4f4533",
+                    "on-tertiary-fixed": "#1a1b1f",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "secondary-container": "#474746",
+                    "surface-dim": "#121212",
+                    "primary-fixed-dim": "#F9BD2A",
+                    "tertiary-fixed": "#e3e2e7",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#b7b5b4",
+                    "background": "#121212",
+                    "on-secondary": "#313030",
+                    "surface-container-low": "#131313",
+                    "on-tertiary-container": "#525257",
+                    "on-primary": "#121212",
+                    "on-primary-fixed": "#121212",
+                    "outline": "#2E2E2E",
+                    "inverse-primary": "#F9BD2A",
+                    "surface-container": "#1c1b1b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "margin-desktop": "40px",
+                    "margin-mobile": "16px",
+                    "unit": "8px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Montserrat"],
+                    "headline-md": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Montserrat"],
+                    "headline-lg": ["Montserrat"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #121212;
+        color: #FFFFFF;
+        -webkit-font-smoothing: antialiased;
+      }
+      .glass-card {
+        background: rgba(26, 26, 26, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid #2E2E2E;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .premium-gradient {
+        background: linear-gradient(135deg, rgba(249, 189, 24, 0.1) 0%, rgba(18, 18, 18, 0) 100%);
+      }
+      
+      /* Scroll Reveal Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.21, 1.02, 0.73, 1), transform 0.8s cubic-bezier(0.21, 1.02, 0.73, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Shimmering Gold Effect */
+      .shimmer-gold {
+        background: linear-gradient(
+          to right,
+          #ffffff 20%,
+          #F9BD2A 40%,
+          #F9BD2A 60%,
+          #ffffff 80%
+        );
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shimmer 5s linear infinite;
+      }
+      @keyframes shimmer {
+        to { background-position: 200% center; }
+      }
+
+      /* Hero Zoom Animation */
+      @keyframes heroZoom {
+        from { transform: scale(1.1); }
+        to { transform: scale(1); }
+      }
+      .animate-hero-zoom {
+        animation: heroZoom 10s ease-out forwards;
+      }
+
+      /* Interactive Background */
+      #bg-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.3;
+      }
+
+      /* Magnetic/Pulse Button */
+      .btn-pulse:hover {
+        box-shadow: 0 0 25px rgba(249, 189, 42, 0.6);
+        animation: pulse-glow 2s infinite;
+      }
+      @keyframes pulse-glow {
+        0% { transform: scale(1); box-shadow: 0 0 15px rgba(249, 189, 42, 0.4); }
+        50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(249, 189, 42, 0.7); }
+        100% { transform: scale(1); box-shadow: 0 0 15px rgba(249, 189, 42, 0.4); }
+      }
+
+      /* Card Hover Effect */
+      .tilt-card {
+        transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      }
+      .tilt-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        border-color: #F9BD2A;
+        box-shadow: 0 10px 40px -10px rgba(249, 189, 42, 0.3);
+      }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        *, ::before, ::after {
+          animation-delay: -1ms !important;
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          background-attachment: initial !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0s !important;
+          transition-delay: 0s !important;
+        }
+        .reveal { opacity: 1; transform: none; }
+        .animate-hero-zoom { animation: none; transform: none; }
+        .shimmer-gold { background: none; color: white; -webkit-text-fill-color: white; }
+      }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<canvas id="bg-particles"></canvas>
+<!-- TopNavBar -->
+<nav class="docked full-width top-0 sticky z-50 transition-all duration-500 py-4 bg-transparent border-b border-transparent" id="top-nav">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<img alt="修學院 Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ">
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-200" href="./index.html">首頁</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./about.html">關於我們</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./quote.html">維修項目</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full font-bold transition-all btn-pulse hover:brightness-110 active:scale-95" onclick="window.location.href='./booking.html'">
+            立即預約
+        </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[85vh] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent z-10"></div>
+<img alt="Professional close-up photography of a technician repairing an iPhone" class="w-full h-full object-cover object-center animate-hero-zoom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGIK-F6eSk3mIpCBxZih0odN43RhneSS3utKmF7DORI9LxPOw93ibtdwXWAsUFYxJJT2xyvy67aqK8zOyZ96P7ygp0ybfcoeXztu7MbDVYztFYrXe6XFekOT9axNxjh9QVLkWg1hSNcskSd70teW78kdABr5WyvstcTAWla02p4xpMMxykKwU57WSQ3JzPHXuzB1jtTDr0QdKWjJ-UzHawWbuh0CBXu11J0iq59OtwYdpBtrueS_xYpunQqw9L83-syv8jkqDmw-E">
+</div>
+<div class="relative z-20 max-w-container-max mx-auto px-margin-desktop w-full">
+<div class="max-w-2xl space-y-6 reveal active">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">台中旗艦旗艦店 • 創立於 2022</span>
+</div>
+<h1 class="font-display-lg text-display-lg leading-tight shimmer-gold">
+                    專業現場維修<br>快速、透明、安心</h1>
+<p class="font-body-lg text-body-lg text-white/80 max-w-xl">
+                    修學院透過『電池與保護貼終身保固』，為您的手機提供最長遠的防護。專注於 Apple 硬體工藝，提供原廠等級的高階修復。
+                </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="bg-[#F9BD2A] text-[#121212] px-8 py-4 rounded-xl font-bold font-label-md text-label-md shadow-lg shadow-primary/20 btn-pulse transition-all" onclick="window.location.href='./booking.html'">
+                        立即預約維修
+                    </button>
+<button class="border border-[#2E2E2E] text-white px-8 py-4 rounded-xl font-bold font-label-md text-label-md hover:bg-white/5 transition-colors">
+                        查看價目表
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Badges -->
+<section class="bg-surface-container-low py-12 border-y border-surface-variant relative z-10">
+<div class="max-w-container-max mx-auto px-margin-desktop flex flex-wrap justify-center md:justify-between items-center gap-12 reveal">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-4xl">verified</span>
+<div>
+<p class="font-headline-md text-headline-md text-white">2022</p>
+<p class="font-label-sm text-label-sm text-white/60">台中創立之極致誠信</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-4xl">star</span>
+<div>
+<p class="font-headline-md text-headline-md text-white">5.0 Rating</p>
+<p class="font-label-sm text-label-sm text-white/60">Google Map 零負評口碑</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-4xl">security</span>
+<div>
+<p class="font-headline-md text-headline-md text-white">BSMI</p>
+<p class="font-label-sm text-label-sm text-white/60">經濟部國家安全認證</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-4xl">sync_saved_locally</span>
+<div>
+<p class="font-headline-md text-headline-md text-white">終身保固</p>
+<p class="font-label-sm text-label-sm text-white/60">電池與保護貼無限次出保</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Features Bento Grid -->
+<section class="py-24 max-w-container-max mx-auto px-margin-desktop">
+<div class="mb-16 space-y-4 text-center reveal">
+<h2 class="font-headline-lg text-headline-lg text-white">為什麼選擇修學院？</h2>
+<div class="w-20 h-1 bg-primary mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Large Feature -->
+<div class="md:col-span-8 glass-card tilt-card rounded-2xl p-12 relative overflow-hidden group reveal">
+<div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+<div class="relative z-10 flex flex-col h-full justify-between gap-8">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-primary text-5xl">handyman</span>
+<h3 class="font-headline-lg text-headline-lg text-white">原廠等級半價透明收費</h3>
+<p class="font-body-lg text-body-lg text-white/70 max-w-md">
+                            我們使用頂級原件，並透過標準化作業流程優化效率，將省下的溢價直接回饋給消費者。價格完全公開透明，絕無隱藏費用。
+                        </p>
+</div>
+<div class="flex items-center gap-4">
+<div class="h-[1px] flex-grow bg-surface-variant"></div>
+<span class="font-label-md text-label-md text-primary">了解維修價目</span>
+</div>
+</div>
+</div>
+<!-- Small Feature 1 -->
+<div class="md:col-span-4 glass-card tilt-card rounded-2xl p-8 border-t-2 border-t-primary flex flex-col gap-6 reveal">
+<span class="material-symbols-outlined text-primary text-4xl">battery_charging_full</span>
+<h3 class="font-headline-md text-headline-md text-white">經濟部 BSMI 安全認證電池</h3>
+<p class="font-body-md text-body-md text-white/70">
+                    安全不容妥協。我們僅採用經過國家級安全認證的高容量電池，並提供業界最長『終身保固』承諾。
+                </p>
+</div>
+<!-- Small Feature 2 -->
+<div class="md:col-span-5 glass-card tilt-card rounded-2xl p-8 flex flex-col gap-6 reveal">
+<span class="material-symbols-outlined text-primary text-4xl">transfer_within_a_station</span>
+<h3 class="font-headline-md text-headline-md text-white">保護貼隨機轉移權限</h3>
+<p class="font-body-md text-body-md text-white/70">
+                    業界首創！保固權限跟隨手機，而非個人。即使二手轉讓，新機主依然享有保護貼出保權益。
+                </p>
+</div>
+<!-- Promo Image Card -->
+<div class="md:col-span-7 rounded-2xl overflow-hidden relative min-h-[300px] border border-surface-variant reveal">
+<img alt="Professional Apple repair workstation at 修學院" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpX2r7LExXxBgPVGrKFnKNq46OP7t7lp1gOx4bz_pp18dODRp49yPwTZiawlLHZcgakDFfzIWz4g1Nn9c_TyxgprwEFamacKzT-VRnK36Q30swd5U456PSglGHq2Rz9z7scDHZQLkUZdv4N4QhVEN5VtM8XFnnuP5lB9nVxTAZYbvpRpIzEFrWlQI0NCKDKLbZMh-1fCoxpUP-TzziiHFdSrU5_w5WBSaoSp9HQGi_2qvkGlX-PNF5JO-7cEmXzGqPWtopcpPdx2I">
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end p-8">
+<div class="text-white">
+<h4 class="font-headline-md text-headline-md font-bold tracking-wider text-primary">台中向上旗艦店</h4>
+<p class="font-body-md text-body-md text-white/80">為您提供最極致的維修體驗</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 bg-surface-container-lowest border-y border-surface-variant">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center space-y-8 reveal">
+<h2 class="font-display-lg text-display-lg text-white shimmer-gold">準備好讓您的裝置重生了嗎？</h2>
+<p class="font-body-lg text-body-lg text-white/70 max-w-2xl mx-auto">
+                加入上萬名滿意顧客的行列，體驗專業、透明、且有終身保障的維修服務。
+            </p>
+<div class="flex justify-center gap-6">
+<button class="bg-[#F9BD2A] text-[#121212] px-12 py-5 rounded-xl font-bold font-headline-md text-headline-md btn-pulse transition-all shadow-xl shadow-primary/20" onclick="window.location.href='./booking.html'">
+                    立即預約
+                </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="full-width border-t border-surface-variant bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-12 max-w-container-max mx-auto reveal">
+<div class="md:col-span-2 space-y-6">
+<div class="flex items-center gap-3">
+<img alt="修學院 Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYg0i6womWmmQjimKkwdnbSYWb-G1YxodbMFV05p1oZfvhkMKKnA2vbwHtDXFBmBWytf2izm3xuwr1P5-m2PPOylS9gzjqXdrf0dC5IVwMCBNlklTk9iHQijjk7omctIErn4w509bIGfUT29G3fHk0jQKLpx_xsj2onbuoZ1ZmptaxxJYTDHWSFBLwS1Gy4LqLXI51VqrHp_hrdqlgRJ9LC9kNcsPsYEi26bokhwq6aIVDRnE6TYGfBL7lF2bJzkIHnfo5QyzctQ">
+<span class="font-headline-md text-headline-md text-white">修學員 FIX COLLEGE</span>
+</div>
+<p class="font-body-md text-body-md text-white/60 max-w-md">
+                台中專業 Apple 維修首選。誠信經營、價格透明，我們不僅修復您的手機，更修復您對維修業界的信任。
+            </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">face_nod</span>
+</a>
+<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">photo_camera</span>
+</a>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest">快速連結</h4>
+<ul class="space-y-2">
+<li><a class="font-body-md text-body-md text-white/60 hover:text-white transition-colors" href="#">隱私權政策</a></li>
+<li><a class="font-body-md text-body-md text-white/60 hover:text-white transition-colors" href="#">服務條款</a></li>
+<li><a class="font-body-md text-body-md text-white/60 hover:text-white transition-colors" href="#">常見問題解答</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest">聯繫資訊</h4>
+<ul class="space-y-2">
+<li class="flex gap-2 text-white/60 font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+                    台中市西區向上路一段 (向上旗艦店)
+                </li>
+<li class="flex gap-2 text-white/60 font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px]">phone_iphone</span>
+                    04-XXXX-XXXX
+                </li>
+</ul>
+</div>
+</div>
+<div class="border-t border-surface-variant py-6 text-center">
+<p class="font-body-md text-body-md text-white/40">
+            © 2022 修學員 FIX COLLEGE. All Rights Reserved. Taichung Apple Repair Flagship.
+        </p>
+</div>
+</footer>
+<script>
+    // Scroll Reveal Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Nav Background on Scroll
+    window.onscroll = function() {
+        const nav = document.getElementById('top-nav');
+        if (window.pageYOffset > 50) {
+            nav.classList.add('bg-surface/90', 'backdrop-blur-xl', 'py-2', 'border-surface-variant');
+            nav.classList.remove('bg-transparent', 'py-4', 'border-transparent');
+        } else {
+            nav.classList.add('bg-transparent', 'py-4', 'border-transparent');
+            nav.classList.remove('bg-surface/90', 'backdrop-blur-xl', 'py-2', 'border-surface-variant');
+        }
+    };
+
+    // Particles Background
+    const canvas = document.getElementById('bg-particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+        draw() {
+            ctx.fillStyle = `rgba(249, 189, 42, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        initParticles();
+        animateParticles();
+    }
+
+    // Magnetic Button Effect (Simple variant)
+    document.querySelectorAll('.btn-pulse').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0px, 0px)`;
+        });
+    });
+</script>
+</body></html>
