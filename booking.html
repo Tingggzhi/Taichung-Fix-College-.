@@ -308,8 +308,8 @@
 
 <main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-20 relative">
 <!-- Background Accents -->
-<div class="absolute top-0 right-0 -z-10 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
-<div class="absolute bottom-0 left-0 -z-10 w-64 h-64 bg-primary/5 rounded-full blur-[80px]"></div>
+<div class="absolute top-0 right-0 -z-10 w-96 h-96 bg-primary/5 rounded-full blur-[100px] parallax-item" data-parallax-speed="-0.15" data-parallax-direction="vertical"></div>
+<div class="absolute bottom-0 left-0 -z-10 w-64 h-64 bg-primary/5 rounded-full blur-[80px] parallax-item" data-parallax-speed="-0.25" data-parallax-direction="vertical"></div>
 <!-- Header Section -->
 <div class="max-w-3xl mb-12 reveal">
 <h1 class="font-display-lg text-display-lg text-on-surface mb-4 tracking-tight">
@@ -795,5 +795,6 @@
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     }
 </script>
+<script src="./parallax.js"></script>
 <script src="./chatbot.js"></script>
 </body></html>

@@ -306,12 +306,94 @@
   input:focus, select:focus, textarea:focus {
       outline: none !important;
       border-color: #F9BD2A !important;
-      box-shadow: 0 0 0 3px rgba(249, 189, 42, 0.2), inset 0 2px 4px rgba(0,0,0,0.6) !important;
-      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  /* ─── 沉浸式開屏進入動畫 ─── */
+  #entrance-container {
+    background-color: #0d0d0d;
+    width: 100%;
+  }
+  .glass-door {
+    background: rgba(20, 20, 20, 0.35);
+    box-shadow: inset 0 0 20px rgba(249, 189, 42, 0.12);
+  }
+  #homepage-content.active {
+    position: static !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* ─── 馬賽克像素溶解轉場 ─── */
+  #pixel-grid-overlay {
+    background-color: transparent;
+  }
+  #pixel-grid-overlay > div {
+    background-color: transparent;
+    opacity: 0;
+    transition: background-color 0.12s ease, opacity 0.12s ease;
+    will-change: opacity, background-color;
   }
 </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════ ENTRANCE ANIMATION ═══════════════════════════════════════ -->
+<div id="entrance-container" class="relative z-[100]">
+  <!-- 滾動軌道：提供足夠的滾動距離 (300vh) 來控制動畫進度 -->
+  <div class="h-[300vh] w-full relative" id="entrance-track">
+    <!-- 固定視窗：畫面會黏在螢幕上，直到滾動完成 -->
+    <div class="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#0d0d0d]">
+      
+      <!-- 門後的金色發光前台場景 (店內) -->
+      <div class="absolute inset-0 z-0 bg-[#0d0d0d] opacity-0 transition-opacity duration-500 ease-out" id="interior-bg">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,189,42,0.22)_0%,_transparent_65%)]"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center select-none pointer-events-none">
+          <p class="font-display font-bold tracking-widest text-[#F9BD2A]/30 text-6xl md:text-8xl blur-[1px]">修學院</p>
+        </div>
+      </div>
+
+      <!-- 門市外觀主圖層 (GPU 硬體加速) -->
+      <div class="absolute inset-0 z-10 w-full h-full transform-gpu origin-center will-change-transform flex items-center justify-center" id="facade-layer">
+        <img src="./vedio/storefront.jpg" class="w-full h-full object-cover object-center select-none pointer-events-none" alt="修學院精品門市外觀">
+        <!-- 巨幅陰影與微光，遮擋圖片邊緣並增強縱深 -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-[#0d0d0d]/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0d0d0d]/40 via-transparent to-[#0d0d0d]/40"></div>
+      </div>
+
+      <!-- 左右金色半透明自動門片 (GPU 硬體加速，初始重疊在圖片大門之上) -->
+      <div class="absolute inset-0 z-20 pointer-events-none origin-center transform-gpu will-change-transform" id="doors-wrapper">
+        <!-- 左自動門 -->
+        <div class="absolute glass-door border-r border-y border-[#F9BD2A]/50 backdrop-blur-[2.5px] transition-transform duration-75 ease-out will-change-transform" id="door-left"
+             style="top: 32.1%; left: 38.1%; width: 11.9%; height: 50.8%;">
+          <!-- 金色拉絲把手 -->
+          <div class="absolute right-2.5 top-1/2 -translate-y-1/2 w-1.5 h-16 bg-gradient-to-b from-[#fcd56f] via-[#F9BD2A] to-[#c7951c] rounded-full shadow-[0_0_12px_rgba(249,189,42,0.4)]"></div>
+          <!-- 玻璃反光光澤 -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent"></div>
+        </div>
+        <!-- 右自動門 -->
+        <div class="absolute glass-door border-l border-y border-[#F9BD2A]/50 backdrop-blur-[2.5px] transition-transform duration-75 ease-out will-change-transform" id="door-right"
+             style="top: 32.1%; left: 50%; width: 11.9%; height: 50.8%;">
+          <!-- 金色拉絲把手 -->
+          <div class="absolute left-2.5 top-1/2 -translate-y-1/2 w-1.5 h-16 bg-gradient-to-b from-[#fcd56f] via-[#F9BD2A] to-[#c7951c] rounded-full shadow-[0_0_12px_rgba(249,189,42,0.4)]"></div>
+          <!-- 玻璃反光光澤 -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent"></div>
+        </div>
+      </div>
+
+      <!-- 滾動引導指示器 -->
+      <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 text-center transition-opacity duration-300 pointer-events-none select-none" id="entrance-hint">
+        <span class="text-[11px] font-bold tracking-[0.25em] text-[#F9BD2A] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] animate-pulse">向下滾動 · 走進修學院</span>
+        <div class="w-6 h-10 rounded-full border border-white/30 flex justify-center p-1.5 backdrop-blur-[2px] bg-black/10">
+          <div class="w-1 h-2 bg-[#F9BD2A] rounded-full animate-bounce"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 包裹原本首頁內容的容器，初始隱藏 -->
+<div id="homepage-content" class="transition-opacity duration-1000 opacity-0 pointer-events-none fixed inset-0 overflow-hidden h-screen">
 
 <!-- Particle background -->
 <canvas id="bg-particles"></canvas>
@@ -347,8 +429,8 @@
 <section class="relative min-h-[92vh] flex items-center overflow-hidden">
   <!-- BG Image -->
   <div class="absolute inset-0 z-0">
-    <img alt="修學院職人維修 Apple 手機" class="w-full h-full object-cover object-center hero-zoom opacity-85"
-      src="./vedio/gif.gif">
+    <img alt="修學院職人維修 Apple 手機" class="w-full h-full object-cover object-center hero-zoom opacity-85 parallax-bg"
+      data-parallax-speed="0.12" data-parallax-direction="vertical" src="./vedio/gif.gif">
     <!-- Gradient overlays -->
     <div class="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-[#0d0d0d]/75 to-transparent"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-50"></div>
@@ -393,6 +475,11 @@
   <!-- Scroll hint -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40 animate-bounce">
     <span class="material-symbols-outlined text-white text-2xl">keyboard_arrow_down</span>
+  </div>
+
+  <!-- 馬賽克像素溶解轉場遮罩 (Pixelated Grid Dissolve Overlay) -->
+  <div id="pixel-grid-overlay" class="absolute inset-0 z-20 pointer-events-none grid"
+       style="grid-template-columns: repeat(24, 1fr); grid-template-rows: repeat(10, 1fr);">
   </div>
 </section>
 
@@ -543,7 +630,7 @@
 <section class="py-28 relative overflow-hidden">
   <!-- BG glow -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px]"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px] parallax-item" data-parallax-speed="-0.18" data-parallax-direction="vertical"></div>
   </div>
   <div class="relative z-10 max-w-[1200px] mx-auto px-10 text-center space-y-8 reveal">
     <div class="badge mx-auto">準備好了嗎？</div>
@@ -644,7 +731,158 @@
   <button class="bg-primary btn-glow-shimmer text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
 </div>
 
+<!-- ═══════════════════════════════════════ SCRIPTS ═══════════════════════════════════════ -->
 <script>
+// ─── 沉浸式開屏進入動畫控制邏輯 ───
+(function() {
+  const entranceContainer = document.getElementById('entrance-container');
+  const entranceTrack = document.getElementById('entrance-track');
+  const facadeLayer = document.getElementById('facade-layer');
+  const doorLeft = document.getElementById('door-left');
+  const doorRight = document.getElementById('door-right');
+  const doorsWrapper = document.getElementById('doors-wrapper');
+  const interiorBg = document.getElementById('interior-bg');
+  const entranceHint = document.getElementById('entrance-hint');
+  const homepageContent = document.getElementById('homepage-content');
+
+  if (!entranceContainer || !entranceTrack || !facadeLayer) return;
+
+  // 偵測是否開啟減少動態效果 (Accessibility)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    entranceContainer.style.display = 'none';
+    homepageContent.classList.add('active');
+    homepageContent.classList.remove('opacity-0', 'pointer-events-none', 'fixed', 'overflow-hidden', 'h-screen');
+    return;
+  }
+
+  let isEntranceFinished = false;
+
+  function updateEntrance() {
+    if (isEntranceFinished) return;
+
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const trackHeight = entranceTrack.offsetHeight;
+    const viewHeight = window.innerHeight;
+    const maxScroll = trackHeight - viewHeight;
+
+    const progress = Math.min(1, Math.max(0, scrollTop / maxScroll));
+
+    // 1. 照片與門片縮放 (Scale up)
+    const scale = 1.0 + progress * 5.0;
+    facadeLayer.style.transform = `scale3d(${scale}, ${scale}, 1)`;
+    doorsWrapper.style.transform = `scale3d(${scale}, ${scale}, 1)`;
+
+    // 2. 自動門片滑動開啟 (在 progress 45% 到 85% 之間滑開)
+    if (progress > 0.45) {
+      const doorProgress = Math.min(1, (progress - 0.45) / 0.35);
+      const xOffset = doorProgress * 100;
+      doorLeft.style.transform = `translateX(-${xOffset}%)`;
+      doorRight.style.transform = `translateX(${xOffset}%)`;
+      doorLeft.style.opacity = 1 - doorProgress * 0.7;
+      doorRight.style.opacity = 1 - doorProgress * 0.7;
+    } else {
+      doorLeft.style.transform = 'translateX(0)';
+      doorRight.style.transform = 'translateX(0)';
+      doorLeft.style.opacity = 1;
+      doorRight.style.opacity = 1;
+    }
+
+    // 3. 門後的金色發光前台背景淡入
+    if (progress > 0.5) {
+      const bgProgress = Math.min(1, (progress - 0.5) / 0.35);
+      interiorBg.style.opacity = bgProgress;
+    } else {
+      interiorBg.style.opacity = 0;
+    }
+
+    // 4. 引導文字淡出
+    if (progress > 0.15) {
+      entranceHint.style.opacity = Math.max(0, 1 - (progress - 0.15) * 4);
+    } else {
+      entranceHint.style.opacity = 1;
+    }
+
+    // 5. 穿透大門轉場
+    if (progress >= 0.96) {
+      isEntranceFinished = true;
+      
+      entranceContainer.style.transition = 'opacity 0.6s ease-out';
+      entranceContainer.style.opacity = '0';
+      
+      setTimeout(() => {
+        entranceContainer.style.display = 'none';
+        
+        homepageContent.classList.add('active');
+        homepageContent.classList.remove('opacity-0', 'pointer-events-none', 'fixed', 'overflow-hidden', 'h-screen');
+        
+        window.scrollTo(0, 0);
+        window.dispatchEvent(new Event('scroll'));
+      }, 600);
+    }
+  }
+
+  window.addEventListener('scroll', updateEntrance, { passive: true });
+  updateEntrance();
+})();
+
+// ─── 馬賽克像素溶解轉場控制邏輯 ───
+(function() {
+  const gridContainer = document.getElementById('pixel-grid-overlay');
+  if (!gridContainer) return;
+
+  // 偵測是否開啟減少動態效果 (Accessibility)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const rows = 10;
+  const cols = 24;
+  const blocks = [];
+
+  // 動態生成 240 個網格方塊，並設定隨機權重
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const block = document.createElement('div');
+      
+      // 計算方塊變黑的臨界權重：Y 軸基礎 (由上至下漸進) + 隨機亂數噪聲
+      const baseWeight = (r / rows) * 0.7; // 0.0 -> 0.63
+      const randomNoise = Math.random() * 0.3; // 額外加入隨機擴散感
+      const threshold = baseWeight + randomNoise;
+
+      gridContainer.appendChild(block);
+      blocks.push({
+        element: block,
+        threshold: threshold
+      });
+    }
+  }
+
+  function updatePixelDissolve() {
+    // 只有在開屏進店動畫完成、且首頁內容顯示出來後才進行計算
+    const homepageContent = document.getElementById('homepage-content');
+    if (!homepageContent || !homepageContent.classList.contains('active')) return;
+
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const fadeEnd = window.innerHeight * 0.75; // 在滾動 75% 視窗高度時完全變黑
+    
+    // 計算滾動進度 0 -> 1
+    const progress = Math.min(1, Math.max(0, scrollTop / fadeEnd));
+
+    blocks.forEach(block => {
+      if (progress > block.threshold) {
+        block.element.style.backgroundColor = '#0d0d0d';
+        block.element.style.opacity = '1';
+      } else {
+        block.element.style.backgroundColor = 'transparent';
+        block.element.style.opacity = '0';
+      }
+    });
+  }
+
+  // 監聽滾動事件
+  window.addEventListener('scroll', updatePixelDissolve, { passive: true });
+})();
+
 // ─── Scroll reveal ───
 if (!window.IntersectionObserver) {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
@@ -765,5 +1003,6 @@ if (!isTouchDevice && window.matchMedia('(hover: hover)').matches && !window.mat
   mutationObserver.observe(document.body, { childList: true, subtree: true });
 }
 </script>
+<script src="./parallax.js"></script>
 <script src="./chatbot.js"></script>
 </body></html>

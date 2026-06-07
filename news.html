@@ -222,7 +222,7 @@
 <main class="flex flex-col w-full max-w-[1200px] mx-auto">
 <!-- Hero Section -->
 <section class="relative w-full py-16 px-6 md:py-24 md:px-10 overflow-hidden">
-<div class="absolute inset-0 hero-pattern opacity-20"></div>
+<div class="absolute inset-0 hero-pattern opacity-20 parallax-item" data-parallax-speed="0.08" data-parallax-direction="vertical"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
 <div class="relative z-10 flex flex-col items-center text-center gap-6 reveal">
 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant">
@@ -568,5 +568,6 @@
             document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
         }
     </script>
+<script src="./parallax.js"></script>
 <script src="./chatbot.js"></script>
 </body></html>

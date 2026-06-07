@@ -220,6 +220,90 @@
                 transition: none !important;
             }
         }
+        
+        /* ─── 3D 保護貼滾動貼合彈窗樣式 ─── */
+        #protector-modal {
+            background-color: rgba(6, 6, 6, 0.88);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), pointer-events 0.45s ease;
+        }
+        #protector-modal.show {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+        .glow-polygon {
+            filter: drop-shadow(0 0 10px rgba(249, 189, 42, 0.8)) drop-shadow(0 0 25px rgba(249, 189, 42, 0.4));
+        }
+        #protector-modal-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        #protector-modal-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        #protector-modal-content::-webkit-scrollbar-thumb {
+            background: rgba(249, 189, 42, 0.15);
+            border-radius: 10px;
+        }
+        #protector-modal-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(249, 189, 42, 0.4);
+        }
+        
+        /* ─── 3D 電池滾動更換彈窗樣式 ─── */
+        #battery-modal {
+            background-color: rgba(6, 6, 6, 0.88);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), pointer-events 0.45s ease;
+        }
+        #battery-modal.show {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+        #battery-modal-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        #battery-modal-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        #battery-modal-content::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 10px;
+        }
+        #battery-modal-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.4);
+        }
+        @keyframes pulse-green-icon {
+            0%, 100% {
+                filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.5));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.9));
+                transform: scale(1.2);
+            }
+        }
+        .animate-pulse-green {
+            display: inline-block;
+            animation: pulse-green-icon 1.5s infinite ease-in-out;
+        }
+        @keyframes ripple-emerald {
+            0% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.4);
+                box-shadow: 0 0 20px 25px rgba(16, 185, 129, 0);
+                opacity: 0;
+            }
+        }
+        .animate-ripple {
+            animation: ripple-emerald 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+            border: 2px solid rgba(16, 185, 129, 0.5);
+        }
+        .glow-phone-green {
+            filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.65)) brightness(1.05);
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary/30 selection:text-primary">
@@ -248,7 +332,7 @@
 <!-- Hero Section -->
 <section class="relative py-24 px-margin-mobile md:px-margin-desktop overflow-hidden">
 <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
-<div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary rounded-full blur-[150px]"></div>
+<div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary rounded-full blur-[150px] parallax-item" data-parallax-speed="-0.2" data-parallax-direction="vertical"></div>
 </div>
 <div class="max-w-container-max mx-auto relative z-10 text-center mb-20 reveal">
 <h1 class="font-display-lg text-display-lg md:text-display-lg mb-6 leading-tight text-white">
@@ -283,10 +367,10 @@
 </div>
 <div class="flex items-center justify-between pt-6 border-t border-surface-variant">
 <span class="text-on-surface-variant font-label-md">價格策略：公開透明</span>
-<a class="text-primary font-label-md flex items-center gap-1 hover:underline group" href="#">
+<button id="btn-learn-battery" class="text-primary font-label-md flex items-center gap-1 hover:underline group cursor-pointer focus:outline-none">
                                     Learn More
                                     <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
-</a>
+</button>
 </div>
 </div>
 </div>
@@ -313,10 +397,10 @@
 </div>
 <div class="flex items-center justify-between pt-6 border-t border-surface-variant">
 <span class="text-on-surface-variant font-label-md">款式：任選不加價</span>
-<a class="text-primary font-label-md flex items-center gap-1 hover:underline group" href="#">
+<button id="btn-learn-protector" class="text-primary font-label-md flex items-center gap-1 hover:underline group cursor-pointer focus:outline-none">
                                     Learn More
                                     <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
-</a>
+</button>
 </div>
 </div>
 </div>
@@ -419,6 +503,227 @@
   <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./faq.html">常見問題</a>
   <a class="text-2xl font-semibold text-white/70 hover:text-primary transition-colors duration-200" href="./news.html">最新消息</a>
   <button class="bg-primary text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
+</div>
+
+<!-- ═══════════════════════════════════════ 3D PROTECTOR FIT MODAL ═══════════════════════════════════════ -->
+<div id="protector-modal" class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+  <div class="relative w-full max-w-[960px] h-[90vh] md:h-[650px] bg-[#141414]/90 border border-outline-variant/60 rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-primary/5 mx-4">
+    
+    <!-- 關閉按鈕 -->
+    <button id="close-protector-modal" class="absolute top-6 right-8 z-50 text-white/50 hover:text-[#F9BD2A] transition-colors focus:outline-none" aria-label="關閉彈窗">
+      <span class="material-symbols-outlined text-[30px]">close</span>
+    </button>
+
+    <!-- 左側：3D 手機與保護貼展示區 -->
+    <div class="w-full md:w-[45%] h-[280px] md:h-full bg-surface-container-low/30 border-b md:border-b-0 md:border-r border-outline-variant flex items-center justify-center p-6 relative overflow-hidden shrink-0 select-none">
+      <!-- 金色背景球 -->
+      <div class="absolute w-56 h-56 bg-primary/10 rounded-full blur-[80px] -z-10 animate-pulse"></div>
+
+      <!-- 手機包裝層 -->
+      <div class="relative w-full max-w-[280px] flex items-center justify-center">
+        <!-- 底圖斜躺手機 -->
+        <img src="./vedio/iphone_model.png" class="w-full h-auto block" alt="iPhone 3D 模型">
+
+        <!-- 3D 亮面保護貼圖片 (不透明度適度調高至 0.48，使滾動貼合過程更清晰可見，同時保留高品質玻璃反射質感) -->
+        <img id="protector-layer" src="./vedio/protector_model.png" class="absolute inset-0 w-full h-auto pointer-events-none transition-all duration-100 ease-out will-change-transform" style="transform: translateY(-80px) scale(1.05); opacity: 0.48;">
+
+        <!-- 貼合發光波紋層 (改用同源圖片搭配金色發光濾鏡，確保 100% 完美重合，不生偏移) -->
+        <img id="fit-flash" src="./vedio/protector_model.png" class="absolute inset-0 w-full h-auto pointer-events-none opacity-0 transition-all duration-300 ease-out will-change-transform mix-blend-screen" style="transform: translateY(-80px) scale(1.05); filter: drop-shadow(0 0 15px rgba(249,189,42,0.95)) brightness(1.6) saturate(1.8);">
+      </div>
+
+      <!-- 進度指示器 -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 border border-outline px-4 py-1.5 rounded-full text-[10px] font-mono text-white/50 tracking-wider">
+        <span id="fit-percentage">0</span>% FIT
+      </div>
+    </div>
+
+    <!-- 右側：細節詳情與滾動內容區 -->
+    <div class="flex-grow h-full overflow-y-auto p-8 md:p-12 space-y-8 flex flex-col justify-between" id="protector-modal-content">
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <div class="badge text-[11px]">終身保固防護計劃</div>
+          <h2 class="font-display font-bold text-3xl text-white">頂級玻璃保護貼</h2>
+        </div>
+        
+        <p class="text-[#A0A0A0] text-sm leading-relaxed">
+          修學院首創「保護貼終身保固」，提供最頂級的 9H 鋼化二次強化玻璃。款式任選、損壞即換，一次付費、終身守護您的愛機。
+        </p>
+
+        <!-- 滾動解鎖指標說明 -->
+        <div class="bg-primary/5 border border-primary/20 p-4 rounded-xl flex gap-3 text-xs text-primary/80">
+          <span class="material-symbols-outlined text-[18px] shrink-0 animate-bounce">mouse</span>
+          <span>向下滾動閱讀條款，左側保護貼將自動吸附至手機上！</span>
+        </div>
+
+        <!-- 保固條款內容 -->
+        <div class="space-y-6 pt-4 border-t border-outline">
+          <div class="space-y-2">
+            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-base">verified</span>
+              9H 頂級鋼化工藝
+            </h4>
+            <p class="text-[#A0A0A0]/70 text-xs leading-relaxed pl-6">
+              防爆防摔能力提升 300%。疏水疏油真空電鍍塗層，手感滑順不殘留指紋，防刮防撞首選。
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-base">all_inclusive</span>
+              不限次數終身出保
+               </h4>
+            <p class="text-[#A0A0A0]/70 text-xs leading-relaxed pl-6">
+              首付 $1,390 享有無限次數出保，後續每次更換僅收取 100 元清潔與工時手工工資。
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-base">swap_horiz</span>
+              保護貼隨機轉移權限
+            </h4>
+            <p class="text-[#A0A0A0]/70 text-xs leading-relaxed pl-6">
+              更換新手機時，僅需支付 200 元權益轉移費，即可將舊機的終身保固無縫轉移到新機上！
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部的 CTA 預約按鈕 -->
+      <div class="pt-8 border-t border-outline mt-auto flex gap-4">
+        <button class="flex-grow bg-[#F9BD2A] text-background px-6 py-3.5 rounded-xl font-bold text-sm hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="window.location.href='./booking.html'">
+          立即預約防護計畫
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+        <button class="border border-outline hover:bg-white/5 text-white/70 text-sm px-6 py-3.5 rounded-xl transition-all" id="close-modal-bottom">
+          返回項目
+        </button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ 3D BATTERY FIT MODAL ═══════════════════════════════════════ -->
+<div id="battery-modal" class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+  <div class="relative w-full max-w-[960px] h-[90vh] md:h-[650px] bg-[#141414]/90 border border-outline-variant/60 rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-primary/5 mx-4">
+    
+    <!-- 關閉按鈕 -->
+    <button id="close-battery-modal" class="absolute top-6 right-8 z-50 text-white/50 hover:text-[#F9BD2A] transition-colors focus:outline-none" aria-label="關閉彈窗">
+      <span class="material-symbols-outlined text-[30px]">close</span>
+    </button>
+
+    <!-- 左側：3D 手機與電池更換展示區 -->
+    <div class="w-full md:w-[45%] h-[280px] md:h-full bg-surface-container-low/30 border-b md:border-b-0 md:border-r border-outline-variant flex items-center justify-center p-6 relative overflow-hidden shrink-0 select-none">
+      <!-- 綠色背景球 -->
+      <div class="absolute w-56 h-56 bg-emerald-500/5 rounded-full blur-[80px] -z-10 animate-pulse"></div>
+
+      <!-- 手機與手部動畫容器 -->
+      <div class="relative w-full max-w-[210px] aspect-[0.64/1] flex items-center justify-center">
+        <!-- 底圖：顯示 15% 電量的直立手機 -->
+        <img id="battery-phone-img" src="./vedio/iphone_low_battery.png" class="w-full h-auto block transition-all duration-500" alt="iPhone 15% 電量">
+
+        <!-- 3D 小手拿著電池圖片 (一開始適度露出部分於左下角預備，不透明度設為 0.70，便於滾動時清晰看見並引導視覺) -->
+        <img id="hand-battery-layer" src="./vedio/hand_battery.png" class="absolute pointer-events-none transition-all duration-100 ease-out will-change-transform" style="transform: translate(-100px, 90px) scale(0.85); opacity: 0.7; width: 160%; max-width: none; left: -70%; top: 10%;">
+
+        <!-- 自訂動態螢幕顯示層 (隨時顯示以覆蓋原底圖的 15%，支援動態電量數字與電池寬度變化) -->
+        <div id="battery-screen-display" class="absolute flex flex-col items-center justify-center bg-[#0d0d0d] rounded-full" style="width: 41.5%; aspect-ratio: 1; left: 57.9%; top: 52.4%; transform: translate(-50%, -50%); box-shadow: 0 0 15px rgba(255,255,255,0.02); z-index: 10;">
+          <!-- 動態電量文字 (低電量為紅色，充滿為綠色，充電中為黃色) -->
+          <div id="display-battery-text" class="font-bold text-[28px] md:text-[28px] tracking-tight leading-none text-[#EF4444] transition-colors duration-300">15%</div>
+          <!-- 充電雷電圖示 (在進度 >= 92% 時顯示並閃爍) -->
+          <span id="display-bolt-icon" class="material-symbols-outlined text-[#10B981] text-xl my-1 animate-pulse-green opacity-0 transition-opacity duration-300">bolt</span>
+          <!-- 動態電池圖示 -->
+          <div id="display-battery-box" class="w-10 h-5 border border-[#EF4444] rounded px-0.5 py-0.5 flex items-center relative scale-90 transition-colors duration-300">
+            <!-- 電量條 (寬度隨電量動態改變) -->
+            <div id="display-battery-bar" class="bg-[#EF4444] h-full w-[15%] rounded-sm transition-all duration-300"></div>
+            <!-- 電池凸頭 -->
+            <div id="display-battery-tip" class="bg-[#EF4444] w-1 h-2 absolute -right-1.2 top-1 rounded-r-xs transition-colors duration-300"></div>
+          </div>
+        </div>
+
+        <!-- 貼合成功綠色擴散發光波紋 (充電成功時的發亮脈衝波紋效果，z-index 9) -->
+        <div id="battery-fit-flash" class="absolute pointer-events-none opacity-0 transition-all duration-500 rounded-full" style="width: 41.5%; aspect-ratio: 1; left: 57.9%; top: 52.4%; transform: translate(-50%, -50%); z-index: 9;"></div>
+
+        <!-- 右上角狀態列自訂動態電量遮罩 (隨時顯示以覆蓋原圖右上角 15%) -->
+        <div id="battery-status-mask" class="absolute bg-[#0d0d0d] flex items-center justify-end" style="width: 25%; height: 3.5%; right: 12%; top: 10.2%; z-index: 10;">
+          <span id="status-battery-text" class="text-[#EF4444] font-bold text-[8px] mr-1 scale-90 transition-colors duration-300">15%</span>
+          <div id="status-battery-box" class="w-3.5 h-1.8 border border-[#EF4444] rounded-2xs px-0.2 py-0.2 flex items-center relative scale-95 transition-colors duration-300">
+            <div id="status-battery-bar" class="bg-[#EF4444] h-full w-[15%] rounded-3xs transition-all duration-300"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 進度指示器 -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 border border-outline px-4 py-1.5 rounded-full text-[10px] font-mono text-white/50 tracking-wider">
+        <span id="battery-percentage">0</span>% INSTALLED
+      </div>
+    </div>
+
+    <!-- 右側：細節詳情與滾動內容區 -->
+    <div class="flex-grow h-full overflow-y-auto p-8 md:p-12 space-y-8 flex flex-col justify-between" id="battery-modal-content">
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <div class="badge text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">國家安全認證電池</div>
+          <h2 class="font-display font-bold text-3xl text-white">BSMI 認證電池更換</h2>
+        </div>
+        
+        <p class="text-[#A0A0A0] text-sm leading-relaxed">
+          手機發燙、自動關機、蓄電量崩跌？這通常是電池老化的訊號。修學院更換的每一顆電池，均通過國家標準檢驗局 (BSMI) 嚴格安全認證，保障您的日常用電安全。
+        </p>
+
+        <!-- 滾動解鎖指標說明 -->
+        <div class="bg-emerald-500/5 border border-emerald-500/20 p-4 rounded-xl flex gap-3 text-xs text-emerald-400/80">
+          <span class="material-symbols-outlined text-[18px] shrink-0 animate-bounce">mouse</span>
+          <span>向下滾動閱讀條款，滾動小手將自動為您的愛機換上健康新電池！</span>
+        </div>
+
+        <!-- 電池服務條款內容 -->
+        <div class="space-y-6 pt-4 border-t border-outline">
+          <div class="space-y-2">
+            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#10B981] text-base">verified</span>
+              經濟部 BSMI 嚴格認證
+            </h4>
+            <p class="text-[#A0A0A0]/70 text-xs leading-relaxed pl-6">
+              通過防爆、高溫過充、短路防護等多項國家標準測試。拒絕來源不明的劣質組裝電池，用電超安心。
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#10B981] text-base">favorite</span>
+              健康度與循環次數完美重設
+            </h4>
+            <p class="text-[#A0A0A0]/70 text-xs leading-relaxed pl-6">
+              安裝後，重獲 100% 最大容量，回復出廠時的極致續航力，解決發熱與無預警重開機問題。
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#10B981] text-base">assignment_turned_in</span>
+              首創電池 Lifetime 終身保固
+            </h4>
+            <p class="text-[#A0A0A0]/70 text-xs leading-relaxed pl-6">
+              自更換起 3 個月內如遇非人為瑕疵免費換新；後續享有 Lifetime 終身保固權益，每次更換僅收取 $400 工資。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部的 CTA 預約按鈕 -->
+      <div class="pt-8 border-t border-outline mt-auto flex gap-4">
+        <button class="flex-grow bg-[#F9BD2A] text-background px-6 py-3.5 rounded-xl font-bold text-sm hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="window.location.href='./booking.html'">
+          立即預約電池更換
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+        <button class="border border-outline hover:bg-white/5 text-white/70 text-sm px-6 py-3.5 rounded-xl transition-all" id="close-battery-modal-bottom">
+          返回項目
+        </button>
+      </div>
+    </div>
+    
+  </div>
 </div>
 
 <script>
@@ -528,6 +833,299 @@
 
             document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
         }
+
+        // ─── 3D 保護貼滾動貼合互動邏輯 ───
+        (function() {
+            const btnOpen = document.getElementById('btn-learn-protector');
+            const modal = document.getElementById('protector-modal');
+            const btnCloseHeader = document.getElementById('close-protector-modal');
+            const btnCloseBottom = document.getElementById('close-modal-bottom');
+            const modalContent = document.getElementById('protector-modal-content');
+            
+            const protectorLayer = document.getElementById('protector-layer');
+            const fitFlash = document.getElementById('fit-flash');
+            const fitPercentage = document.getElementById('fit-percentage');
+            
+            if (!btnOpen || !modal || !modalContent || !protectorLayer) return;
+
+            // 開啟彈窗
+            btnOpen.addEventListener('click', () => {
+                modal.classList.add('show');
+                modalContent.scrollTop = 0; // 重設滾動條
+                document.body.style.overflow = 'hidden'; // 鎖定網頁背景滾動
+                updateProtectorFit(); // 初始化一次
+            });
+
+            // 關閉彈窗
+            const closeModal = () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = ''; // 解鎖網頁背景滾動
+            };
+            
+            btnCloseHeader.addEventListener('click', closeModal);
+            btnCloseBottom.addEventListener('click', closeModal);
+
+            // 點擊 Modal 背景關閉 (點擊 Modal 框外)
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            // 滾動連動邏輯
+            function updateProtectorFit() {
+                const scrollTop = modalContent.scrollTop;
+                const scrollHeight = modalContent.scrollHeight;
+                const clientHeight = modalContent.clientHeight;
+                const maxScroll = scrollHeight - clientHeight;
+                
+                // 計算滾動進度 0.0 -> 1.0
+                const progress = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
+                
+                // 連動計算：translateY 從 -80px 遞減至 0px；scale 從 1.05 遞減至 1.00
+                const yOffset = -80 * (1 - progress);
+                const scale = 1.05 - (0.05 * progress);
+                
+                // 讓保護貼與光暈層的運動軌跡 100% 完全同步
+                const transformStr = `translate3d(0, ${yOffset}px, 0) scale3d(${scale}, ${scale}, 1)`;
+                protectorLayer.style.transform = transformStr;
+                fitFlash.style.transform = transformStr;
+                
+                fitPercentage.innerText = Math.round(progress * 100);
+
+                // 完美咬合發光 (進度大於 95%)
+                if (progress >= 0.95) {
+                    fitFlash.style.opacity = '1';
+                } else {
+                    fitFlash.style.opacity = '0';
+                }
+            }
+
+            modalContent.addEventListener('scroll', updateProtectorFit, { passive: true });
+        })();
+
+        // ─── 3D 電池滾動更換互動邏輯 ───
+        (function() {
+            const btnOpen = document.getElementById('btn-learn-battery');
+            const modal = document.getElementById('battery-modal');
+            const btnCloseHeader = document.getElementById('close-battery-modal');
+            const btnCloseBottom = document.getElementById('close-battery-modal-bottom');
+            const modalContent = document.getElementById('battery-modal-content');
+            
+            const handBatteryLayer = document.getElementById('hand-battery-layer');
+            const batteryPercentage = document.getElementById('battery-percentage');
+            const batteryPhoneImg = document.getElementById('battery-phone-img');
+            const batteryFitFlash = document.getElementById('battery-fit-flash');
+
+            // 獲取動態電量顯示元素
+            const displayBatteryText = document.getElementById('display-battery-text');
+            const displayBoltIcon = document.getElementById('display-bolt-icon');
+            const displayBatteryBox = document.getElementById('display-battery-box');
+            const displayBatteryBar = document.getElementById('display-battery-bar');
+            const displayBatteryTip = document.getElementById('display-battery-tip');
+            
+            const statusBatteryText = document.getElementById('status-battery-text');
+            const statusBatteryBox = document.getElementById('status-battery-box');
+            const statusBatteryBar = document.getElementById('status-battery-bar');
+            
+            // 獲取右上角遮罩層
+            const batteryStatusMask = document.getElementById('battery-status-mask');
+            
+            if (!btnOpen || !modal || !modalContent || !handBatteryLayer || !batteryPhoneImg || !batteryFitFlash || 
+                !displayBatteryText || !displayBoltIcon || !displayBatteryBox || !displayBatteryBar || !displayBatteryTip ||
+                !statusBatteryText || !statusBatteryBox || !statusBatteryBar || !batteryStatusMask) return;
+
+            // 狀態變量
+            let currentBattery = 15;
+            let drainInterval = null;
+            let isScrollingCharge = false;
+            let lowestBatteryReached = 15; // 紀錄掉電達到的最低百分比，用於滾動時平滑插值充能
+
+            // 更新電量 UI 顯示
+            function updateDisplay(percent) {
+                // 更新數字
+                displayBatteryText.innerText = percent + '%';
+                statusBatteryText.innerText = percent + '%';
+                
+                // 更新電池條寬度
+                displayBatteryBar.style.width = percent + '%';
+                statusBatteryBar.style.width = percent + '%';
+
+                if (percent >= 100) {
+                    // 滿電狀態 (綠色)
+                    const greenColor = '#10B981';
+                    
+                    displayBatteryText.style.color = greenColor;
+                    displayBatteryBox.style.borderColor = greenColor;
+                    displayBatteryBar.style.backgroundColor = greenColor;
+                    displayBatteryTip.style.backgroundColor = greenColor;
+                    
+                    statusBatteryText.style.color = greenColor;
+                    statusBatteryBox.style.borderColor = greenColor;
+                    statusBatteryBar.style.backgroundColor = greenColor;
+
+                    displayBoltIcon.style.opacity = '1';
+                    displayBatteryText.classList.remove('animate-pulse');
+                } else if (percent >= 20) {
+                    // 充電/上升狀態 (黃色)
+                    const yellowColor = '#F9BD2A';
+                    
+                    displayBatteryText.style.color = yellowColor;
+                    displayBatteryBox.style.borderColor = yellowColor;
+                    displayBatteryBar.style.backgroundColor = yellowColor;
+                    displayBatteryTip.style.backgroundColor = yellowColor;
+                    
+                    statusBatteryText.style.color = yellowColor;
+                    statusBatteryBox.style.borderColor = yellowColor;
+                    statusBatteryBar.style.backgroundColor = yellowColor;
+
+                    displayBoltIcon.style.opacity = '0';
+                    displayBatteryText.classList.remove('animate-pulse');
+                } else {
+                    // 低電量狀態 (紅色)
+                    const redColor = '#EF4444';
+                    
+                    displayBatteryText.style.color = redColor;
+                    displayBatteryBox.style.borderColor = redColor;
+                    displayBatteryBar.style.backgroundColor = redColor;
+                    displayBatteryTip.style.backgroundColor = redColor;
+                    
+                    statusBatteryText.style.color = redColor;
+                    statusBatteryBox.style.borderColor = redColor;
+                    statusBatteryBar.style.backgroundColor = redColor;
+
+                    displayBoltIcon.style.opacity = '0';
+
+                    // 2% 以下時閃爍紅色警報
+                    if (percent <= 2) {
+                        displayBatteryText.classList.add('animate-pulse');
+                    } else {
+                        displayBatteryText.classList.remove('animate-pulse');
+                    }
+                }
+            }
+
+            // 啟動自動掉電
+            function startDraining() {
+                if (drainInterval) return;
+                drainInterval = setInterval(() => {
+                    if (!isScrollingCharge && currentBattery > 1) {
+                        currentBattery--;
+                        lowestBatteryReached = currentBattery; // 更新最低電量
+                        updateDisplay(currentBattery);
+                    }
+                }, 800); // 每 800ms 掉 1%
+            }
+
+            // 停止自動掉電
+            function stopDraining() {
+                if (drainInterval) {
+                    clearInterval(drainInterval);
+                    drainInterval = null;
+                }
+            }
+
+            // 開啟彈窗
+            btnOpen.addEventListener('click', () => {
+                modal.classList.add('show');
+                modalContent.scrollTop = 0; // 重設滾動條
+                document.body.style.overflow = 'hidden'; // 鎖定網頁背景滾動
+                
+                // 初始化電量狀態與自動掉電
+                currentBattery = 15;
+                lowestBatteryReached = 15;
+                isScrollingCharge = false;
+                updateDisplay(currentBattery);
+                startDraining();
+                
+                updateBatteryFit(); // 初始化對位一次
+            });
+
+            // 關閉彈窗
+            const closeModal = () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = ''; // 解鎖網頁背景滾動
+                stopDraining(); // 關閉時停止定時器
+            };
+            
+            btnCloseHeader.addEventListener('click', closeModal);
+            btnCloseBottom.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            // 滾動連動邏輯
+            function updateBatteryFit() {
+                const scrollTop = modalContent.scrollTop;
+                const scrollHeight = modalContent.scrollHeight;
+                const clientHeight = modalContent.clientHeight;
+                const maxScroll = scrollHeight - clientHeight;
+                
+                // 計算滾動進度 0.0 -> 1.0
+                const progress = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
+                
+                // 只要有滾動進度，就暫停自動掉電，並進入充電狀態
+                if (progress > 0.01) {
+                    isScrollingCharge = true;
+                    stopDraining();
+                } else if (progress <= 0.01 && isScrollingCharge) {
+                    // 如果滾回頂端，重設狀態並繼續掉電
+                    isScrollingCharge = false;
+                    currentBattery = lowestBatteryReached;
+                    updateDisplay(currentBattery);
+                    startDraining();
+                }
+
+                // 連動計算：小手從左下方「從左往右」斜向滑入安裝
+                let xOffset = 0;
+                let yOffset = 0;
+                let scale = 1.0;
+                let opacity = 1.0;
+
+                if (progress < 0.92) {
+                    const subProgress = progress / 0.92;
+                    xOffset = -100 * (1 - subProgress); // 從左下預備位置 (-100px) 平滑移入至對齊點 (0px)
+                    yOffset = 90 * (1 - subProgress);   // 從左下預備位置 (90px) 平滑移入至對齊點 (0px)
+                    scale = 0.85 + (0.15 * subProgress);
+                    opacity = 0.7 + (0.3 * subProgress); // 從 0.7 漸變至完全不透明 1.0
+                    
+                    // 根據 progress 線性插值計算電量回升 (最低電量 -> 99%)
+                    if (isScrollingCharge) {
+                        const targetBattery = Math.round(lowestBatteryReached + (99 - lowestBatteryReached) * subProgress);
+                        currentBattery = targetBattery;
+                        updateDisplay(currentBattery);
+                    }
+                } else {
+                    const subProgress = (progress - 0.92) / 0.08;
+                    xOffset = 0;
+                    yOffset = 25 * subProgress; // 塞入的向下按壓感
+                    scale = 1.0 - (0.02 * subProgress);
+                    opacity = 1.0 - subProgress; // 安裝完成後自動淡出抽離
+                    
+                    // 到底變為 100% 綠電
+                    currentBattery = 100;
+                    updateDisplay(currentBattery);
+                }
+
+                handBatteryLayer.style.transform = `translate3d(${xOffset}px, ${yOffset}px, 0) scale3d(${scale}, ${scale}, 1)`;
+                handBatteryLayer.style.opacity = opacity;
+
+                batteryPercentage.innerText = Math.round(progress * 100);
+
+                // 當進度達 92% 以上時，觸發電池安裝成功（整機綠光脈衝且啟動發光擴散波紋）
+                if (progress >= 0.92) {
+                    batteryFitFlash.style.opacity = '1';
+                    batteryFitFlash.classList.add('animate-ripple');
+                    batteryPhoneImg.classList.add('glow-phone-green');
+                } else {
+                    batteryFitFlash.style.opacity = '0';
+                    batteryFitFlash.classList.remove('animate-ripple');
+                    batteryPhoneImg.classList.remove('glow-phone-green');
+                }
+            }
+
+            modalContent.addEventListener('scroll', updateBatteryFit, { passive: true });
+        })();
     </script>
+<script src="./parallax.js"></script>
 <script src="./chatbot.js"></script>
 </body></html>
