@@ -429,11 +429,11 @@
 <section class="relative min-h-[92vh] flex items-center overflow-hidden">
   <!-- BG Image -->
   <div class="absolute inset-0 z-0">
-    <img alt="修學院職人維修 Apple 手機" class="w-full h-full object-cover object-center hero-zoom opacity-85 parallax-bg"
+    <img alt="修學院職人維修 Apple 手機" class="w-full h-full object-cover object-center hero-zoom opacity-95 parallax-bg"
       data-parallax-speed="0.12" data-parallax-direction="vertical" src="./vedio/gif.gif">
     <!-- Gradient overlays -->
-    <div class="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-[#0d0d0d]/75 to-transparent"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-50"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0d0d0d]/65 via-[#0d0d0d]/35 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d0d]/40 via-transparent to-transparent opacity-30"></div>
   </div>
 
   <!-- Content -->
@@ -844,8 +844,8 @@
     for (let c = 0; c < cols; c++) {
       const block = document.createElement('div');
       
-      // 計算方塊變黑的臨界權重：Y 軸基礎 (由上至下漸進) + 隨機亂數噪聲
-      const baseWeight = (r / rows) * 0.7; // 0.0 -> 0.63
+      // 計算方塊變黑的臨界權重：Y 軸基礎 (由下至上漸進) + 隨機亂數噪聲
+      const baseWeight = ((rows - 1 - r) / rows) * 0.7; // 0.0 -> 0.63
       const randomNoise = Math.random() * 0.3; // 額外加入隨機擴散感
       const threshold = baseWeight + randomNoise;
 
