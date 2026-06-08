@@ -930,37 +930,76 @@
             });
           }
 
-          // 2. 全域移除所有指向 spline.design 的 Logo 連結與其外層容器
-          const splineLinks = document.querySelectorAll('a[href*="spline.design"]');
-          splineLinks.forEach(link => {
-            let p = link;
-            // 向上追溯並清除最多 3 層父節點（確保帶有背景定位的 Logo 容器被消滅）
-            for (let i = 0; i < 3; i++) {
-              if (p && p.tagName && p.tagName.toLowerCase() !== 'body') {
-                p.style.display = 'none';
-                p.style.opacity = '0';
-                p.style.pointerEvents = 'none';
-                const nextParent = p.parentElement;
-                p.remove();
-                p = nextParent;
-              } else {
-                break;
-              }
-            }
-          });
+          // 2. 遞迴穿透所有 DOM 以及 Shadow DOM，消滅任何包含 'spline' 或 'built' 關鍵字的 Logo 連結與容器
+          const scanAndDestroy = (rootNode) => {
+            if (!rootNode) return;
 
-          // 3. 搜尋並移除特定 spline logo 標籤
-          const logos = document.querySelectorAll('[class*="spline-logo"], [id*="spline-logo"]');
-          logos.forEach(logo => {
-            logo.style.display = 'none';
-            logo.remove();
-          });
+            // 處理 a 連結
+            const links = rootNode.querySelectorAll('a');
+            links.forEach(link => {
+              const href = (link.getAttribute('href') || '').toLowerCase();
+              const text = (link.textContent || link.innerText || '').toLowerCase();
+              if (href.includes('spline') || text.includes('spline') || text.includes('built')) {
+                let p = link;
+                for (let i = 0; i < 4; i++) {
+                  if (p && p.parentNode && p.tagName && p.tagName.toLowerCase() !== 'body') {
+                    p.style.display = 'none';
+                    p.style.opacity = '0';
+                    p.style.pointerEvents = 'none';
+                    const parent = p.parentNode;
+                    try { p.remove(); } catch(e) {}
+                    p = parent;
+                  } else {
+                    break;
+                  }
+                }
+              }
+            });
+
+            // 處理 div 區塊
+            const divs = rootNode.querySelectorAll('div');
+            divs.forEach(div => {
+              const text = (div.textContent || div.innerText || '').trim();
+              if (text === 'Built with Spline' || text.includes('Built with Spline')) {
+                let p = div;
+                for (let i = 0; i < 4; i++) {
+                  if (p && p.parentNode && p.tagName && p.tagName.toLowerCase() !== 'body') {
+                    p.style.display = 'none';
+                    p.style.opacity = '0';
+                    p.style.pointerEvents = 'none';
+                    const parent = p.parentNode;
+                    try { p.remove(); } catch(e) {}
+                    p = parent;
+                  } else {
+                    break;
+                  }
+                }
+              }
+            });
+
+            // 遞迴穿透所有 Shadow DOM
+            const allElements = rootNode.querySelectorAll('*');
+            allElements.forEach(el => {
+              if (el.shadowRoot) {
+                scanAndDestroy(el.shadowRoot);
+              }
+            });
+          };
+
+          // 執行全域掃描與消滅
+          scanAndDestroy(document);
+          const fab = document.getElementById('chatbot-fab');
+          if (fab) scanAndDestroy(fab);
         };
         
         cleanSplineLogo();
-        // 建立一個定時器，前 15 秒每 100 毫秒高頻清理一次，確保不管 Spline 何時插入 Logo 都會瞬間被消滅
+        // 建立一個定時器，高頻清理，並延長為永久每秒檢查一次，防止任何時刻的浮水印殘留
         const logoInterval = setInterval(cleanSplineLogo, 100);
-        setTimeout(() => clearInterval(logoInterval), 15000);
+        setTimeout(() => {
+          clearInterval(logoInterval);
+          // 10秒後降低頻率為每秒檢查一次，以保持永久無 Logo 狀態同時確保極致效能
+          setInterval(cleanSplineLogo, 1000);
+        }, 10000);
 
         // 遞迴遍歷 3D 場景進行機身自動改色，並保留面罩與發光Logo的原色
         const objs = spline.getAllObjects();
