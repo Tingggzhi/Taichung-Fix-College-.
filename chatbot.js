@@ -1029,11 +1029,26 @@
                                    (m.emissive && (m.emissive.r > 0.1 || m.emissive.g > 0.1 || m.emissive.b > 0.1));
 
             if (!isFaceOrScreen) {
-              // 將機身改為修學院品牌金黃色，並優化金屬反光與粗糙度
               if (m.color) {
-                m.color.set('#F9BD2A');
-                m.roughness = 0.35;
-                m.metalness = 0.8;
+                // 判斷是否為主體結構（改為曜石黑以形成黑黃色層次感）
+                const isBodyPart = name.includes('head') || 
+                                   name.includes('body') || 
+                                   name.includes('arm') || 
+                                   name.includes('forearm') || 
+                                   name.includes('shoulder') || 
+                                   name.includes('cylinder');
+                                   
+                if (isBodyPart) {
+                  // 精緻的金屬曜石黑
+                  m.color.set('#141416');
+                  m.roughness = 0.2;
+                  m.metalness = 0.9;
+                } else {
+                  // 修學院品牌金黃色裝飾
+                  m.color.set('#F9BD2A');
+                  m.roughness = 0.35;
+                  m.metalness = 0.8;
+                }
               }
             }
           };
