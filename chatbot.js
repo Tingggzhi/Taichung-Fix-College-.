@@ -1030,24 +1030,39 @@
 
             if (!isFaceOrScreen) {
               if (m.color) {
-                // 判斷是否為主體結構（改為曜石黑以形成黑黃色層次感）
-                const isBodyPart = name.includes('head') || 
-                                   name.includes('body') || 
-                                   name.includes('arm') || 
-                                   name.includes('forearm') || 
-                                   name.includes('shoulder') || 
-                                   name.includes('cylinder');
-                                   
-                if (isBodyPart) {
-                  // 精緻的金屬曜石黑
-                  m.color.set('#141416');
-                  m.roughness = 0.2;
-                  m.metalness = 0.9;
-                } else {
+                // 1. 優先判定裝飾性部件（改為黃色，以避開關鍵字重疊）
+                const isYellowPart = name.includes('ear') || 
+                                     name.includes('circle') || 
+                                     name.includes('element') || 
+                                     name.includes('mouth') || 
+                                     name.includes('hand');
+                                     
+                if (isYellowPart) {
                   // 修學院品牌金黃色裝飾
                   m.color.set('#F9BD2A');
                   m.roughness = 0.35;
-                  m.metalness = 0.8;
+                  m.metalness = 0.75;
+                } else {
+                  // 2. 判定主體骨架結構（改為曜石黑）
+                  const isBodyPart = name.includes('head') || 
+                                     name.includes('body') || 
+                                     name.includes('arm') || 
+                                     name.includes('forearm') || 
+                                     name.includes('shoulder') || 
+                                     name.includes('neck') || 
+                                     name.includes('cylinder');
+                                     
+                  if (isBodyPart) {
+                    // 精緻的金屬曜石黑
+                    m.color.set('#141416');
+                    m.roughness = 0.25;
+                    m.metalness = 0.95;
+                  } else {
+                    // 其餘預設金黃色
+                    m.color.set('#F9BD2A');
+                    m.roughness = 0.35;
+                    m.metalness = 0.75;
+                  }
                 }
               }
             }
