@@ -941,39 +941,34 @@
           const scanAndDestroy = (rootNode) => {
             if (!rootNode) return;
 
-            // 處理 a 連結
-            const links = rootNode.querySelectorAll('a');
-            links.forEach(link => {
-              const href = (link.getAttribute('href') || '').toLowerCase();
-              const text = (link.textContent || link.innerText || '').toLowerCase();
-              if (href.includes('spline') || text.includes('spline') || text.includes('built')) {
-                let p = link;
-                for (let i = 0; i < 4; i++) {
-                  if (p && p.parentNode && p.tagName && p.tagName.toLowerCase() !== 'body') {
-                    p.style.display = 'none';
-                    p.style.opacity = '0';
-                    p.style.pointerEvents = 'none';
-                    const parent = p.parentNode;
-                    try { p.remove(); } catch(e) {}
-                    p = parent;
-                  } else {
-                    break;
-                  }
-                }
+            // 尋找所有節點，但排除 chatbot-window 和 chatbot-message 避免誤傷聊天對話內容
+            const elements = rootNode.querySelectorAll('*');
+            elements.forEach(el => {
+              if (el.closest && (el.closest('#chatbot-window') || el.closest('.chatbot-message'))) {
+                return;
               }
-            });
 
-            // 處理 div 區塊
-            const divs = rootNode.querySelectorAll('div');
-            divs.forEach(div => {
-              const text = (div.textContent || div.innerText || '').trim();
-              if (text === 'Built with Spline' || text.includes('Built with Spline')) {
-                let p = div;
+              const href = (el.getAttribute && el.getAttribute('href') || '').toLowerCase();
+              const text = (el.textContent || el.innerText || '').toLowerCase();
+              const tagName = (el.tagName || '').toLowerCase();
+
+              // 檢查是否為浮水印元素
+              let isWatermark = false;
+              if (tagName === 'a' && (href.includes('spline') || text.includes('spline') || text.includes('built'))) {
+                isWatermark = true;
+              } else if (text === 'built with spline' || text.includes('built with spline')) {
+                isWatermark = true;
+              }
+
+              if (isWatermark) {
+                let p = el;
+                // 向上追溯並清除最多 4 層父節點（確保帶有背景定位的 Logo 容器被消滅）
                 for (let i = 0; i < 4; i++) {
-                  if (p && p.parentNode && p.tagName && p.tagName.toLowerCase() !== 'body') {
+                  if (p && p.parentNode && p.tagName && p.tagName.toLowerCase() !== 'body' && p.tagName.toLowerCase() !== 'html') {
                     p.style.display = 'none';
                     p.style.opacity = '0';
                     p.style.pointerEvents = 'none';
+                    p.style.visibility = 'hidden';
                     const parent = p.parentNode;
                     try { p.remove(); } catch(e) {}
                     p = parent;
