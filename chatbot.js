@@ -65,11 +65,20 @@
     #chatbot-fab [class*="logo"],
     .chatbot-avatar-container a,
     .chatbot-avatar-container [class*="logo"],
-    .chatbot-avatar-container > *:not(canvas) {
+    .chatbot-avatar-container > *:not(canvas),
+    /* 全域強力隱藏所有指向 spline.design 的 Logo 元素與其容器 */
+    a[href*="spline.design"],
+    div:has(> a[href*="spline.design"]),
+    div:has(a[href*="spline.design"]),
+    [class*="spline-logo"],
+    [id*="spline-logo"] {
       display: none !important;
       opacity: 0 !important;
       pointer-events: none !important;
       visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
     }
 
     /* ─── 浮動提示氣泡 ─── */
@@ -910,19 +919,48 @@
       .then(() => {
         // ─── 徹底清除 Spline Logo 浮水印與非 canvas 雜質 ───
         const cleanSplineLogo = () => {
+          // 1. 容器內部非 canvas 元素一律清除
           const container = document.querySelector('.chatbot-avatar-container');
-          if (!container) return;
-          Array.from(container.children).forEach(child => {
-            if (child.tagName && child.tagName.toLowerCase() !== 'canvas') {
-              child.style.display = 'none';
-              child.remove();
+          if (container) {
+            Array.from(container.children).forEach(child => {
+              if (child.tagName && child.tagName.toLowerCase() !== 'canvas') {
+                child.style.display = 'none';
+                child.remove();
+              }
+            });
+          }
+
+          // 2. 全域移除所有指向 spline.design 的 Logo 連結與其外層容器
+          const splineLinks = document.querySelectorAll('a[href*="spline.design"]');
+          splineLinks.forEach(link => {
+            let p = link;
+            // 向上追溯並清除最多 3 層父節點（確保帶有背景定位的 Logo 容器被消滅）
+            for (let i = 0; i < 3; i++) {
+              if (p && p.tagName && p.tagName.toLowerCase() !== 'body') {
+                p.style.display = 'none';
+                p.style.opacity = '0';
+                p.style.pointerEvents = 'none';
+                const nextParent = p.parentElement;
+                p.remove();
+                p = nextParent;
+              } else {
+                break;
+              }
             }
           });
+
+          // 3. 搜尋並移除特定 spline logo 標籤
+          const logos = document.querySelectorAll('[class*="spline-logo"], [id*="spline-logo"]');
+          logos.forEach(logo => {
+            logo.style.display = 'none';
+            logo.remove();
+          });
         };
+        
         cleanSplineLogo();
-        for (let delay of [100, 300, 500, 1000, 1500, 2000, 3000, 5000]) {
-          setTimeout(cleanSplineLogo, delay);
-        }
+        // 建立一個定時器，前 15 秒每 100 毫秒高頻清理一次，確保不管 Spline 何時插入 Logo 都會瞬間被消滅
+        const logoInterval = setInterval(cleanSplineLogo, 100);
+        setTimeout(() => clearInterval(logoInterval), 15000);
 
         // 遞迴遍歷 3D 場景進行機身自動改色，並保留面罩與發光Logo的原色
         const objs = spline.getAllObjects();
