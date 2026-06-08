@@ -16,14 +16,10 @@
       position: fixed;
       right: 24px;
       bottom: 24px;
-      width: 76px;
-      height: 76px;
-      border-radius: 50%;
-      background: #F9BD2A; /* 亮黃色背景 */
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 10px 30px rgba(249, 189, 42, 0.45),
-                  inset 0 -4px 10px rgba(0, 0, 0, 0.2),
-                  inset 0 4px 10px rgba(255, 255, 255, 0.3);
+      width: 110px;
+      height: 110px;
+      background: transparent;
+      border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -33,12 +29,12 @@
       animation: chatbot-float 4s ease-in-out infinite;
       outline: none;
       overflow: visible; /* 讓 3D 模型可以立體出框 */
+      /* 套用 drop-shadow 濾鏡，對 3D 機器人去背身形進行亮黃色外發光 */
+      filter: drop-shadow(0 0 8px rgba(249, 189, 42, 0.8)) drop-shadow(0 0 20px rgba(249, 189, 42, 0.5));
     }
     #chatbot-fab:hover {
-      transform: scale(1.06) translateY(-2px);
-      box-shadow: 0 16px 40px rgba(249, 189, 42, 0.6),
-                  0 0 0 6px rgba(249, 189, 42, 0.15);
-      background: #fcd05b;
+      transform: scale(1.08) translateY(-4px);
+      filter: drop-shadow(0 0 12px rgba(249, 189, 42, 0.95)) drop-shadow(0 0 30px rgba(249, 189, 42, 0.75));
     }
     #chatbot-fab:active {
       transform: scale(0.95);
@@ -46,14 +42,14 @@
     
     /* 機器人 3D 畫布容器 */
     .chatbot-avatar-container {
-      width: 86px; /* 稍微大於按鈕以營造出框透視 */
-      height: 86px;
+      width: 110px;
+      height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       pointer-events: none;
-      margin-bottom: 6px; /* 微調垂直視覺中心 */
+      margin-bottom: 0;
       overflow: visible;
     }
 
@@ -62,6 +58,17 @@
       height: 100%;
       background: transparent;
       will-change: transform;
+    }
+
+    /* 隱藏 Spline 自動生成的 Logo 連結與浮水印 */
+    #chatbot-fab a,
+    #chatbot-fab [class*="logo"],
+    .chatbot-avatar-container a,
+    .chatbot-avatar-container [class*="logo"] {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
     }
 
     /* ─── 浮動提示氣泡 ─── */
