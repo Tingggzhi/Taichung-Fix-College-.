@@ -73,10 +73,10 @@
     .chatbot-avatar-container a,
     .chatbot-avatar-container [class*="logo"],
     .chatbot-avatar-container > *:not(canvas),
-    /* 全域強力隱藏所有指向 spline.design 的 Logo 元素與其容器 */
-    a[href*="spline.design"],
-    div:has(> a[href*="spline.design"]),
-    div:has(a[href*="spline.design"]),
+    /* 全域強力隱藏所有指向 spline 的 Logo 元素與其容器 */
+    a[href*="spline"],
+    div:has(> a[href*="spline"]),
+    div:has(a[href*="spline"]),
     [class*="spline-logo"],
     [id*="spline-logo"] {
       display: none !important;
@@ -994,7 +994,8 @@
           };
 
           // 執行全域掃描與消滅
-          scanAndDestroy(document);
+          if (document.body) scanAndDestroy(document.body);
+          if (document.documentElement) scanAndDestroy(document.documentElement);
           const fab = document.getElementById('chatbot-fab');
           if (fab) scanAndDestroy(fab);
         };
