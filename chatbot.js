@@ -918,10 +918,32 @@
   });
 
   // ─── 實時 3D 機器人 Three.js 載入與初始化 ───
-  Promise.all([
-    import('https://unpkg.com/three@0.150.0/build/three.module.js'),
-    import('https://unpkg.com/three@0.150.0/examples/jsm/loaders/GLTFLoader.js')
-  ]).then(([THREE, { GLTFLoader }]) => {
+  const loadThreeJS = () => {
+    return new Promise((resolve, reject) => {
+      if (window.THREE && window.THREE.GLTFLoader) {
+        resolve([window.THREE, window.THREE.GLTFLoader]);
+        return;
+      }
+      
+      const s1 = document.createElement('script');
+      s1.src = 'https://unpkg.com/three@0.128.0/build/three.min.js';
+      s1.crossOrigin = 'anonymous';
+      s1.onload = () => {
+        const s2 = document.createElement('script');
+        s2.src = 'https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+        s2.crossOrigin = 'anonymous';
+        s2.onload = () => {
+          resolve([window.THREE, window.THREE.GLTFLoader]);
+        };
+        s2.onerror = (err) => reject(new Error('GLTFLoader load fail'));
+        document.head.appendChild(s2);
+      };
+      s1.onerror = (err) => reject(new Error('Three.js load fail'));
+      document.head.appendChild(s1);
+    });
+  };
+
+  loadThreeJS().then(([THREE, GLTFLoader]) => {
     const canvas = document.getElementById('chatbot-3d-canvas');
     if (!canvas) return;
 
