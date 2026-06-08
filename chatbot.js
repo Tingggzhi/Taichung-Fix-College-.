@@ -964,21 +964,18 @@
     renderer.setSize(rect.width, rect.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 2. 燈光配置 (提供好看的金屬感與高光)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // 2. 燈光配置（低調暗黑風格，僅用白光保持黑色機身可辨識）
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.8);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.0);
     dirLight1.position.set(5, 10, 7);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xF9BD2A, 1.0); // 暖黃色側光增強發光感
+    // 背光（Rim Light）確保黑色機身邊緣在暗色背景中仍有立體感
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
     dirLight2.position.set(-5, 5, -5);
     scene.add(dirLight2);
-
-    const pointLight = new THREE.PointLight(0xffffff, 1.5, 50);
-    pointLight.position.set(0, 3, 4);
-    scene.add(pointLight);
 
     // 3. 載入模型 (優先使用內嵌 Base64，若無則 Fetch 本地 GLB)
     const loader = new GLTFLoader();
@@ -1019,33 +1016,39 @@
           const applyColor = (m) => {
             if (!m || !m.color) return;
 
-            // 讀取原始材質亮度作為分色依據
+            // 讀取原始材質亮度（加權公式）
             const origColor = m.color.clone();
             const brightness = origColor.r * 0.299 + origColor.g * 0.587 + origColor.b * 0.114;
             
-            // 檢查是否有自發光（emissive）屬性
-            const hasEmissive = m.emissive && (m.emissive.r > 0.05 || m.emissive.g > 0.05 || m.emissive.b > 0.05);
+            // 檢查是否有顯著自發光
+            const hasStrongEmissive = m.emissive && (
+              m.emissive.r + m.emissive.g + m.emissive.b > 0.5
+            );
             
-            // 檢查是否為透明材質（面罩玻璃等）
-            const isTransparent = m.transparent === true || m.opacity < 0.9;
-
-            if (isTransparent) {
-              // 保留透明面罩，不改色
+            // 透明材質（面罩玻璃）保留不動
+            if (m.transparent === true || m.opacity < 0.9) {
               return;
-            } else if (hasEmissive || brightness > 0.6) {
-              // 原本亮色/發光的部分 → 改為金黃色發光
-              m.color.set('#FFCC00');
-              m.roughness = 0.2;
-              m.metalness = 0.1;
+            }
+            
+            // 只有極亮的白色部件 或 強自發光 才改為低調暖金
+            if (hasStrongEmissive || brightness > 0.92) {
+              m.color.set('#C8961E');       // 低調暖金，與頁面主視覺一致
+              m.roughness = 0.3;
+              m.metalness = 0.4;
               if (m.emissive) {
-                m.emissive.set('#F9BD2A');
-                m.emissiveIntensity = 0.6;
+                m.emissive.set('#8B6914');   // 暗金色自發光
+                m.emissiveIntensity = 0.3;
               }
             } else {
-              // 原本暗色的部分 → 霧面啞光黑（與截圖一致）
+              // 其餘全部 → 霧面啞光黑
               m.color.set('#121212');
               m.roughness = 0.8;
               m.metalness = 0.2;
+              // 清除任何殘留自發光以避免泛黃
+              if (m.emissive) {
+                m.emissive.set('#000000');
+                m.emissiveIntensity = 0;
+              }
             }
           };
 
