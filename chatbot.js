@@ -1006,6 +1006,10 @@
       camera.position.y = 0;
       camera.lookAt(0, 0, 0);
 
+      // 設定機器人正面朝向相機 (因 Spline 坐標系差異，GLB 初始面向側邊，此處加上 -90 度偏轉對準正面)
+      const BASE_ROTATION_Y = -Math.PI / 2; 
+      model.rotation.y = BASE_ROTATION_Y;
+
       // 遞迴遍歷 3D 場景進行機身自動改色，並保留面罩與發光Logo的原色
       model.traverse((child) => {
         if (child.isMesh && child.material) {
@@ -1066,7 +1070,7 @@
           headObj.rotation.y = targetRotY;
           headObj.rotation.x = targetRotX;
         } else {
-          model.rotation.y = targetRotY;
+          model.rotation.y = BASE_ROTATION_Y + targetRotY;
           model.rotation.x = targetRotX;
         }
       });
