@@ -196,6 +196,71 @@
                 transition: none !important;
             }
         }
+
+        /* ─── 優惠彈窗 Modal 樣式 ─── */
+        .promo-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 1.5rem;
+        }
+
+        .promo-modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .promo-modal-card {
+            background-color: #1a1919;
+            border: 1px solid rgba(249, 189, 42, 0.2);
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 650px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                        0 0 40px rgba(249, 189, 42, 0.1);
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        opacity 0.4s ease;
+        }
+
+        .promo-modal-backdrop.active .promo-modal-card {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .promo-modal-header-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(249, 189, 42, 0.5), transparent);
+        }
+
+        .promo-list-item {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .promo-list-item::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #F9BD2A;
+            text-shadow: 0 0 8px rgba(249, 189, 42, 0.6);
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body-md antialiased">
@@ -245,41 +310,41 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 <!-- Promo Card 1 -->
-<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50 reveal">
+<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50 cursor-pointer interactive-target reveal" onclick="openPromoModal(1)">
 <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A professional close-up of a MacBook Pro being serviced on a clean, anti-static black technician mat. The internal components are visible with high-precision screwdrivers resting nearby. The lighting is dramatic and moody, with a strong focus on the gold-toned interior hardware and the sleek metallic shell, matching the dark and gold premium UI aesthetic of the Repair Academy brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdpY0wNyHRlutYX8oKFi5-483l-NdXLqtdehhAPGq2g317UOt4l9_XYR4lEZO18BrjokmkOrgDkf1nBgm-m9XYNm6-QFevQdq8zRZGZtXv0rXNhqZW5dmhOAKcp2rFunM97VLnZkNRADMx2_d6xRwIKmioWlwndAk5yZ3OdRZQv5R3NSWQFJ_PffBdj0q9fjEIHkVsyih7HBZa94cg9bHb8jNPk77L-w7nATBtidrPVg5VUElBBfPCAkCbxBGtaEc2SskqdSUlFnw">
 <div class="absolute inset-0 gradient-overlay"></div>
 <div class="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
 <div class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit">Summer Deal</div>
 <h3 class="text-xl font-bold text-on-surface leading-tight">MacBook 換電池優惠 <br><span class="text-primary">$500 off</span></h3>
 <p class="text-on-surface-variant text-sm line-clamp-2">使用原廠規格電池，並享有 180 定保固服務。</p>
-<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform" onclick="openPromoModal(1); event.stopPropagation();">
                             了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
 </button>
 </div>
 </div>
 <!-- Promo Card 2 -->
-<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50 reveal reveal-delay-1">
+<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50 cursor-pointer interactive-target reveal reveal-delay-1" onclick="openPromoModal(2)">
 <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A macro shot of an iPhone battery with visible BSMI certification marking. The battery is placed on a dark textured surface illuminated by a focused golden light beam that highlights the metallic details and safety labels. The environment is tech-focused and clinical, conveying reliability and high standards of quality in repair services, consistent with the Pure Dark and Gold edition design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANZ0AzXk1UOAOxoXiTHovfoS3oQoz_ZQeFPzQE8eDUiMmCNar2qB9fix90yY8ZcoCoPO84WxrChHDf_XxDzO6HF8t3WrHxrun-ADbwP_pe-5Zd0_wcwIwEB6YiI6FMawevoN0SL_OJoNBRdbf7W0VYH2GT4mSHaAYyqOKC0gj4YnrCAmaWkCcKA9uCmjdD3nf7bddlIiB17BjBECDouovGiytU9M9mESCm0K70PvlRXzqhho-br6caDFAKmFZkDXsFHcJizVx1kOE">
 <div class="absolute inset-0 gradient-overlay"></div>
 <div class="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
 <div class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit">Certified Parts</div>
 <h3 class="text-xl font-bold text-on-surface leading-tight">iPhone BSMI 認證電池<br><span class="text-primary">$300 off</span></h3>
 <p class="text-on-surface-variant text-sm line-clamp-2">安全第一！全面採用 BSMI 認證零件，延長手機壽命。</p>
-<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                            了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform" onclick="openPromoModal(2); event.stopPropagation();">
+                             了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
 </button>
 </div>
 </div>
 <!-- Promo Card 3 -->
-<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50 reveal reveal-delay-2">
+<div class="group relative aspect-[4/5] rounded-xl overflow-hidden border border-outline-variant bg-surface-container-low transition-all hover:border-primary/50 cursor-pointer interactive-target reveal reveal-delay-2" onclick="openPromoModal(3)">
 <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A technician using a high-pressure air duster and specialized cleaning tools on an open MacBook. Dust particles are caught in a cinematic spotlight against a dark background, emphasizing the meticulous cleaning process. The overall mood is sophisticated and professional, using a deep monochromatic palette with warm gold highlights to evoke trust and premium service quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCboqGD15oLijMcKwsEibdiz3kbaCmVcVfHNR2C1cMJdnB-wciCY4aLGL1bfjR3FlhgDTKlebT1cJOqJQWLKhPPGHDqoW12-IJguCqmDtD7mR58OMkIpTudZkw3gQF-X-IzuvB6RjjhIcGN5iNvhEfpPm28g5eU5RFl1u9ZsREAHvUJmSHBO_v0_sk2OfMvy42T8MhEKlicHaMgVcfY3snEj3IjUUTWdIyEtXZurv5MbedlwsvHrxJrME_jzSPvAsQpgZ6t8hHeoUM">
 <div class="absolute inset-0 gradient-overlay"></div>
 <div class="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
 <div class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit">Free Service</div>
 <h3 class="text-xl font-bold text-on-surface leading-tight">MacBook <br><span class="text-primary">免費健檢與清潔</span></h3>
 <p class="text-on-surface-variant text-sm line-clamp-2">預約任何維修服務，即贈送價值 $1,200 的全機深層清潔與散熱膏更換。</p>
-<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                            了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<button class="mt-2 text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform" onclick="openPromoModal(3); event.stopPropagation();">
+                             了解更多 <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
 </button>
 </div>
 </div>
@@ -473,6 +538,63 @@
   <button class="bg-primary text-on-primary font-bold px-10 py-4 rounded-full text-lg mt-4 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="window.location.href='./booking.html'">立即預約</button>
 </div>
 
+<!-- 優惠活動詳情彈窗 -->
+<div id="promo-modal" class="promo-modal-backdrop" onclick="closePromoModal(event)">
+    <div class="promo-modal-card relative flex flex-col" onclick="event.stopPropagation()">
+        <!-- 頂部發光邊緣 -->
+        <div class="promo-modal-header-glow"></div>
+        
+        <!-- 關閉按鈕 -->
+        <button onclick="closePromoModal(null)" class="absolute top-4 right-4 z-10 size-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#F9BD2A] hover:border-[#F9BD2A]/40 transition-colors" aria-label="關閉彈窗">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+
+        <!-- 頂部特色圖 -->
+        <div class="relative h-48 md:h-56 overflow-hidden">
+            <img id="promo-modal-img" class="w-full h-full object-cover filter brightness-[0.7] saturate-[1.1]" src="" alt="優惠詳情背景">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1a1919] via-transparent to-black/30"></div>
+            <div class="absolute bottom-6 left-6 pr-6 flex flex-col gap-2">
+                <span id="promo-modal-tag" class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit"></span>
+                <h2 id="promo-modal-title" class="text-2xl md:text-3xl font-display-lg text-on-surface leading-tight"></h2>
+            </div>
+        </div>
+
+        <!-- 優惠詳細內容 -->
+        <div class="p-6 md:p-8 flex flex-col gap-6">
+            <!-- 副標題 -->
+            <p id="promo-modal-subtitle" class="text-[#F9BD2A] font-semibold text-base md:text-lg border-l-2 border-[#F9BD2A] pl-3"></p>
+            
+            <!-- 詳細條款與項目 -->
+            <div class="flex flex-col gap-4">
+                <h4 class="text-white/40 text-xs font-semibold tracking-wider uppercase">專屬優惠詳情</h4>
+                <ul id="promo-modal-list" class="flex flex-col gap-3 text-on-surface-variant text-sm md:text-base leading-relaxed">
+                    <!-- 動態生成 -->
+                </ul>
+            </div>
+
+            <!-- 時間 & 條件備註 -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-t border-white/5 pt-4 text-xs text-white/40 gap-2">
+                <span id="promo-modal-duration" class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">calendar_today</span> 活動期限：
+                </span>
+                <span id="promo-modal-limit" class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">info</span> 適用對象：
+                </span>
+            </div>
+
+            <!-- 預約與引導按鈕 -->
+            <div class="flex items-center gap-4 mt-2">
+                <button onclick="closePromoModal(null)" class="flex-1 py-3 border border-white/10 hover:border-white/30 text-white font-medium rounded-full text-sm transition-all text-center">
+                    再看看
+                </button>
+                <button id="promo-modal-action-btn" class="flex-1 py-3 bg-primary text-on-primary font-bold rounded-full text-sm transition-all hover:bg-primary/90 shadow-[0_8px_20px_rgba(249,189,42,0.25)] text-center">
+                    立即預約此優惠
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('top-nav');
@@ -566,6 +688,97 @@
             });
 
             document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        }
+
+        // ─── 優惠活動彈窗控制與內容數據 ───
+        const promoData = {
+            1: {
+                tag: "Summer Deal",
+                title: "MacBook 換電池優惠",
+                discount: "$500 off",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAdpY0wNyHRlutYX8oKFi5-483l-NdXLqtdehhAPGq2g317UOt4l9_XYR4lEZO18BrjokmkOrgDkf1nBgm-m9XYNm6-QFevQdq8zRZGZtXv0rXNhqZW5dmhOAKcp2rFunM97VLnZkNRADMx2_d6xRwIKmioWlwndAk5yZ3OdRZQv5R3NSWQFJ_PffBdj0q9fjEIHkVsyih7HBZa94cg9bHb8jNPk77L-w7nATBtidrPVg5VUElBBfPCAkCbxBGtaEc2SskqdSUlFnw",
+                subtitle: "即日起至 8 月底，全面升級健康電力，再享 $500 現折與 180 天定保固！",
+                list: [
+                    "採用符合國家安全認證的高品質原廠規格電芯，續航力與發熱管理完全符合原廠出廠規範。",
+                    "結帳時出示此畫面，MacBook 電池更換服務現折新台幣 $500 元。",
+                    "尊榮售後保障：享有 180 天長效安心保固，保固期內非人為損壞免費更換。",
+                    "預約更換即加碼贈送價值 $800 元的內部基本除塵與航太級散熱膏重塗服務。"
+                ],
+                duration: "即日起 至 2026 年 8 月 31 日",
+                limit: "MacBook Pro/Air 全系列機種",
+                bookingUrl: "./booking.html?service=macbook_battery"
+            },
+            2: {
+                tag: "Certified Parts",
+                title: "iPhone BSMI 認證電池更換",
+                discount: "$300 off",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuANZ0AzXk1UOAOxoXiTHovfoS3oQoz_ZQeFPzQE8eDUiMmCNar2qB9fix90yY8ZcoCoPO84WxrChHDf_XxDzO6HF8t3WrHxrun-ADbwP_pe-5Zd0_wcwIwEB6YiI6FMawevoN0SL_OJoNBRdbf7W0VYH2GT4mSHaAYyqOKC0gj4YnrCAmaWkCcKA9uCmjdD3nf7bddlIiB17BjBECDouovGiytU9M9mESCm0K70PvlRXzqhho-br6caDFAKmFZkDXsFHcJizVx1kOE",
+                subtitle: "告別頻繁充電與降頻卡頓，BSMI 認證電池現折 $300，健康度 100% 復活！",
+                list: [
+                    "安全第一：全面採用台灣經濟部標準檢驗局 (BSMI) 合格認證高效能電芯，品質安全可靠。",
+                    "優惠好康：iPhone 全系列更換電池現折新台幣 $300 元，老客戶再享配件折扣。",
+                    "現場快修：現場最快 20~30 分鐘取件，且不影響手機內部個人資料（仍建議預先備份）。",
+                    "貼心保固：隨附 180 天安心售後保固，並投保千萬產品責任險，雙重安心保障。"
+                ],
+                duration: "即日起 至 2026 年 7 月 15 日",
+                limit: "iPhone 8 至 iPhone 15 全系列機種",
+                bookingUrl: "./booking.html?service=iphone_battery"
+            },
+            3: {
+                tag: "Free Service",
+                title: "MacBook 免費健檢與深層清潔",
+                discount: "價值 $1,200",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCboqGD15oLijMcKwsEibdiz3kbaCmVcVfHNR2C1cMJdnB-wciCY4aLGL1bfjR3FlhgDTKlebT1cJOqJQWLKhPPGHDqoW12-IJguCqmDtD7mR58OMkIpTudZkw3gQF-X-IzuvB6RjjhIcGN5iNvhEfpPm28g5eU5RFl1u9ZsREAHvUJmSHBO_v0_sk2OfMvy42T8MhEKlicHaMgVcfY3snEj3IjUUTWdIyEtXZurv5MbedlwsvHrxJrME_jzSPvAsQpgZ6t8hHeoUM",
+                subtitle: "預約任何維修項目，即享免費全機內部深層除塵健檢與散熱膏更換服務！",
+                list: [
+                    "告別高溫降頻：拆機高壓除塵，清除雙風扇與散熱鰭片的頑固毛屑。",
+                    "航太級散熱膏：免費重塗高品質散熱膏，有效降低處理器溫度達 5~10°C，提升運算效能。",
+                    "24項專業檢測：包含電池膨脹程度、主機板電壓健康度、螢幕背光衰退度與SSD壽命診斷。",
+                    "使用條件：凡預約「修學院」任何維修服務項目，此清潔健檢套餐（價值 $1,200）完全免費。"
+                ],
+                duration: "常態回饋活動（每台裝置限享一次）",
+                limit: "需搭配任何付費維修項目使用",
+                bookingUrl: "./booking.html?service=macbook_clean"
+            }
+        };
+
+        function openPromoModal(id) {
+            const data = promoData[id];
+            if (!data) return;
+
+            document.getElementById('promo-modal-img').src = data.image;
+            document.getElementById('promo-modal-tag').textContent = data.tag;
+            document.getElementById('promo-modal-title').innerHTML = `${data.title} <span class="text-primary">${data.discount}</span>`;
+            document.getElementById('promo-modal-subtitle').textContent = data.subtitle;
+
+            const listContainer = document.getElementById('promo-modal-list');
+            listContainer.innerHTML = '';
+            data.list.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'promo-list-item';
+                li.textContent = item;
+                listContainer.appendChild(li);
+            });
+
+            document.getElementById('promo-modal-duration').innerHTML = `<span class="material-symbols-outlined text-[14px]">calendar_today</span> 活動期限：${data.duration}`;
+            document.getElementById('promo-modal-limit').innerHTML = `<span class="material-symbols-outlined text-[14px]">info</span> 適用對象：${data.limit}`;
+
+            const actionBtn = document.getElementById('promo-modal-action-btn');
+            actionBtn.onclick = () => {
+                window.location.href = data.bookingUrl;
+            };
+
+            const modal = document.getElementById('promo-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 阻止背景滾動
+        }
+
+        function closePromoModal(event) {
+            // 只有點選背景或點選關閉按鈕時才關閉
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('promo-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢復背景滾動
         }
     </script>
 <script src="./scroll-plug.js"></script>

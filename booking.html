@@ -322,6 +322,20 @@
 <!-- Booking Form Container -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 <form class="lg:col-span-8 space-y-10 reveal reveal-delay-1" id="bookingForm">
+<!-- 自動套用優惠提示 -->
+<div id="applied-promo-alert" class="hidden bg-primary/10 border border-primary/30 p-5 rounded-2xl flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary animate-pulse" style="font-size:28px;">local_offer</span>
+        <div>
+            <p id="applied-promo-title" class="font-bold text-primary text-sm md:text-base"></p>
+            <p id="applied-promo-desc" class="text-xs text-on-surface-variant mt-0.5"></p>
+        </div>
+    </div>
+    <button type="button" onclick="removeAppliedPromo()" class="text-white/60 hover:text-white transition-colors text-xs px-3 py-1.5 border border-white/10 rounded-lg shrink-0">
+        取消套用
+    </button>
+</div>
+
 <!-- Step 1: Device Model -->
 <section class="space-y-6">
 <div class="flex items-center gap-3">
@@ -794,6 +808,105 @@
 
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     }
+
+    // ─── 優惠活動自動套用與 URL 參數解析 ───
+    const promos = {
+        'macbook_battery': {
+            title: 'MacBook 換電池優惠 (Summer Deal)',
+            desc: '已自動勾選「電池健康度 / 膨脹」，完成預約並出示畫面立折 $500！',
+            issueValue: 'battery'
+        },
+        'iphone_battery': {
+            title: 'iPhone BSMI 認證電池更換優惠',
+            desc: '已自動勾選「電池健康度 / 膨脹」，完成預約並出示畫面立折 $300！',
+            issueValue: 'battery'
+        },
+        'macbook_clean': {
+            title: 'MacBook 免費健檢與清潔服務',
+            desc: '已自動勾選「其他硬體問題」，預約成功即贈送全機深層清潔與散熱膏重塗！',
+            issueValue: 'other'
+        }
+    };
+
+    function applyPromoFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const service = urlParams.get('service');
+        if (!service || !promos[service]) return;
+
+        const promo = promos[service];
+        const alertEl = document.getElementById('applied-promo-alert');
+        const titleEl = document.getElementById('applied-promo-title');
+        const descEl = document.getElementById('applied-promo-desc');
+
+        if (alertEl && titleEl && descEl) {
+            titleEl.textContent = promo.title;
+            descEl.textContent = promo.desc;
+            alertEl.classList.remove('hidden');
+            setTimeout(() => {
+                alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        const checkbox = document.querySelector(`input[name="issue"][value="${promo.issueValue}"]`);
+        if (checkbox) {
+            checkbox.checked = true;
+            const card = checkbox.closest('.diagnosis-card');
+            if (card) {
+                card.classList.add('peer-checked');
+                card.style.borderColor = '#F9BD2A';
+                card.style.background = 'rgba(249, 189, 42, 0.05)';
+            }
+        }
+    }
+
+    function removeAppliedPromo() {
+        const alertEl = document.getElementById('applied-promo-alert');
+        if (alertEl) {
+            alertEl.classList.add('hidden');
+        }
+
+        const url = new URL(window.location);
+        url.searchParams.delete('service');
+        window.history.replaceState({}, '', url);
+
+        document.querySelectorAll('input[name="issue"]').forEach(checkbox => {
+            checkbox.checked = false;
+            const card = checkbox.closest('.diagnosis-card');
+            if (card) {
+                card.classList.remove('peer-checked');
+                card.style.borderColor = '';
+                card.style.background = '';
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        applyPromoFromUrl();
+
+        document.querySelectorAll('input[name="issue"]').forEach(checkbox => {
+            // 初始化已勾選的狀態（例如從 URL 帶入的）
+            const card = checkbox.closest('.diagnosis-card');
+            if (card && checkbox.checked) {
+                card.classList.add('peer-checked');
+                card.style.borderColor = '#F9BD2A';
+                card.style.background = 'rgba(249, 189, 42, 0.05)';
+            }
+
+            checkbox.addEventListener('change', function() {
+                const card = this.closest('.diagnosis-card');
+                if (!card) return;
+                if (this.checked) {
+                    card.classList.add('peer-checked');
+                    card.style.borderColor = '#F9BD2A';
+                    card.style.background = 'rgba(249, 189, 42, 0.05)';
+                } else {
+                    card.classList.remove('peer-checked');
+                    card.style.borderColor = '';
+                    card.style.background = '';
+                }
+            });
+        });
+    });
 </script>
 <script src="./scroll-plug.js"></script>
 <script src="./parallax.js"></script>
