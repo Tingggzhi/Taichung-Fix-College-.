@@ -1010,68 +1010,49 @@
       const BASE_ROTATION_Y = -Math.PI / 2; 
       model.rotation.y = BASE_ROTATION_Y;
 
-      // 遞迴遍歷 3D 場景進行機身自動改色，並保留面罩與發光Logo的原色
+      // 遞迴遍歷 3D 場景：黑黃配色渲染（參考 React Three Fiber 方案）
       model.traverse((child) => {
         if (child.isMesh && child.material) {
-          const name = (child.name || '').toLowerCase();
-          
-          const processMat = (m) => {
-            if (!m) return;
-            
-            // 排除發光面罩、LED點陣眼與彩色漩渦Logo
-            const isFaceOrScreen = name.includes('glass') || 
-                                   name.includes('screen') || 
-                                   name.includes('eye') || 
-                                   name.includes('face') || 
-                                   name.includes('glow') ||
-                                   m.transparent === true || 
-                                   m.opacity < 0.95 ||
-                                   (m.emissive && (m.emissive.r > 0.1 || m.emissive.g > 0.1 || m.emissive.b > 0.1));
+          child.castShadow = true;
+          child.receiveShadow = true;
 
-            if (!isFaceOrScreen) {
-              if (m.color) {
-                // 1. 優先判定裝飾性部件（改為黃色，以避開關鍵字重疊）
-                const isYellowPart = name.includes('ear') || 
-                                     name.includes('circle') || 
-                                     name.includes('element') || 
-                                     name.includes('mouth') || 
-                                     name.includes('hand');
-                                     
-                if (isYellowPart) {
-                  // 修學院品牌金黃色裝飾
-                  m.color.set('#F9BD2A');
-                  m.roughness = 0.35;
-                  m.metalness = 0.75;
-                } else {
-                  // 2. 判定主體骨架結構（改為曜石黑）
-                  const isBodyPart = name.includes('head') || 
-                                     name.includes('body') || 
-                                     name.includes('arm') || 
-                                     name.includes('forearm') || 
-                                     name.includes('shoulder') || 
-                                     name.includes('neck') || 
-                                     name.includes('cylinder');
-                                     
-                  if (isBodyPart) {
-                    // 精緻的金屬曜石黑
-                    m.color.set('#141416');
-                    m.roughness = 0.25;
-                    m.metalness = 0.95;
-                  } else {
-                    // 其餘預設金黃色
-                    m.color.set('#F9BD2A');
-                    m.roughness = 0.35;
-                    m.metalness = 0.75;
-                  }
-                }
+          const applyColor = (m) => {
+            if (!m || !m.color) return;
+
+            // 讀取原始材質亮度作為分色依據
+            const origColor = m.color.clone();
+            const brightness = origColor.r * 0.299 + origColor.g * 0.587 + origColor.b * 0.114;
+            
+            // 檢查是否有自發光（emissive）屬性
+            const hasEmissive = m.emissive && (m.emissive.r > 0.05 || m.emissive.g > 0.05 || m.emissive.b > 0.05);
+            
+            // 檢查是否為透明材質（面罩玻璃等）
+            const isTransparent = m.transparent === true || m.opacity < 0.9;
+
+            if (isTransparent) {
+              // 保留透明面罩，不改色
+              return;
+            } else if (hasEmissive || brightness > 0.6) {
+              // 原本亮色/發光的部分 → 改為金黃色發光
+              m.color.set('#FFCC00');
+              m.roughness = 0.2;
+              m.metalness = 0.1;
+              if (m.emissive) {
+                m.emissive.set('#F9BD2A');
+                m.emissiveIntensity = 0.6;
               }
+            } else {
+              // 原本暗色的部分 → 霧面啞光黑（與截圖一致）
+              m.color.set('#121212');
+              m.roughness = 0.8;
+              m.metalness = 0.2;
             }
           };
 
           if (Array.isArray(child.material)) {
-            child.material.forEach(processMat);
+            child.material.forEach(applyColor);
           } else {
-            processMat(child.material);
+            applyColor(child.material);
           }
         }
       });
