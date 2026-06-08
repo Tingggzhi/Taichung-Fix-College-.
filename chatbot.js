@@ -39,6 +39,13 @@
     #chatbot-fab:active {
       transform: scale(0.95);
     }
+    /* 當聊天視窗打開時，隱藏大機器人，避免遮擋對話內容與輸入框 */
+    #chatbot-fab.active {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.7) translateY(30px);
+      filter: none;
+    }
     
     /* 機器人 3D 畫布容器 */
     .chatbot-avatar-container {
@@ -122,7 +129,7 @@
     #chatbot-window {
       position: fixed;
       right: 24px;
-      bottom: 165px; /* 避開放大後的 145px 待命機器人 */
+      bottom: 24px; /* 當機器人隱藏時，視窗貼近底部邊緣，更自然美觀 */
       width: 360px;
       height: 520px;
       border-radius: 20px;
