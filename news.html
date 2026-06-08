@@ -368,7 +368,7 @@
 </div>
 <div class="space-y-4">
 <!-- Article Item 1 -->
-<article class="group flex flex-col md:flex-row gap-6 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer reveal">
+<article class="group flex flex-col md:flex-row gap-6 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer interactive-target reveal" onclick="openBlogModal(1)">
 <div class="w-full md:w-64 h-40 rounded-lg overflow-hidden shrink-0">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Close-up of a high-resolution smartphone screen displaying a battery health diagnostic chart with green and yellow indicators. The phone is held by a hand in a dimly lit environment, with soft bokeh background lights. The color scheme is dominated by deep charcoal grays and glowing amber accents, creating a high-tech atmosphere that fits the Pro-Tech Flagship design aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr9UKKRogHJUtL_5v4C_xzgQQnmUGiVWjrVrETMpfupEJd3mMkyGIUofs7XgvRBHX-0EUuhPm7OBG-hksAFj9FuGFgLjKeiFZku6ufhysUNaSphku14jA9w8UT_TlK-huWfUIrlWSlF6D_VIB2wF4N8t_JHG9iVI96GAvgndmrc73bM5oVoLf15CgE_eMoIAiWmXuyA2Y_iXY2cTfheU7ooz-2UFglqgUpmOdHBgYm4317Co7MMdE8nwhZu0k4EWEanj98mUICGGQ">
 </div>
@@ -396,7 +396,7 @@
 </div>
 </article>
 <!-- Article Item 2 -->
-<article class="group flex flex-col md:flex-row gap-6 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer reveal reveal-delay-1">
+<article class="group flex flex-col md:flex-row gap-6 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer interactive-target reveal reveal-delay-1" onclick="openBlogModal(2)">
 <div class="w-full md:w-64 h-40 rounded-lg overflow-hidden shrink-0">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A MacBook logic board with visible water droplet damage near tiny electronic components. The image uses macro photography to show the intricate circuitry with a shallow depth of field. Cold blue and dark grey tones contrast with warm golden light that highlights critical damage zones, designed to look professional and educational within the Repair Academy's premium dark UI environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ3ZNi6mz0AqGQ4Wxgqx3IIK-a23JeI3jvv_eprDtOVwmXAE2hQcCK746ZAsiOh72hzCAdfBAShAvSeGdeTsRW0O1QLvogdjSDdmA6n5CkUAHQZmVsLz849nFDcbStFtEHD-LklHcBSlJUJoSc6bwodfyJu0B6H5_9k0loqCGRTOqKL4kUbPNcL-BuWpmJH5gkJG4Zsp96PdSJscXpDCMbSkLojuERP_ni4w9yff0wFu1LRkOqT8zFFplvjDcUSVZ2HlvYuijUEa8">
 </div>
@@ -595,6 +595,77 @@
     </div>
 </div>
 
+<!-- 部落格文章詳情彈窗 -->
+<div id="blog-modal" class="promo-modal-backdrop" onclick="closeBlogModal(event)">
+    <div class="promo-modal-card relative flex flex-col max-w-4xl h-[85vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <!-- 頂部發光邊緣 -->
+        <div class="promo-modal-header-glow"></div>
+        
+        <!-- 關閉按鈕 -->
+        <button onclick="closeBlogModal(null)" class="absolute top-4 right-4 z-20 size-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#F9BD2A] hover:border-[#F9BD2A]/40 transition-colors" aria-label="關閉文章">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+
+        <!-- 頂部文章大圖 -->
+        <div class="relative h-64 md:h-80 overflow-hidden shrink-0">
+            <img id="blog-modal-img" class="w-full h-full object-cover filter brightness-[0.6] saturate-[1.05]" src="" alt="文章插圖">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1a1919] via-transparent to-black/40"></div>
+            <div class="absolute bottom-6 left-6 right-6 flex flex-col gap-3">
+                <span id="blog-modal-category" class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter w-fit"></span>
+                <h2 id="blog-modal-title" class="text-2xl md:text-4xl font-display-lg text-on-surface leading-tight text-shadow"></h2>
+            </div>
+        </div>
+
+        <!-- 文章內容區域 -->
+        <div class="p-6 md:p-10 flex flex-col gap-8">
+            <!-- 作者資訊與文章元數據 -->
+            <div class="flex items-center justify-between border-b border-white/5 pb-6">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center overflow-hidden">
+                        <span class="material-symbols-outlined text-[20px]" id="blog-modal-author-icon">person</span>
+                    </div>
+                    <div>
+                        <p id="blog-modal-author" class="text-sm font-semibold text-white/90"></p>
+                        <p class="text-[11px] text-white/40">修學院 專欄作者</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-white/40 font-mono">
+                    <span id="blog-modal-date" class="flex items-center gap-1"></span>
+                    <span id="blog-modal-readtime" class="flex items-center gap-1"></span>
+                </div>
+            </div>
+
+            <!-- 文章導讀 (引言) -->
+            <blockquote id="blog-modal-intro" class="text-base md:text-lg italic text-[#F9BD2A]/90 border-l-4 border-[#F9BD2A] pl-4 py-1 leading-relaxed bg-primary/5 p-4 rounded-r-xl">
+            </blockquote>
+
+            <!-- 正文主體 -->
+            <div id="blog-modal-body" class="prose prose-invert max-w-none text-on-surface-variant text-sm md:text-base leading-relaxed space-y-6">
+                <!-- 動態注入文章段落 -->
+            </div>
+
+            <!-- 職人建議 / 注意事項 -->
+            <div class="bg-[#222222] border border-[#F9BD2A]/20 p-6 rounded-2xl flex flex-col gap-3 relative overflow-hidden mt-4">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl"></div>
+                <h4 class="text-primary font-bold text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm animate-pulse">offline_bolt</span> 職人真心叮嚀
+                </h4>
+                <p id="blog-modal-tips" class="text-xs md:text-sm text-on-surface-variant leading-relaxed"></p>
+            </div>
+
+            <!-- 底部返回與預約導流 -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 border-t border-white/5 pt-8 mt-4">
+                <button onclick="closeBlogModal(null)" class="w-full sm:flex-1 py-3.5 border border-white/10 hover:border-white/30 text-white font-medium rounded-xl text-sm transition-all">
+                    返回列表
+                </button>
+                <button onclick="window.location.href='./booking.html'" class="w-full sm:flex-1 py-3.5 bg-primary text-on-primary font-bold rounded-xl text-sm transition-all hover:bg-primary/90 shadow-[0_8px_20px_rgba(249,189,42,0.25)] flex items-center justify-center gap-2">
+                    線上即時諮詢預約 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('top-nav');
@@ -777,6 +848,97 @@
             // 只有點選背景或點選關閉按鈕時才關閉
             if (event && event.target !== event.currentTarget) return;
             const modal = document.getElementById('promo-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢復背景滾動
+        }
+
+        // ─── 職人專欄部落格文章數據 ───
+        const blogData = {
+            1: {
+                category: "iPhone 維修",
+                title: "如何自行檢查 iPhone 電池健康度與更換時機？",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAr9UKKRogHJUtL_5v4C_xzgQQnmUGiVWjrVrETMpfupEJd3mMkyGIUofs7XgvRBHX-0EUuhPm7OBG-hksAFj9FuGFgLjKeiFZku6ufhysUNaSphku14jA9w8UT_TlK-huWfUIrlWSlF6D_VIB2wF4N8t_JHG9iVI96GAvgndmrc73bM5oVoLf15CgE_eMoIAiWmXuyA2Y_iXY2cTfheU7ooz-2UFglqgUpmOdHBgYm4317Co7MMdE8nwhZu0k4EWEanj98mUICGGQ",
+                author: "維修長 阿誠",
+                date: "2024 年 3 月 15 日",
+                readTime: "5 分鐘閱讀",
+                intro: "「你的 iPhone 是不是出門不到半天就尿崩？天冷時明明還有 20% 卻突然自動關機？大家都說電池健康度掉到 80% 以下就該換，但這真的準嗎？」",
+                body: `
+                    <p class="text-white/80">嗨，我是修學院的阿誠。每天在維修現場，我最常被問到的問題就是：<strong>「阿誠，我的電池健康度 83% 了，到底需不需要換？」</strong></p>
+                    
+                    <h3 class="text-lg font-bold text-primary mt-6 mb-2">一、別被系統的「數字」給綁架了！</h3>
+                    <p class="text-white/80">首先，大家要知道，iOS 設定裡的「電池健康度」（最大容量）其實是<strong>軟體透過化學電壓演算估計出來的</strong>，而不是實際硬體測量值。這也是為什麼很多客人的手機在 81% 或 82% 卡了半年都沒變，結果一更新系統，健康度就直接「雪崩」掉到 78%。</p>
+                    <p class="text-white/80">所以，與其整天看著那個數字焦慮，不如相信你的<strong>實際使用體感</strong>。如果出現以下狀況，說明你的電池已經開始老化了。</p>
+                    
+                    <h3 class="text-lg font-bold text-primary mt-6 mb-2">二、電池老化的三大「黃金警訊」</h3>
+                    <ul class="list-disc pl-5 space-y-2 mt-2 text-white/80">
+                        <li><strong>手機異常發熱：</strong>即使只是滑滑 IG、回個 LINE，手機背面卻燙得像暖暖包。這是因為老化的電池內阻變大，電流通過時產生了更多的廢熱。</li>
+                        <li><strong>效能卡頓（被降頻）：</strong>你有沒有發現，電量低於 30% 時，手機鍵盤打字反應變慢、滑網頁卡卡的？這是因為電池無法提供穩定的峰值電壓，iOS 為了防止突然關機，主動降低了處理器的運行效能。</li>
+                        <li><strong>螢幕局部出現白斑或浮起：</strong>這是最嚴重的警訊 —— <strong>電池膨脹</strong>。鋰電池在嚴重劣化或受潮時會釋放氣體，導致外殼鼓起。這時如果硬壓，極易戳破電池引起燃燒，甚至擠碎昂貴的螢幕液晶！</li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-primary mt-6 mb-2">三、BSMI 認證電池 vs. 原廠電池，到底怎麼選？</h3>
+                    <p class="text-white/80">很多客人會糾結該回原廠換，還是找坊間維修店？簡單的評估邏輯如下：</p>
+                    <p class="text-white/80"><strong>回官方原廠：</strong>優點是 100% 原廠料件，設定裡能看得到健康度；缺點是費用昂貴、且備份資料非常繁瑣，遇到官方庫存不足時，還需留機 3 到 7 天。</p>
+                    <p class="text-white/80"><strong>坊間優質快速維修：</strong>優點是現場 20 分鐘快速取件，且資料不會遺失。但重點是<strong>必須選擇通過台灣經濟部標準檢驗局 (BSMI) 合格認證的高效能電池</strong>。BSMI 認證代表安全係數、防爆機制與電芯容量都通過政府檢測，這也是我們「修學院」唯一的堅持。</p>
+                `,
+                tips: "如果你的 iPhone 已使用超過 2 年，或者充電循環次數已達 500 次以上，且感覺到續航大不如前，建議直接來店由我們進行免費檢測。現場更換 BSMI 認證電池只需 20 分鐘，安全又有保障！"
+            },
+            2: {
+                category: "MacBook 指南",
+                title: "MacBook 進水緊急救援手冊：這三個動作千萬別做",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJ3ZNi6mz0AqGQ4Wxgqx3IIK-a23JeI3jvv_eprDtOVwmXAE2hQcCK746ZAsiOh72hzCAdfBAShAvSeGdeTsRW0O1QLvogdjSDdmA6n5CkUAHQZmVsLz849nFDcbStFtEHD-LklHcBSlJUJoSc6bwodfyJu0B6H5_9k0loqCGRTOqKL4kUbPNcL-BuWpmJH5gkJG4Zsp96PdSJscXpDCMbSkLojuERP_ni4w9yff0wFu1LRkOqT8zFFplvjDcUSVZ2HlvYuijUEa8",
+                author: "技術副總 Jack",
+                date: "2024 年 3 月 10 日",
+                readTime: "8 分鐘閱讀",
+                intro: "「咖啡打翻在鍵盤上？雨水漏進了背包？泡水或進水是筆電維修中最棘手的災害。落水後的黃金三小時，你的每一個舉動都將決定主機板的生死。」",
+                body: `
+                    <p class="text-white/80">嗨，我是 Jack。在維修桌前看過成百上千台「死於非命」的 MacBook，其中有八成進水機，原本只是微量進水，卻因為主人的<strong>「網路上說的急救大法」</strong>反而被親手送進垃圾桶。今天我必須跟大家科普正確的進水自救守則。</p>
+                    
+                    <h3 class="text-lg font-bold text-primary mt-6 mb-2">一、千萬別做！三大致命「自殺動作」</h3>
+                    <ul class="list-disc pl-5 space-y-2 mt-2 text-white/80">
+                        <li><strong>致命第一步：千萬不要試圖開機或充電！</strong><br>水本身不致命，致命的是「導電引起的短路」。當主機板上有液體殘留時，一通電會瞬間引發多個電阻、IC 晶片燒毀。這通常是泡水機無法修復的根本原因。</li>
+                        <li><strong>致命第二步：千萬不要用吹風機吹它！</strong><br>你以為風可以把水吹乾？錯了！強風會把鍵盤縫隙的水分吹向原本沒事的主機板深處，甚至把水分送進螢幕液晶背光層。而且吹風機的熱風會導致精密鍵盤結構熱熔變形。</li>
+                        <li><strong>致命第三步：千萬別放進米缸！</strong><br>這也是網路最毒的謠言。大米雖然能吸濕，但極慢，而且大米微小的粉塵和澱粉碎屑會跟水融合成黏稠物質，塞滿充電插槽、喇叭孔與排熱鰭片，反而讓內部金屬加速氧化發霉。</li>
+                    </ul>
+
+                    <h3 class="text-lg font-bold text-primary mt-6 mb-2">二、正確黃金救援三步驟</h3>
+                    <p class="text-white/80">打翻液體的那一秒開始，請跟著 Jack 這樣做：</p>
+                    <ol class="list-decimal pl-5 space-y-2 mt-2 text-white/80">
+                        <li><strong>確立強制關機：</strong>如果電腦還開著，請按住電源鍵（Touch ID 鍵）不放持續 5-10 秒，直到強制斷電。如果螢幕已經黑了，千萬不要好奇去按按鍵試圖喚醒它。</li>
+                        <li><strong>倒扣呈 V 字型放：</strong>將 MacBook 螢幕與鍵盤打開呈大約 90 度倒扣在乾淨的毛巾上，像一個倒過來的 V 字。這能防止液體繼續往下滲透到鍵盤底下最脆弱的主機板核心區。</li>
+                        <li><strong>立刻送修拆機斷電：</strong>即使你表面擦乾了，內部的積水在密閉空間內是不可能自然風乾的。唯一的解法是找專業技師，第一時間拆開底蓋拔掉電池排線（徹底斷電），然後使用超音波清洗機去除主機板上的殘留物與雜質。</li>
+                    </ol>
+                    
+                    <h3 class="text-lg font-bold text-primary mt-6 mb-2">三、為什麼不能等它自己乾？</h3>
+                    <p class="text-white/80">很多人會說：「我放了三天，電腦開機正常耶，應該沒事吧？」</p>
+                    <p class="text-white/80">非常危險！咖啡、茶、果汁甚至自來水，都含有豐富的礦物質與酸性物質。當水分蒸發後，這些雜質會像結晶鹽一樣黏在主機板銅導線上。只要空氣一潮濕，它們就會開始瘋狂「氧化生鏽」，大概在兩週至一個月後，電腦就會無預警暴斃，那時主機板已經滿是綠色鏽斑，修復難度將呈幾何級數飆升。</p>
+                `,
+                tips: "MacBook 進水千萬不要心存僥倖，第一時間強制關機、保持倒扣，並立刻送來修學院進行拆機斷電清洗。這能幫您省下動輒數萬元的更換主機板費用！"
+            }
+        };
+
+        function openBlogModal(id) {
+            const data = blogData[id];
+            if (!data) return;
+
+            document.getElementById('blog-modal-img').src = data.image;
+            document.getElementById('blog-modal-category').textContent = data.category;
+            document.getElementById('blog-modal-title').textContent = data.title;
+            document.getElementById('blog-modal-author').textContent = data.author;
+            document.getElementById('blog-modal-date').innerHTML = `<span class="material-symbols-outlined text-[14px]">calendar_today</span> ${data.date}`;
+            document.getElementById('blog-modal-readtime').innerHTML = `<span class="material-symbols-outlined text-[14px]">schedule</span> ${data.readTime}`;
+            document.getElementById('blog-modal-intro').textContent = data.intro;
+            document.getElementById('blog-modal-body').innerHTML = data.body;
+            document.getElementById('blog-modal-tips').textContent = data.tips;
+
+            const modal = document.getElementById('blog-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 阻止背景滾動
+        }
+
+        function closeBlogModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('blog-modal');
             modal.classList.remove('active');
             document.body.style.overflow = ''; // 恢復背景滾動
         }
