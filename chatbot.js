@@ -14,10 +14,10 @@
     /* ─── 懸浮按鈕 (FAB - 實時 3D 智慧機器人) ─── */
     #chatbot-fab {
       position: fixed;
-      right: 24px;
-      bottom: 24px;
-      width: 110px;
-      height: 110px;
+      right: 12px;
+      bottom: 12px;
+      width: 145px;
+      height: 145px;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -30,11 +30,11 @@
       outline: none;
       overflow: visible; /* 讓 3D 模型可以立體出框 */
       /* 套用 drop-shadow 濾鏡，對 3D 機器人去背身形進行亮黃色外發光 */
-      filter: drop-shadow(0 0 8px rgba(249, 189, 42, 0.8)) drop-shadow(0 0 20px rgba(249, 189, 42, 0.5));
+      filter: drop-shadow(0 0 10px rgba(249, 189, 42, 0.85)) drop-shadow(0 0 24px rgba(249, 189, 42, 0.55));
     }
     #chatbot-fab:hover {
       transform: scale(1.08) translateY(-4px);
-      filter: drop-shadow(0 0 12px rgba(249, 189, 42, 0.95)) drop-shadow(0 0 30px rgba(249, 189, 42, 0.75));
+      filter: drop-shadow(0 0 14px rgba(249, 189, 42, 0.98)) drop-shadow(0 0 35px rgba(249, 189, 42, 0.8));
     }
     #chatbot-fab:active {
       transform: scale(0.95);
@@ -42,8 +42,8 @@
     
     /* 機器人 3D 畫布容器 */
     .chatbot-avatar-container {
-      width: 110px;
-      height: 110px;
+      width: 145px;
+      height: 145px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -60,11 +60,12 @@
       will-change: transform;
     }
 
-    /* 隱藏 Spline 自動生成的 Logo 連結與浮水印 */
+    /* 隱藏 Spline 自動生成的 Logo 連結、浮水印以及一切非 canvas 的干擾元素 */
     #chatbot-fab a,
     #chatbot-fab [class*="logo"],
     .chatbot-avatar-container a,
-    .chatbot-avatar-container [class*="logo"] {
+    .chatbot-avatar-container [class*="logo"],
+    .chatbot-avatar-container > *:not(canvas) {
       display: none !important;
       opacity: 0 !important;
       pointer-events: none !important;
@@ -74,8 +75,8 @@
     /* ─── 浮動提示氣泡 ─── */
     #chatbot-tooltip {
       position: fixed;
-      right: 96px;
-      bottom: 34px;
+      right: 155px; /* 配合放大後的機器人位置與寬度 */
+      bottom: 65px;
       background: rgba(20, 20, 20, 0.9);
       border: 1px solid rgba(249, 189, 42, 0.3);
       padding: 8px 16px;
@@ -112,7 +113,7 @@
     #chatbot-window {
       position: fixed;
       right: 24px;
-      bottom: 96px;
+      bottom: 165px; /* 避開放大後的 145px 待命機器人 */
       width: 360px;
       height: 520px;
       border-radius: 20px;
@@ -907,6 +908,22 @@
     const spline = new Application(canvas);
     spline.load('https://prod.spline.design/TKs6v2R47lg-CsQl/scene.splinecode')
       .then(() => {
+        // ─── 徹底清除 Spline Logo 浮水印與非 canvas 雜質 ───
+        const cleanSplineLogo = () => {
+          const container = document.querySelector('.chatbot-avatar-container');
+          if (!container) return;
+          Array.from(container.children).forEach(child => {
+            if (child.tagName && child.tagName.toLowerCase() !== 'canvas') {
+              child.style.display = 'none';
+              child.remove();
+            }
+          });
+        };
+        cleanSplineLogo();
+        for (let delay of [100, 300, 500, 1000, 1500, 2000, 3000, 5000]) {
+          setTimeout(cleanSplineLogo, delay);
+        }
+
         // 遞迴遍歷 3D 場景進行機身自動改色，並保留面罩與發光Logo的原色
         const objs = spline.getAllObjects();
         objs.forEach(obj => {
