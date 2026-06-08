@@ -11,19 +11,19 @@
       position: relative;
     }
     
-    /* ─── 懸浮按鈕 (FAB - 3D 互動機器人頭像) ─── */
+    /* ─── 懸浮按鈕 (FAB - 實時 3D 智慧機器人) ─── */
     #chatbot-fab {
       position: fixed;
       right: 24px;
       bottom: 24px;
-      width: 65px;
-      height: 65px;
+      width: 76px;
+      height: 76px;
       border-radius: 50%;
-      background: #F9BD2A; /* 亮眼黃色背景 */
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 10px 30px rgba(249, 189, 42, 0.4),
-                  inset 0 -4px 10px rgba(0, 0, 0, 0.15),
-                  inset 0 4px 10px rgba(255, 255, 255, 0.25);
+      background: #F9BD2A; /* 亮黃色背景 */
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(249, 189, 42, 0.45),
+                  inset 0 -4px 10px rgba(0, 0, 0, 0.2),
+                  inset 0 4px 10px rgba(255, 255, 255, 0.3);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -32,12 +32,11 @@
       z-index: 10000;
       animation: chatbot-float 4s ease-in-out infinite;
       outline: none;
-      perspective: 1000px; /* 3D 空間透視 */
-      overflow: visible; /* 允許機器人局部超出邊界，這樣極具立體感！ */
+      overflow: visible; /* 讓 3D 模型可以立體出框 */
     }
     #chatbot-fab:hover {
-      transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 16px 40px rgba(249, 189, 42, 0.55),
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 16px 40px rgba(249, 189, 42, 0.6),
                   0 0 0 6px rgba(249, 189, 42, 0.15);
       background: #fcd05b;
     }
@@ -45,28 +44,24 @@
       transform: scale(0.95);
     }
     
-    /* 機器人大頭照容器 */
+    /* 機器人 3D 畫布容器 */
     .chatbot-avatar-container {
-      width: 58px;
-      height: 58px;
+      width: 86px; /* 稍微大於按鈕以營造出框透視 */
+      height: 86px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      transform-style: preserve-3d;
       pointer-events: none;
-      margin-top: -4px; /* 稍微向上靠以達成出框效果 */
+      margin-bottom: 6px; /* 微調垂直視覺中心 */
+      overflow: visible;
     }
 
-    /* 機器人 3D 頭像 */
-    .bot-avatar-img {
-      width: 54px;
-      height: 54px;
-      object-fit: contain;
+    #chatbot-3d-canvas {
+      width: 100%;
+      height: 100%;
+      background: transparent;
       will-change: transform;
-      transition: transform 0.08s ease-out;
-      transform-style: preserve-3d;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
     }
 
     /* ─── 浮動提示氣泡 ─── */
@@ -510,7 +505,7 @@
     <!-- 懸浮按鈕 -->
     <button id="chatbot-fab" aria-label="聯絡維修客服">
       <div class="chatbot-avatar-container">
-        <img id="chatbot-bot-avatar" class="bot-avatar-img" src="./vedio/robot_avatar.png" alt="職人客服">
+        <canvas id="chatbot-3d-canvas" style="width: 100%; height: 100%; pointer-events: none;"></canvas>
       </div>
     </button>
 
@@ -897,34 +892,87 @@
     });
   });
 
-  // ─── 3D 機器人大頭照跟隨滑鼠事件監聽 ───
-  const fabBtn = document.getElementById('chatbot-fab');
-  const botAvatar = document.getElementById('chatbot-bot-avatar');
+  // ─── 實時 3D 機器人 Spline 載入與改色 ───
+  import('https://unpkg.com/@splinetool/runtime').then(({ Application }) => {
+    const canvas = document.getElementById('chatbot-3d-canvas');
+    if (!canvas) return;
 
-  document.addEventListener('mousemove', (e) => {
-    if (!fabBtn || !botAvatar) return;
+    const spline = new Application(canvas);
+    spline.load('https://prod.spline.design/TKs6v2R47lg-CsQl/scene.splinecode')
+      .then(() => {
+        // 遞迴遍歷 3D 場景進行機身自動改色，並保留面罩與發光Logo的原色
+        const objs = spline.getAllObjects();
+        objs.forEach(obj => {
+          obj.traverse((child) => {
+            if (child.isMesh && child.material) {
+              const name = (child.name || '').toLowerCase();
+              
+              const processMat = (m) => {
+                if (!m) return;
+                
+                // 排除發光面罩、LED點陣眼與彩色漩渦Logo
+                const isFaceOrScreen = name.includes('glass') || 
+                                       name.includes('screen') || 
+                                       name.includes('eye') || 
+                                       name.includes('face') || 
+                                       name.includes('glow') ||
+                                       m.transparent === true || 
+                                       m.opacity < 0.95 ||
+                                       (m.emissive && (m.emissive.r > 0.1 || m.emissive.g > 0.1 || m.emissive.b > 0.1));
 
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
+                if (!isFaceOrScreen) {
+                  // 將原本為黑色/深碳纖維質感的機身骨架改為修學院品牌金黃色，並優化金屬反光與粗糙度
+                  if (m.color) {
+                    m.color.set('#F9BD2A');
+                    if (m.roughness !== undefined) m.roughness = 0.35;
+                    if (m.metalness !== undefined) m.metalness = 0.75;
+                  }
+                }
+              };
 
-    const rect = fabBtn.getBoundingClientRect();
-    const fabX = rect.left + rect.width / 2;
-    const fabY = rect.top + rect.height / 2;
+              if (Array.isArray(child.material)) {
+                child.material.forEach(processMat);
+              } else {
+                processMat(child.material);
+              }
+            }
+          });
+        });
 
-    const dx = mouseX - fabX;
-    const dy = mouseY - fabY;
+        // ─── 3D 轉頭滑鼠跟隨邏輯 ───
+        // 尋找 Spline 中的頭部物件，如果沒有則對整體場景進行旋轉
+        const headObj = spline.findObjectByName('head') || spline.findObjectByName('Head');
+        const fabBtn = document.getElementById('chatbot-fab');
 
-    const maxTilt = 18;
-    const tiltX = -Math.min(maxTilt, Math.max(-maxTilt, (dy / 35))); // 繞 X 軸旋轉
-    const tiltY = Math.min(maxTilt, Math.max(-maxTilt, (dx / 35)));  // 繞 Y 軸旋轉
+        document.addEventListener('mousemove', (e) => {
+          if (!fabBtn) return;
+          const mouseX = e.clientX;
+          const mouseY = e.clientY;
 
-    botAvatar.style.transform = `perspective(200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
-  });
+          const rect = fabBtn.getBoundingClientRect();
+          const fabX = rect.left + rect.width / 2;
+          const fabY = rect.top + rect.height / 2;
 
-  document.addEventListener('mouseleave', () => {
-    if (botAvatar) {
-      botAvatar.style.transform = 'perspective(200px) rotateX(0deg) rotateY(0deg) scale(1)';
-    }
+          const dx = mouseX - fabX;
+          const dy = mouseY - fabY;
+
+          if (headObj) {
+            const maxRot = 0.35; // 限制最大旋轉弧度
+            headObj.rotation.y = Math.min(maxRot, Math.max(-maxRot, (dx / 300)));
+            headObj.rotation.x = Math.min(maxRot, Math.max(-maxRot, (dy / 300)));
+          } else {
+            const mainGroup = spline.scene;
+            if (mainGroup) {
+              const maxRot = 0.25;
+              mainGroup.rotation.y = Math.min(maxRot, Math.max(-maxRot, (dx / 500)));
+              mainGroup.rotation.x = Math.min(maxRot, Math.max(-maxRot, (dy / 500)));
+            }
+          }
+        });
+      })
+      .catch(err => {
+        console.error('Error loading Spline scene:', err);
+      });
   });
 
 })();
