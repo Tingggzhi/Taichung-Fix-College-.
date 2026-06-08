@@ -11,18 +11,19 @@
       position: relative;
     }
     
-    /* ─── 懸浮按鈕 (FAB - 黃色亮麗互動機器人) ─── */
+    /* ─── 懸浮按鈕 (FAB - 3D 互動機器人頭像) ─── */
     #chatbot-fab {
       position: fixed;
       right: 24px;
       bottom: 24px;
-      width: 60px;
-      height: 60px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
-      background: #F9BD2A; /* 明亮黃色 */
-      border: none;
-      box-shadow: 0 8px 30px rgba(249, 189, 42, 0.4),
-                  0 0 0 0px rgba(249, 189, 42, 0.2);
+      background: #F9BD2A; /* 亮眼黃色背景 */
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(249, 189, 42, 0.4),
+                  inset 0 -4px 10px rgba(0, 0, 0, 0.15),
+                  inset 0 4px 10px rgba(255, 255, 255, 0.25);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -31,10 +32,12 @@
       z-index: 10000;
       animation: chatbot-float 4s ease-in-out infinite;
       outline: none;
+      perspective: 1000px; /* 3D 空間透視 */
+      overflow: visible; /* 允許機器人局部超出邊界，這樣極具立體感！ */
     }
     #chatbot-fab:hover {
       transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 12px 40px rgba(249, 189, 42, 0.6),
+      box-shadow: 0 16px 40px rgba(249, 189, 42, 0.55),
                   0 0 0 6px rgba(249, 189, 42, 0.15);
       background: #fcd05b;
     }
@@ -42,112 +45,28 @@
       transform: scale(0.95);
     }
     
-    /* 機器人頭部容器 */
-    .bot-head {
-      width: 38px;
-      height: 38px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding-bottom: 2px;
-      transition: transform 0.3s ease;
-    }
-    
-    #chatbot-fab.active .bot-head {
-      transform: rotate(90deg); /* 展開時旋轉 */
-    }
-
-    /* 機器人天線 */
-    .bot-antenna {
-      width: 2px;
-      height: 6px;
-      background-color: #0d0d0d;
-      position: absolute;
-      top: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .bot-antenna-ball {
-      width: 6px;
-      height: 6px;
-      background-color: #ff453a; /* 天線紅色小燈 */
-      border-radius: 50%;
-      position: absolute;
-      top: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 0 8px #ff453a;
-      animation: antenna-blink 1.5s infinite ease-in-out;
-    }
-
-    #chatbot-fab:hover .bot-antenna-ball {
-      animation: antenna-blink 0.5s infinite ease-in-out;
-    }
-
-    /* 機器人臉部 */
-    .bot-face {
-      width: 30px;
-      height: 22px;
-      background-color: #0d0d0d; /* 黑色螢幕 */
-      border: 2px solid #0d0d0d;
-      border-radius: 8px;
-      position: relative;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 3px;
-      box-shadow: inset 0 0 4px rgba(255,255,255,0.2);
-    }
-
-    /* 眼睛（眼白） */
-    .bot-eye {
-      width: 8px;
-      height: 8px;
-      background-color: #ffffff;
-      border-radius: 50%;
-      position: relative;
-      overflow: hidden;
+    /* 機器人大頭照容器 */
+    .chatbot-avatar-container {
+      width: 58px;
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      transform-style: preserve-3d;
+      pointer-events: none;
+      margin-top: -4px; /* 稍微向上靠以達成出框效果 */
     }
 
-    /* 瞳孔 */
-    .bot-pupil {
-      width: 4px;
-      height: 4px;
-      background-color: #F9BD2A; /* 黃色瞳孔 */
-      border-radius: 50%;
-      position: absolute;
+    /* 機器人 3D 頭像 */
+    .bot-avatar-img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
       will-change: transform;
-      transition: transform 0.05s ease-out;
-    }
-
-    /* 嘴巴 */
-    .bot-mouth {
-      width: 10px;
-      height: 2px;
-      background-color: #F9BD2A;
-      position: absolute;
-      bottom: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 9999px;
-      opacity: 0.8;
-      transition: height 0.2s ease, border-radius 0.2s ease;
-    }
-
-    #chatbot-fab:hover .bot-mouth {
-      height: 4px;
-      border-radius: 0 0 4px 4px; /* 微笑 */
-    }
-
-    @keyframes antenna-blink {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; filter: brightness(1.3); }
+      transition: transform 0.08s ease-out;
+      transform-style: preserve-3d;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
     }
 
     /* ─── 浮動提示氣泡 ─── */
@@ -590,19 +509,8 @@
     
     <!-- 懸浮按鈕 -->
     <button id="chatbot-fab" aria-label="聯絡維修客服">
-      <div class="bot-head">
-        <div class="bot-antenna">
-          <div class="bot-antenna-ball"></div>
-        </div>
-        <div class="bot-face">
-          <div class="bot-eye left">
-            <div class="bot-pupil"></div>
-          </div>
-          <div class="bot-eye right">
-            <div class="bot-pupil"></div>
-          </div>
-          <div class="bot-mouth"></div>
-        </div>
+      <div class="chatbot-avatar-container">
+        <img id="chatbot-bot-avatar" class="bot-avatar-img" src="./vedio/robot_avatar.png" alt="職人客服">
       </div>
     </button>
 
@@ -989,29 +897,34 @@
     });
   });
 
-  // ─── 雙眼跟隨滑鼠事件監聽 ───
-  const pupils = document.querySelectorAll('.bot-pupil');
+  // ─── 3D 機器人大頭照跟隨滑鼠事件監聽 ───
   const fabBtn = document.getElementById('chatbot-fab');
+  const botAvatar = document.getElementById('chatbot-bot-avatar');
 
   document.addEventListener('mousemove', (e) => {
-    if (!pupils.length || !fabBtn) return;
+    if (!fabBtn || !botAvatar) return;
 
     const mouseX = e.clientX;
     const mouseY = e.clientY;
 
-    pupils.forEach(pupil => {
-      const eye = pupil.parentElement;
-      const rect = eye.getBoundingClientRect();
-      const eyeX = rect.left + rect.width / 2;
-      const eyeY = rect.top + rect.height / 2;
+    const rect = fabBtn.getBoundingClientRect();
+    const fabX = rect.left + rect.width / 2;
+    const fabY = rect.top + rect.height / 2;
 
-      const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
-      const maxDistance = 2; // 眼框 8px，瞳孔 4px，可移動距離為 (8-4)/2 = 2px
-      const x = Math.cos(angle) * maxDistance;
-      const y = Math.sin(angle) * maxDistance;
+    const dx = mouseX - fabX;
+    const dy = mouseY - fabY;
 
-      pupil.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    });
+    const maxTilt = 18;
+    const tiltX = -Math.min(maxTilt, Math.max(-maxTilt, (dy / 35))); // 繞 X 軸旋轉
+    const tiltY = Math.min(maxTilt, Math.max(-maxTilt, (dx / 35)));  // 繞 Y 軸旋轉
+
+    botAvatar.style.transform = `perspective(200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    if (botAvatar) {
+      botAvatar.style.transform = 'perspective(200px) rotateX(0deg) rotateY(0deg) scale(1)';
+    }
   });
 
 })();
