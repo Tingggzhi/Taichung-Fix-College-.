@@ -630,13 +630,42 @@
   // 5. 初始狀態設定
   let isOpen = false;
 
-  // 主動提示（3 秒後顯示提示氣泡，5秒後消失）
-  setTimeout(() => {
-    if (!isOpen) {
-      tooltip.classList.add('show');
-      setTimeout(() => tooltip.classList.remove('show'), 6000);
-    }
-  }, 3000);
+  // 🤖 機器人主動說話/隨機提示氣泡邏輯 (每 30 秒輪播不同話術)
+  const tooltipPhrases = [
+    "有任何維修問題嗎？歡迎詢問喔！🛠️",
+    "嗨！今天您的 Apple 裝置運作還流暢嗎？💻",
+    "想了解電池與保護貼的「終身保固」細節嗎？🔋",
+    "手機耗電太快或發熱？隨時問我解決辦法！📱",
+    "MacBook 需要深度清潔或換散熱膏嗎？💨",
+    "iPhone 螢幕破裂、進水？我來為您估價！💰",
+    "現場快速維修最快 20 分鐘即可取件喔！📅"
+  ];
+  let lastPhraseIndex = -1;
+
+  const showRandomTooltip = () => {
+    if (isOpen) return; // 視窗已打開時不打擾使用者
+
+    // 隨機選擇一個與上一次不同的一句話
+    let randIndex;
+    do {
+      randIndex = Math.floor(Math.random() * tooltipPhrases.length);
+    } while (randIndex === lastPhraseIndex && tooltipPhrases.length > 1);
+
+    lastPhraseIndex = randIndex;
+    tooltip.textContent = tooltipPhrases[randIndex];
+    tooltip.classList.add('show');
+
+    // 顯示 6 秒後自動收回
+    setTimeout(() => {
+      tooltip.classList.remove('show');
+    }, 6000);
+  };
+
+  // 頁面載入 5 秒後進行首次提示
+  setTimeout(showRandomTooltip, 5000);
+
+  // 每隔 30 秒循環發起一次主動說話提示
+  setInterval(showRandomTooltip, 30000);
 
   // 6. 對話視窗展開/收合
   const toggleChat = () => {
