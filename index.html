@@ -412,10 +412,10 @@
 
 <!-- ═══════════════════════════════════════ ENTRANCE ANIMATION ═══════════════════════════════════════ -->
 <div id="entrance-container" class="relative z-[100]">
-  <!-- 滾動軌道：提供足夠的滾動距離 (300vh) 來控制動畫進度 -->
-  <div class="h-[300vh] w-full relative" id="entrance-track">
+  <!-- 滾動軌道：提供足夠的滾動距離 (300vh) 來控制動畫進度 (直接寫死實體樣式，避免 Tailwind 未編譯時高度為 0) -->
+  <div class="w-full relative" id="entrance-track" style="height: 300vh;">
     <!-- 固定視窗：畫面會黏在螢幕上，直到滾動完成 -->
-    <div class="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#0d0d0d]">
+    <div class="sticky top-0 left-0 w-full overflow-hidden flex items-center justify-center bg-[#0d0d0d]" style="height: 100vh;">
       
       <!-- 門後的金色發光前台場景 (店內) -->
       <div class="absolute inset-0 z-0 bg-[#0d0d0d] opacity-0 transition-opacity duration-500 ease-out" id="interior-bg">
@@ -465,8 +465,8 @@
   </div>
 </div>
 
-<!-- 包裹原本首頁內容的容器，初始隱藏 -->
-<div id="homepage-content" class="transition-opacity duration-1000 opacity-0 pointer-events-none fixed inset-0 overflow-hidden h-screen">
+<!-- 包裹原本首頁內容的容器，初始隱藏 (直接設定 100vh 避開 Tailwind 未載入時的時序競爭) -->
+<div id="homepage-content" class="transition-opacity duration-1000 opacity-0 pointer-events-none fixed inset-0 overflow-hidden" style="height: 100vh;">
 
 <!-- Particle background -->
 <canvas id="bg-particles"></canvas>
@@ -808,6 +808,12 @@
 <script>
 // ─── 沉浸式開屏進入動畫控制邏輯 ───
 (function() {
+  // 為了防止瀏覽器記住滾動條位置，並在載入時自動恢復滾動條，我們強制重置為手動控制並滾回頂端
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   const entranceContainer = document.getElementById('entrance-container');
   const entranceTrack = document.getElementById('entrance-track');
   const facadeLayer = document.getElementById('facade-layer');
@@ -818,7 +824,8 @@
   const entranceHint = document.getElementById('entrance-hint');
   const homepageContent = document.getElementById('homepage-content');
 
-  if (!entranceContainer || !entranceTrack || !facadeLayer) return;
+  // 防禦性檢查：確保所有必需的 DOM 元素均存在，否則直接 return，防止拋出 TypeError
+  if (!entranceContainer || !entranceTrack || !facadeLayer || !doorLeft || !doorRight || !doorsWrapper || !interiorBg || !entranceHint || !homepageContent) return;
 
   // 偵測是否開啟減少動態效果 (Accessibility)
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -838,6 +845,9 @@
     const trackHeight = entranceTrack.offsetHeight;
     const viewHeight = window.innerHeight;
     const maxScroll = trackHeight - viewHeight;
+
+    // 如果高度尚未被瀏覽器計算出來 (Tailwind 還沒載入或 DOM 還沒繪製完畢)，則直接 return
+    if (maxScroll <= 0) return;
 
     const progress = Math.min(1, Math.max(0, scrollTop / maxScroll));
 
@@ -895,7 +905,9 @@
     }
   }
 
+  // 監聽滾動與加載事件
   window.addEventListener('scroll', updateEntrance, { passive: true });
+  window.addEventListener('load', updateEntrance, { passive: true });
   updateEntrance();
 })();
 
