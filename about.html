@@ -218,6 +218,48 @@
                 transition: none !important;
             }
         }
+
+        /* ─── 里程碑中心線發散動畫 ─── */
+        @media (min-width: 768px) {
+            /* 左側卡片/圖片：由中心線向左滑出，並有淡入與微幅旋轉縮放 */
+            .timeline-reveal-left {
+                opacity: 0 !important;
+                transform: translateX(120px) scale(0.9) rotate(-2deg) !important;
+                transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                            transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                will-change: transform, opacity;
+            }
+            .timeline-reveal-left.visible {
+                opacity: 1 !important;
+                transform: translateX(0) scale(1) rotate(0deg) !important;
+            }
+
+            /* 右側卡片/圖片：由中心線向右滑出，並有淡入與微幅旋轉縮放 */
+            .timeline-reveal-right {
+                opacity: 0 !important;
+                transform: translateX(-120px) scale(0.9) rotate(2deg) !important;
+                transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                            transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                will-change: transform, opacity;
+            }
+            .timeline-reveal-right.visible {
+                opacity: 1 !important;
+                transform: translateX(0) scale(1) rotate(0deg) !important;
+            }
+
+            /* 中心點：從 scale(0) 放大並淡入 */
+            .timeline-reveal-center {
+                opacity: 0 !important;
+                transform: translate3d(-50%, 0, 0) scale(0) !important;
+                transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                            transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+                will-change: transform, opacity;
+            }
+            .timeline-reveal-center.visible {
+                opacity: 1 !important;
+                transform: translate3d(-50%, 0, 0) scale(1) !important;
+            }
+        }
     </style>
     <style>a[href*="spline"],div:has(> a[href*="spline"]),div:has(a[href*="spline"]),[class*="spline-logo"],[id*="spline-logo"],.chatbot-avatar-container > *:not(canvas) { display: none !important; opacity: 0 !important; visibility: hidden !important; width: 0 !important; height: 0 !important; overflow: hidden !important; pointer-events: none !important; }</style>
 </head>
@@ -294,28 +336,28 @@
 <!-- 2022 -->
 <div class="relative flex flex-col md:flex-row items-center">
 <div class="flex-1 md:text-right md:pr-12 mb-8 md:mb-0">
-<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal">
+<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal timeline-reveal-left">
 <div class="text-primary font-headline-md mb-2">2022-06-14</div>
 <h3 class="text-on-surface font-headline-md mb-4">正式創立</h3>
 <p class="text-on-surface-variant font-body-md">修學院正式進駐台中向上商圈，致力於建立全新的 Apple 維修服務標準。首創「面對面即時維修」流程，消除客戶對零件調包的疑慮。</p>
 </div>
 </div>
-<div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block"></div>
-<div class="flex-1 md:pl-12 w-full reveal reveal-delay-2">
+<div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block reveal timeline-reveal-center"></div>
+<div class="flex-1 md:pl-12 w-full reveal timeline-reveal-right">
 <img alt="https://lh3.googleusercontent.com/aida-public/AB6AXuAfNv1_Sr-xEKcW9wLtDoAFazM4otOmL5JW8cYES71qbZJ2EVxXDmqHHyxdje9Oq1FYCGwjRwZSFJbWzOWtMG40NhYtDkryWFea8s7UHt5BJLnApAOiGb8EL_-QOfYiImWLs5IuiE2XTmm2-bYvV5KHdRUKW5bKGXSLxFMkHUECesFcgAIJiZqUQO4SIWoIR5HLGaaKTAhs0k2MbYp1_d-nsAY_s5pSXu3Adqqwul41QM_TW6pP-GEUvDV2nxKG7xQMSBu-J_lvuSs" class="rounded-xl object-cover aspect-video w-full hover:grayscale-0 transition-all duration-500 border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfNv1_Sr-xEKcW9wLtDoAFazM4otOmL5JW8cYES71qbZJ2EVxXDmqHHyxdje9Oq1FYCGwjRwZSFJbWzOWtMG40NhYtDkryWFea8s7UHt5BJLnApAOiGb8EL_-QOfYiImWLs5IuiE2XTmm2-bYvV5KHdRUKW5bKGXSLxFMkHUECesFcgAIJiZqUQO4SIWoIR5HLGaaKTAhs0k2MbYp1_d-nsAY_s5pSXu3Adqqwul41QM_TW6pP-GEUvDV2nxKG7xQMSBu-J_lvuSs">
 </div>
 </div>
 <!-- 2023 -->
 <div class="relative flex flex-col md:flex-row-reverse items-center">
 <div class="flex-1 md:text-left md:pl-12 mb-8 md:mb-0">
-<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all reveal">
+<div class="bg-surface-container p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all reveal timeline-reveal-right">
 <div class="text-primary font-headline-md mb-2">2023</div>
 <h3 class="text-on-surface font-headline-md mb-4">五星誠信標章</h3>
 <p class="text-on-surface-variant font-body-md">榮獲 Google Map 5星誠信評價維修指標店家。透過透明價格與高品質零件，在競爭激烈的台中維修市場中贏得超過千位客戶的真實肯定。</p>
 </div>
 </div>
-<div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block"></div>
-<div class="flex-1 md:pr-12 w-full reveal reveal-delay-2">
+<div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block reveal timeline-reveal-center"></div>
+<div class="flex-1 md:pr-12 w-full reveal timeline-reveal-left">
 <div class="grid grid-cols-2 gap-4">
 <img alt="Teamwork" class="rounded-xl border border-outline-variant grayscale hover:grayscale-0 transition-all duration-500" data-alt="A high-quality image of a team of tech experts collaborating in a modern workshop environment. Warm yellow highlights contrast with deep charcoal tones. The team is dressed in professional black attire, using tablets and specialized tools. The scene radiates authority, teamwork, and reliability in a high-tech service setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCND9mZGxZAshbtwc84xWcWbvFmPax1McpBpkXzT9CN4cqdKImlPuNGtB9Z0SeFHMPGRNRQRvz5NwrSSn0ZX_s1ycTqbdkjwcKJprcW4YwzdSYGZeUUQvrKc1BwT-CJMdqtpl77uorSet15-H6J5dTapSlRsCLigUgu0uzlgzbO5W1I-xVpr6AU3GAp5GpoX0upmEikqNkra0_8SrrVsyUrTMedQf083bGFrh9sXuKhvJGa9sU3XyHtaNf9DMOsHcbAJzSTvy5XlEg">
 <div class="bg-surface-container rounded-xl border border-primary/20 flex flex-col items-center justify-center p-4">
@@ -329,14 +371,14 @@
 <!-- 2026 -->
 <div class="relative flex flex-col md:flex-row items-center">
 <div class="flex-1 md:text-right md:pr-12 mb-8 md:mb-0">
-<div class="bg-surface-container p-8 rounded-2xl border border-primary border-dashed hover:bg-surface-variant transition-all reveal">
+<div class="bg-surface-container p-8 rounded-2xl border border-primary border-dashed hover:bg-surface-variant transition-all reveal timeline-reveal-left">
 <div class="text-primary font-headline-md mb-2">2026</div>
 <h3 class="text-on-surface font-headline-md mb-4">數位轉型未來</h3>
 <p class="text-on-surface-variant font-body-md">官方多頁式 CRM 系統與終身保固查詢平台上線。客戶可即時透過雲端查詢維修履歷、保固期限與各項維修數據，實現全數位化透明管理。</p>
 </div>
 </div>
-<div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block"></div>
-<div class="flex-1 md:pl-12 w-full reveal reveal-delay-2">
+<div class="z-10 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20 absolute left-1/2 -translate-x-1/2 hidden md:block reveal timeline-reveal-center"></div>
+<div class="flex-1 md:pl-12 w-full reveal timeline-reveal-right">
 <div class="bg-surface-container-high rounded-xl border border-outline-variant p-2">
 <div class="bg-surface rounded-lg p-6 flex flex-col gap-4">
 <div class="h-4 w-1/3 bg-surface-variant rounded"></div>
