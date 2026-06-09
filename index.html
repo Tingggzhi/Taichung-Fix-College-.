@@ -465,8 +465,8 @@
   </div>
 </div>
 
-<!-- 包裹原本首頁內容的容器，初始隱藏 (直接設定 100vh 避開 Tailwind 未載入時的時序競爭) -->
-<div id="homepage-content" class="transition-opacity duration-1000 opacity-0 pointer-events-none fixed inset-0 overflow-hidden" style="height: 100vh;">
+<!-- 包裹原本首頁內容的容器，初始隱藏 -->
+<div id="homepage-content" class="transition-opacity duration-1000 opacity-0 pointer-events-none fixed inset-0 overflow-hidden">
 
 <!-- Particle background -->
 <canvas id="bg-particles"></canvas>
@@ -898,6 +898,7 @@
         
         homepageContent.classList.add('active');
         homepageContent.classList.remove('opacity-0', 'pointer-events-none', 'fixed', 'overflow-hidden', 'h-screen');
+        homepageContent.style.height = ''; // 清除行內高度鎖定，還原內容滾動高度
         
         window.scrollTo(0, 0);
         window.dispatchEvent(new Event('scroll'));
