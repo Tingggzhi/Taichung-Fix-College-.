@@ -315,12 +315,12 @@
             pointer-events: auto !important;
         }
         #diagnostic-phone-wrapper {
-            --scan-x: 0%;
-            --scan-y: 0%;
+            --scan-x: -200px;
+            --scan-y: -200px;
         }
         #diagnostic-xray-layer {
             clip-path: circle(80px at var(--scan-x) var(--scan-y));
-            transition: opacity 0.3s ease;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #telemetry-wave {
             stroke-dasharray: 240;
@@ -772,16 +772,16 @@
       <!-- 金色背景球 -->
       <div class="absolute w-56 h-56 bg-primary/5 rounded-full blur-[80px] -z-10 animate-pulse"></div>
 
-      <!-- 手機顯示容器 -->
-      <div id="diagnostic-phone-wrapper" class="relative w-full max-w-[210px] aspect-[0.52/1] flex items-center justify-center pointer-events-none">
+      <!-- 手機顯示容器 (已拿掉 pointer-events-none，改為 pointer-events-auto 與 cursor-none，寬度調大且比例修正) -->
+      <div id="diagnostic-phone-wrapper" class="relative w-full max-w-[280px] md:max-w-[360px] aspect-[976/1024] flex items-center justify-center select-none pointer-events-auto cursor-none">
         <!-- 底圖：破裂灰色手機 -->
-        <img id="diagnostic-phone-img" src="./vedio/iphone_cracked.png" class="w-full h-auto block" alt="iPhone 螢幕碎裂">
+        <img id="diagnostic-phone-img" class="w-full h-full object-contain pointer-events-none" src="./vedio/iphone_cracked.png" alt="iPhone 螢幕碎裂">
 
-        <!-- 透視層 SVG 電路圖 (採用 clip-path 動態揭露) -->
-        <svg id="diagnostic-xray-layer" class="absolute inset-0 w-full h-full pointer-events-none transition-all duration-75 mix-blend-screen" viewBox="0 0 210 404" style="opacity: 0;">
+        <!-- 透視層 SVG 電路圖 (採用 clip-path 動態揭露，viewBox 設為 0 0 976 1024 與圖片 100% 對位) -->
+        <svg id="diagnostic-xray-layer" class="absolute inset-0 w-full h-full pointer-events-none transition-all duration-75 mix-blend-screen" viewBox="0 0 976 1024" style="opacity: 0;">
           <defs>
             <filter id="xray-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feGaussianBlur stdDeviation="8" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -789,76 +789,81 @@
             </filter>
           </defs>
           
-          <g filter="url(#xray-glow)" stroke="#F9BD2A" stroke-width="1.2" fill="none" opacity="0.95">
-            <!-- 1. 頂部相機模組 (0% - 25%, Y: 0 - 100) -->
+          <g filter="url(#xray-glow)" stroke="#F9BD2A" stroke-width="3" fill="none" opacity="0.95">
+            <!-- 1. 頂部相機模組 (Y: 68 - 260, X: 310 - 520) -->
             <g id="xray-part-camera">
-              <rect x="52" y="32" width="45" height="45" rx="8" stroke-dasharray="2,2"/>
-              <circle cx="64" cy="44" r="10" />
-              <circle cx="85" cy="44" r="8" />
-              <circle cx="74" cy="62" r="11" />
-              <path d="M 64 44 L 74 62 M 85 44 L 74 62" stroke-width="0.8" opacity="0.6"/>
+              <!-- 相機外框與鏡頭圓圈 -->
+              <rect x="320" y="100" width="180" height="180" rx="30" stroke-dasharray="6,6"/>
+              <circle cx="370" cy="150" r="40" />
+              <circle cx="450" cy="150" r="32" />
+              <circle cx="410" cy="220" r="44" />
+              <path d="M 370 150 L 410 220 M 450 150 L 410 220" stroke-width="2" opacity="0.6"/>
             </g>
 
-            <!-- 2. 中部主機板電路 (25% - 50%, Y: 100 - 200) -->
+            <!-- 2. 中部主機板電路 (Y: 260 - 500, X: 450 - 680) -->
             <g id="xray-part-motherboard">
-              <rect x="102" y="90" width="35" height="50" rx="4" />
-              <text x="108" y="112" fill="#F9BD2A" font-size="8" font-family="monospace" stroke="none">A17 PRO</text>
-              <rect x="106" y="94" width="27" height="42" rx="2" stroke-dasharray="1,2" />
-              <path d="M 102 100 H 60 V 220 H 90" />
-              <path d="M 102 120 H 75 V 190 H 85" />
-              <path d="M 120 140 V 180 H 135" />
-              <path d="M 137 110 H 155 V 160 H 145" />
-              <circle cx="60" cy="220" r="1.5" fill="#F9BD2A" />
-              <circle cx="75" cy="190" r="1.5" fill="#F9BD2A" />
-              <circle cx="135" cy="180" r="1.5" fill="#F9BD2A" />
+              <!-- CPU A17 Pro 晶片 -->
+              <rect x="510" y="300" width="130" height="180" rx="15" />
+              <text x="525" y="380" fill="#F9BD2A" font-size="22" font-family="monospace" stroke="none" font-weight="bold">A17 PRO</text>
+              <rect x="525" y="315" width="100" height="150" rx="8" stroke-dasharray="3,6" />
+              <!-- 精密電路走線 -->
+              <path d="M 510 330 H 380 V 550 H 420" />
+              <path d="M 510 410 H 400 V 490" />
+              <path d="M 640 350 H 700 V 480" />
+              <!-- 節點圓圈 -->
+              <circle cx="380" cy="550" r="4" fill="#F9BD2A" />
+              <circle cx="400" cy="490" r="4" fill="#F9BD2A" />
+              <circle cx="700" cy="480" r="4" fill="#F9BD2A" />
             </g>
 
-            <!-- 3. 中下部無線充電線圈 (50% - 75%, Y: 200 - 300) -->
+            <!-- 3. 中下部無線充電線圈 (Y: 500 - 750, 圓心大約在 503, 520) -->
             <g id="xray-part-wireless">
-              <circle cx="105" cy="235" r="42" stroke-dasharray="4,2" />
-              <circle cx="105" cy="235" r="35" />
-              <circle cx="105" cy="235" r="28" />
-              <circle cx="105" cy="235" r="21" />
-              <circle cx="105" cy="235" r="14" />
-              <circle cx="105" cy="235" r="6" />
-              <path d="M 105 277 V 320 H 95" />
-              <path d="M 105 193 V 150 H 115" />
+              <circle cx="503" cy="520" r="150" stroke-dasharray="8,4" />
+              <circle cx="503" cy="520" r="125" />
+              <circle cx="503" cy="520" r="100" />
+              <circle cx="503" cy="520" r="75" />
+              <circle cx="503" cy="520" r="50" />
+              <circle cx="503" cy="520" r="25" />
+              <path d="M 503 670 V 780" />
+              <path d="M 503 370 V 300" />
             </g>
 
-            <!-- 4. 底部尾插充電排線 (75% - 100%, Y: 300 - 404) -->
+            <!-- 4. 底部尾插充電排線 (Y: 750 - 973, X: 360 - 650) -->
             <g id="xray-part-port">
-              <rect x="88" y="362" width="34" height="15" rx="3" />
-              <line x1="88" y1="370" x2="122" y2="370" stroke-dasharray="1,1" />
-              <rect x="50" y="348" width="25" height="15" rx="2" />
-              <rect x="135" y="348" width="25" height="15" rx="2" />
-              <path d="M 62 348 V 320 H 105 V 362" />
-              <path d="M 148 348 V 320 H 105" />
-              <circle cx="62" cy="348" r="1.5" fill="#F9BD2A" />
-              <circle cx="148" cy="348" r="1.5" fill="#F9BD2A" />
+              <!-- Type-C 接口 -->
+              <rect x="438" y="900" width="100" height="40" rx="10" />
+              <line x1="438" y1="920" x2="538" y2="920" stroke-dasharray="3,3" />
+              <!-- 揚聲器與天線 -->
+              <rect x="330" y="850" width="80" height="40" rx="5" />
+              <rect x="566" y="850" width="80" height="40" rx="5" />
+              <path d="M 370 850 V 780 H 503 V 900" />
+              <path d="M 606 850 V 780" />
+              <circle cx="370" cy="780" r="4" fill="#F9BD2A" />
+              <circle cx="606" cy="780" r="4" fill="#F9BD2A" />
             </g>
           </g>
         </svg>
-      </div>
 
-      <!-- HUD 圓形偵測儀 (滑鼠跟隨) -->
-      <div id="diagnostic-hud-lens" class="absolute pointer-events-none opacity-0 select-none transition-opacity duration-300" style="width: 160px; height: 160px; z-index: 20;">
-        <div class="absolute inset-0 border border-primary/30 rounded-full animate-[spin_12s_linear_infinite]">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
-          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
-          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
-          <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
-        </div>
-        <div class="absolute inset-2 border border-dashed border-primary/50 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="w-full h-[0.5px] bg-primary/20"></div>
-        </div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="w-[0.5px] h-full bg-primary/20"></div>
-        </div>
-        <div class="absolute inset-[65px] bg-transparent border border-primary/80 rounded-full"></div>
-        
-        <div class="absolute top-[170px] left-1/2 -translate-x-1/2 bg-black/70 border border-primary/30 px-2.5 py-0.5 rounded text-[8px] font-mono text-primary whitespace-nowrap tracking-widest uppercase">
-          Scan: <span id="hud-lens-text">Ready</span>
+        <!-- HUD 圓形偵測儀 (滑鼠跟隨，移入手機內部作為它的直接子元素，確保坐標系100%一致) -->
+        <div id="diagnostic-hud-lens" class="absolute pointer-events-none opacity-0 select-none transition-opacity duration-300" style="width: 160px; height: 160px; z-index: 20;">
+          <div class="absolute inset-0 border border-primary/30 rounded-full animate-[spin_12s_linear_infinite]">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+          </div>
+          <div class="absolute inset-2 border border-dashed border-primary/50 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-full h-[0.5px] bg-primary/20"></div>
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-[0.5px] h-full bg-primary/20"></div>
+          </div>
+          <div class="absolute inset-[65px] bg-transparent border border-primary/80 rounded-full"></div>
+          
+          <div class="absolute top-[170px] left-1/2 -translate-x-1/2 bg-black/70 border border-primary/30 px-2.5 py-0.5 rounded text-[8px] font-mono text-primary whitespace-nowrap tracking-widest uppercase">
+            Scan: <span id="hud-lens-text">Ready</span>
+          </div>
         </div>
       </div>
 
@@ -1424,55 +1429,50 @@
                 if (e.target === modal) closeModal();
             });
 
-            function resetDiagnostic() {
-                xrayLayer.style.opacity = '0';
-                hudLens.style.opacity = '0';
-                hudLensText.innerText = "Ready";
-                statusText.innerText = "HUD SYSTEM READY";
-                statusText.className = "text-xs font-mono font-bold text-primary tracking-widest animate-pulse";
+            // 監聽滑鼠在手機 wrapper 上的移動 (僅在滑鼠定點移入機身時才啟動偵測儀與透視)
+            phoneWrapper.addEventListener('mousemove', (e) => {
+                const rect = phoneWrapper.getBoundingClientRect();
                 
-                reportGuide.classList.remove('hidden');
-                reportDetails.classList.add('hidden');
-                lastPart = null;
-            }
+                // e.offsetX 和 e.offsetY 是相對於 phoneWrapper 的像素座標
+                const x = e.offsetX;
+                const y = e.offsetY;
 
-            scanContainer.addEventListener('mousemove', (e) => {
-                const rect = scanContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const globalRing = document.getElementById('cursor-ring');
-                const globalDot = document.getElementById('cursor-dot');
-                if (globalRing) globalRing.style.opacity = '0';
-                if (globalDot) globalDot.style.opacity = '0';
+                // 換算成 976x1024 畫布上的邏輯像素值
+                const logicalX = (x / rect.width) * 976;
+                const logicalY = (y / rect.height) * 1024;
 
-                hudLens.style.opacity = '1';
-                xrayLayer.style.opacity = '1';
+                // 判斷是否在手機本體（非透明區域）範圍內：X 介於 281~725 且 Y 介於 68~973
+                const isOverPhoneBody = (logicalX >= 281 && logicalX <= 725 && logicalY >= 68 && logicalY <= 973);
 
-                hudLens.style.transform = `translate3d(${x - 80}px, ${y - 80}px, 0)`;
+                if (isOverPhoneBody) {
+                    // 1. 隱藏全站自訂游標
+                    const globalRing = document.getElementById('cursor-ring');
+                    const globalDot = document.getElementById('cursor-dot');
+                    if (globalRing) globalRing.style.opacity = '0';
+                    if (globalDot) globalDot.style.opacity = '0';
 
-                const phoneRect = phoneWrapper.getBoundingClientRect();
-                const phoneX = e.clientX - phoneRect.left;
-                const phoneY = e.clientY - phoneRect.top;
+                    // 2. 顯示 HUD 偵測儀與透視電路
+                    hudLens.style.opacity = '1';
+                    xrayLayer.style.opacity = '1';
 
-                const scanX = Math.round((phoneX / phoneRect.width) * 100);
-                const scanY = Math.round((phoneY / phoneRect.height) * 100);
-                
-                phoneWrapper.style.setProperty('--scan-x', scanX + '%');
-                phoneWrapper.style.setProperty('--scan-y', scanY + '%');
+                    // 3. HUD 偵測儀以實體像素為單位跟隨滑鼠，並精密對齊圓心
+                    hudLens.style.transform = `translate3d(${x - 80}px, ${y - 80}px, 0)`;
 
-                const isOverPhone = phoneX >= 0 && phoneX <= phoneRect.width && phoneY >= 0 && phoneY <= phoneRect.height;
+                    // 4. 設定 CSS 變數以實體像素 (px) 傳給 clip-path，以確保 100% 絕對重合
+                    phoneWrapper.style.setProperty('--scan-x', x + 'px');
+                    phoneWrapper.style.setProperty('--scan-y', y + 'px');
 
-                if (isOverPhone) {
                     statusText.innerText = "SCANNING HARDWARE...";
                     statusText.className = "text-xs font-mono font-bold text-primary tracking-widest";
-                    
+
+                    // 5. 根據手機本體高度百分比判定硬體部位
+                    const relativeY = (logicalY - 68) / 905;
                     let part = "";
-                    if (scanY < 25) {
+                    if (relativeY < 0.25) {
                         part = "camera";
-                    } else if (scanY >= 25 && scanY < 50) {
+                    } else if (relativeY >= 0.25 && relativeY < 0.50) {
                         part = "motherboard";
-                    } else if (scanY >= 50 && scanY < 75) {
+                    } else if (relativeY >= 0.50 && relativeY < 0.75) {
                         part = "wireless";
                     } else {
                         part = "port";
@@ -1483,14 +1483,44 @@
                         showDiagnosticReport(part);
                     }
                 } else {
-                    statusText.innerText = "HUD ACTIVE / LENS STANDBY";
-                    hudLensText.innerText = "Standby";
+                    // 滑鼠在手機容器的左右透明去背區域上，視為 Standby 狀態
+                    deactivateTelemetry();
                 }
             });
 
-            scanContainer.addEventListener('mouseleave', () => {
+            // 監聽滑鼠離開手機容器
+            phoneWrapper.addEventListener('mouseleave', () => {
                 resetDiagnostic();
             });
+
+            function deactivateTelemetry() {
+                hudLens.style.opacity = '0';
+                xrayLayer.style.opacity = '0';
+                statusText.innerText = "HUD ACTIVE / LENS STANDBY";
+                hudLensText.innerText = "Standby";
+
+                const globalRing = document.getElementById('cursor-ring');
+                const globalDot = document.getElementById('cursor-dot');
+                if (globalRing) globalRing.style.opacity = '1';
+                if (globalDot) globalDot.style.opacity = '1';
+            }
+
+            function resetDiagnostic() {
+                xrayLayer.style.opacity = '0';
+                hudLens.style.opacity = '0';
+                hudLensText.innerText = "Ready";
+                statusText.innerText = "HUD SYSTEM READY";
+                statusText.className = "text-xs font-mono font-bold text-primary tracking-widest animate-pulse";
+                
+                reportGuide.classList.remove('hidden');
+                reportDetails.classList.add('hidden');
+                lastPart = null;
+
+                const globalRing = document.getElementById('cursor-ring');
+                const globalDot = document.getElementById('cursor-dot');
+                if (globalRing) globalRing.style.opacity = '1';
+                if (globalDot) globalDot.style.opacity = '1';
+            }
 
             function showDiagnosticReport(partKey) {
                 const data = diagnosticData[partKey];
