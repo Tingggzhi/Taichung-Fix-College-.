@@ -328,9 +328,10 @@
     background-color: transparent;
   }
   #pixel-grid-overlay > div {
-    background-color: #0d0d0d;
+    background-color: transparent;
     opacity: 0;
-    will-change: opacity;
+    transition: background-color 0.12s ease, opacity 0.12s ease;
+    will-change: opacity, background-color;
   }
 </style>
 <style>a[href*="spline"],div:has(> a[href*="spline"]),div:has(a[href*="spline"]),[class*="spline-logo"],[id*="spline-logo"],.chatbot-avatar-container > *:not(canvas) { display: none !important; opacity: 0 !important; visibility: hidden !important; width: 0 !important; height: 0 !important; overflow: hidden !important; pointer-events: none !important; }</style>
@@ -839,14 +840,20 @@
   const cols = 48;
   const blocks = [];
 
-  // 動態生成 960 個更微小精緻的網格方塊，設定平滑隨機權重
+  // 動態生成 960 個微型網格方塊，並設定漸進式權重
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const block = document.createElement('div');
       
-      // 計算方塊變黑的臨界權重：Y 軸基礎 (由下至上漸進) + 隨機亂數噪聲 (最大權重控制在 0.8 以確保最後完全覆蓋)
-      const baseWeight = ((rows - 1 - r) / rows) * 0.55; 
-      const randomNoise = Math.random() * 0.25; 
+      // 設定基礎樣式：預先填色並啟用硬體加速，後續滾動僅需修改 opacity
+      block.style.backgroundColor = '#0d0d0d';
+      block.style.opacity = '0';
+      block.style.willChange = 'opacity';
+      block.style.transition = 'opacity 0.18s ease-out';
+      
+      // 計算方塊變黑的臨界權重：Y 軸基礎 (由下至上漸進) + 輕微隨機擴散噪聲 (0.2 保持波浪形起伏)
+      const baseWeight = ((rows - 1 - r) / rows) * 0.75; 
+      const randomNoise = Math.random() * 0.2; 
       const threshold = baseWeight + randomNoise;
 
       gridContainer.appendChild(block);
@@ -865,16 +872,15 @@
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const fadeEnd = window.innerHeight * 0.75; // 在滾動 75% 視窗高度時完全變黑
     
-    // 計算滾動進度 0 -> 1
+    // 計算整體滾動進度 0 -> 1
     const progress = Math.min(1, Math.max(0, scrollTop / fadeEnd));
 
+    // 每個像素點在經過臨界值後，於 0.16 的滾動區間內完成漸變淡入
+    const fadeRange = 0.16;
+
     blocks.forEach(block => {
-      const delta = progress - block.threshold;
-      let opacity = 0;
-      if (delta > 0) {
-        // 讓方塊不再是生硬地「瞬間黑白切換」，而是隨著滾動進度平滑淡入 (0.15 為淡入區間長度)
-        opacity = Math.min(1, delta / 0.15);
-      }
+      let opacity = (progress - block.threshold) / fadeRange;
+      opacity = Math.max(0, Math.min(1, opacity));
       block.element.style.opacity = opacity;
     });
   }
