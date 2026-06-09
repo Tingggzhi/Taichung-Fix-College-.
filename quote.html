@@ -772,10 +772,10 @@
       <!-- 金色背景球 -->
       <div class="absolute w-56 h-56 bg-primary/5 rounded-full blur-[80px] -z-10 animate-pulse"></div>
 
-      <!-- 手機顯示容器 (已拿掉 pointer-events-none，改為 pointer-events-auto 與 cursor-none，寬度調大且比例修正) -->
-      <div id="diagnostic-phone-wrapper" class="relative w-full max-w-[280px] md:max-w-[360px] aspect-[976/1024] flex items-center justify-center select-none pointer-events-auto cursor-none">
+      <!-- 手機顯示容器 (拿掉 flex 居中以統一絕對座標起點，改為 pointer-events-auto 與 cursor-none，寬度調大且比例修正) -->
+      <div id="diagnostic-phone-wrapper" class="relative w-full max-w-[280px] md:max-w-[360px] aspect-[976/1024] select-none pointer-events-auto cursor-none">
         <!-- 底圖：破裂灰色手機 -->
-        <img id="diagnostic-phone-img" class="w-full h-full object-contain pointer-events-none" src="./vedio/iphone_cracked.png" alt="iPhone 螢幕碎裂">
+        <img id="diagnostic-phone-img" class="w-full h-full object-contain pointer-events-none block" src="./vedio/iphone_cracked.png" alt="iPhone 螢幕碎裂">
 
         <!-- 透視層 SVG 電路圖 (採用 clip-path 動態揭露，viewBox 設為 0 0 976 1024 與圖片 100% 對位) -->
         <svg id="diagnostic-xray-layer" class="absolute inset-0 w-full h-full pointer-events-none transition-all duration-75 mix-blend-screen" viewBox="0 0 976 1024" style="opacity: 0;">
@@ -844,8 +844,8 @@
           </g>
         </svg>
 
-        <!-- HUD 圓形偵測儀 (滑鼠跟隨，移入手機內部作為它的直接子元素，確保坐標系100%一致) -->
-        <div id="diagnostic-hud-lens" class="absolute pointer-events-none opacity-0 select-none transition-opacity duration-300" style="width: 160px; height: 160px; z-index: 20;">
+        <!-- HUD 圓形偵測儀 (滑鼠跟隨，移入手機內部作為它的直接子元素，明確加上 top: 0; left: 0; 確保與左上角對齊) -->
+        <div id="diagnostic-hud-lens" class="absolute pointer-events-none opacity-0 select-none transition-opacity duration-300" style="top: 0; left: 0; width: 160px; height: 160px; z-index: 20;">
           <div class="absolute inset-0 border border-primary/30 rounded-full animate-[spin_12s_linear_infinite]">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
             <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
@@ -1429,13 +1429,13 @@
                 if (e.target === modal) closeModal();
             });
 
-            // 監聽滑鼠在手機 wrapper 上的移動 (僅在滑鼠定點移入機身時才啟動偵測儀與透視)
+            // 監聽滑鼠在手機 wrapper 上的移動 (使用 getBoundingClientRect 排除 e.offsetX 跳動，確保與 X-Ray 100% 重合)
             phoneWrapper.addEventListener('mousemove', (e) => {
                 const rect = phoneWrapper.getBoundingClientRect();
                 
-                // e.offsetX 和 e.offsetY 是相對於 phoneWrapper 的像素座標
-                const x = e.offsetX;
-                const y = e.offsetY;
+                // 使用 clientX/Y 減去 bounding rect 確保不受子元素干擾且原點絕對對齊左上角 (0, 0)
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
 
                 // 換算成 976x1024 畫布上的邏輯像素值
                 const logicalX = (x / rect.width) * 976;
