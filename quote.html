@@ -304,6 +304,34 @@
         .glow-phone-green {
             filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.65)) brightness(1.05);
         }
+        
+        /* ─── 互動式手機問題偵測儀彈窗樣式 ─── */
+        #diagnostic-modal {
+            background-color: rgba(6, 6, 6, 0.88);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), pointer-events 0.45s ease;
+        }
+        #diagnostic-modal.show {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+        #diagnostic-phone-wrapper {
+            --scan-x: 0%;
+            --scan-y: 0%;
+        }
+        #diagnostic-xray-layer {
+            clip-path: circle(80px at var(--scan-x) var(--scan-y));
+            transition: opacity 0.3s ease;
+        }
+        #telemetry-wave {
+            stroke-dasharray: 240;
+            stroke-dashoffset: 240;
+            animation: wave-telemetry 4s linear infinite;
+        }
+        @keyframes wave-telemetry {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
     </style>
     <style>a[href*="spline"],div:has(> a[href*="spline"]),div:has(a[href*="spline"]),[class*="spline-logo"],[id*="spline-logo"],.chatbot-avatar-container > *:not(canvas) { display: none !important; opacity: 0 !important; visibility: hidden !important; width: 0 !important; height: 0 !important; overflow: hidden !important; pointer-events: none !important; }</style>
 </head>
@@ -428,10 +456,10 @@
 </div>
 <div class="flex items-center justify-between pt-6 border-t border-surface-variant">
 <span class="text-on-surface-variant font-label-md">標價：職人專業診斷</span>
-<a class="text-primary font-label-md flex items-center gap-1 hover:underline group" href="#">
+<button id="btn-learn-diagnostic" class="text-primary font-label-md flex items-center gap-1 hover:underline group cursor-pointer focus:outline-none">
                                     Learn More
                                     <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
-</a>
+</button>
 </div>
 </div>
 </div>
@@ -724,6 +752,191 @@
       </div>
     </div>
     
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ INTERACTIVE DIAGNOSTIC MODAL ═══════════════════════════════════════ -->
+<div id="diagnostic-modal" class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+  <div class="relative w-full max-w-[960px] h-[90vh] md:h-[650px] bg-[#141414]/90 border border-outline-variant/60 rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-primary/5 mx-4">
+    
+    <!-- 關閉按鈕 -->
+    <button id="close-diagnostic-modal" class="absolute top-6 right-8 z-50 text-white/50 hover:text-[#F9BD2A] transition-colors focus:outline-none" aria-label="關閉彈窗">
+      <span class="material-symbols-outlined text-[30px]">close</span>
+    </button>
+
+    <!-- 左側：互動偵測區 -->
+    <div id="diagnostic-scan-container" class="w-full md:w-[45%] h-[280px] md:h-full bg-surface-container-low/30 border-b md:border-b-0 md:border-r border-outline-variant flex items-center justify-center p-6 relative overflow-hidden shrink-0 select-none cursor-none">
+      <!-- 科技背景網格 -->
+      <div class="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(249,189,42,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(249,189,42,0.1)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+      
+      <!-- 金色背景球 -->
+      <div class="absolute w-56 h-56 bg-primary/5 rounded-full blur-[80px] -z-10 animate-pulse"></div>
+
+      <!-- 手機顯示容器 -->
+      <div id="diagnostic-phone-wrapper" class="relative w-full max-w-[210px] aspect-[0.52/1] flex items-center justify-center pointer-events-none">
+        <!-- 底圖：破裂灰色手機 -->
+        <img id="diagnostic-phone-img" src="./vedio/iphone_cracked.png" class="w-full h-auto block" alt="iPhone 螢幕碎裂">
+
+        <!-- 透視層 SVG 電路圖 (採用 clip-path 動態揭露) -->
+        <svg id="diagnostic-xray-layer" class="absolute inset-0 w-full h-full pointer-events-none transition-all duration-75 mix-blend-screen" viewBox="0 0 210 404" style="opacity: 0;">
+          <defs>
+            <filter id="xray-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <g filter="url(#xray-glow)" stroke="#F9BD2A" stroke-width="1.2" fill="none" opacity="0.95">
+            <!-- 1. 頂部相機模組 (0% - 25%, Y: 0 - 100) -->
+            <g id="xray-part-camera">
+              <rect x="52" y="32" width="45" height="45" rx="8" stroke-dasharray="2,2"/>
+              <circle cx="64" cy="44" r="10" />
+              <circle cx="85" cy="44" r="8" />
+              <circle cx="74" cy="62" r="11" />
+              <path d="M 64 44 L 74 62 M 85 44 L 74 62" stroke-width="0.8" opacity="0.6"/>
+            </g>
+
+            <!-- 2. 中部主機板電路 (25% - 50%, Y: 100 - 200) -->
+            <g id="xray-part-motherboard">
+              <rect x="102" y="90" width="35" height="50" rx="4" />
+              <text x="108" y="112" fill="#F9BD2A" font-size="8" font-family="monospace" stroke="none">A17 PRO</text>
+              <rect x="106" y="94" width="27" height="42" rx="2" stroke-dasharray="1,2" />
+              <path d="M 102 100 H 60 V 220 H 90" />
+              <path d="M 102 120 H 75 V 190 H 85" />
+              <path d="M 120 140 V 180 H 135" />
+              <path d="M 137 110 H 155 V 160 H 145" />
+              <circle cx="60" cy="220" r="1.5" fill="#F9BD2A" />
+              <circle cx="75" cy="190" r="1.5" fill="#F9BD2A" />
+              <circle cx="135" cy="180" r="1.5" fill="#F9BD2A" />
+            </g>
+
+            <!-- 3. 中下部無線充電線圈 (50% - 75%, Y: 200 - 300) -->
+            <g id="xray-part-wireless">
+              <circle cx="105" cy="235" r="42" stroke-dasharray="4,2" />
+              <circle cx="105" cy="235" r="35" />
+              <circle cx="105" cy="235" r="28" />
+              <circle cx="105" cy="235" r="21" />
+              <circle cx="105" cy="235" r="14" />
+              <circle cx="105" cy="235" r="6" />
+              <path d="M 105 277 V 320 H 95" />
+              <path d="M 105 193 V 150 H 115" />
+            </g>
+
+            <!-- 4. 底部尾插充電排線 (75% - 100%, Y: 300 - 404) -->
+            <g id="xray-part-port">
+              <rect x="88" y="362" width="34" height="15" rx="3" />
+              <line x1="88" y1="370" x2="122" y2="370" stroke-dasharray="1,1" />
+              <rect x="50" y="348" width="25" height="15" rx="2" />
+              <rect x="135" y="348" width="25" height="15" rx="2" />
+              <path d="M 62 348 V 320 H 105 V 362" />
+              <path d="M 148 348 V 320 H 105" />
+              <circle cx="62" cy="348" r="1.5" fill="#F9BD2A" />
+              <circle cx="148" cy="348" r="1.5" fill="#F9BD2A" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- HUD 圓形偵測儀 (滑鼠跟隨) -->
+      <div id="diagnostic-hud-lens" class="absolute pointer-events-none opacity-0 select-none transition-opacity duration-300" style="width: 160px; height: 160px; z-index: 20;">
+        <div class="absolute inset-0 border border-primary/30 rounded-full animate-[spin_12s_linear_infinite]">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+          <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full"></div>
+        </div>
+        <div class="absolute inset-2 border border-dashed border-primary/50 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-full h-[0.5px] bg-primary/20"></div>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-[0.5px] h-full bg-primary/20"></div>
+        </div>
+        <div class="absolute inset-[65px] bg-transparent border border-primary/80 rounded-full"></div>
+        
+        <div class="absolute top-[170px] left-1/2 -translate-x-1/2 bg-black/70 border border-primary/30 px-2.5 py-0.5 rounded text-[8px] font-mono text-primary whitespace-nowrap tracking-widest uppercase">
+          Scan: <span id="hud-lens-text">Ready</span>
+        </div>
+      </div>
+
+      <div class="absolute bottom-6 left-6 text-[9px] font-mono text-white/30 tracking-widest uppercase pointer-events-none">
+        HUD v1.0.4 / ACTIVE
+      </div>
+    </div>
+
+    <!-- 右側：細節詳情與報告內容區 -->
+    <div class="flex-grow h-full overflow-y-auto p-8 md:p-12 space-y-6 flex flex-col justify-between" id="diagnostic-modal-content">
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <div class="badge text-[11px] bg-primary/10 text-primary border border-primary/20">職人智能感應診斷</div>
+          <h2 class="font-display font-bold text-3xl text-white">智慧硬體偵測報告</h2>
+        </div>
+        
+        <div class="bg-black/40 border border-outline-variant/60 rounded-xl p-4 flex items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="text-[10px] font-mono text-white/50 tracking-wider">SYSTEM TELEMETRY</div>
+            <div id="diagnostic-status-text" class="text-xs font-mono font-bold text-primary tracking-widest animate-pulse">HUD SYSTEM READY</div>
+          </div>
+          <div class="w-32 h-8 flex items-center">
+            <svg class="w-full h-full" viewBox="0 0 120 30" fill="none">
+              <path id="telemetry-wave" d="M0,15 L15,15 L20,5 L25,25 L30,15 L60,15 L65,8 L70,22 L75,15 L90,15 L95,2 L100,28 L105,15 L120,15" stroke="#F9BD2A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+
+        <div id="diagnostic-report-card" class="bg-surface-container-high/40 border border-outline-variant/40 p-6 rounded-2xl min-h-[200px] flex flex-col justify-center transition-all duration-300">
+          <div id="report-guide" class="text-center space-y-4">
+            <span class="material-symbols-outlined text-[48px] text-primary/40 animate-pulse">radar</span>
+            <p class="text-sm text-[#A0A0A0] leading-relaxed">
+              請移動滑鼠將 <span class="text-primary font-bold">圓形偵測儀</span> 移至左側手機上，<br>偵測儀會立即透視內部組件並進行硬體故障診斷。
+            </p>
+          </div>
+
+          <div id="report-details" class="hidden space-y-4">
+            <div class="flex items-center justify-between border-b border-outline-variant/40 pb-2">
+              <span id="report-part-name" class="font-bold text-white text-lg flex items-center gap-2">
+                <span id="report-part-icon" class="material-symbols-outlined text-primary">build</span>
+                <span id="report-part-title">元件名稱</span>
+              </span>
+              <span id="report-part-code" class="text-[10px] font-mono bg-primary/10 text-primary px-2 py-0.5 rounded border border-primary/20">MODULE-ID</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="space-y-1">
+                <span class="text-xs text-white/50 block">故障診斷：</span>
+                <p id="report-description" class="text-sm text-[#A0A0A0] leading-relaxed pl-1">
+                  故障說明文字。
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 pt-2">
+                <div class="space-y-0.5">
+                  <span class="text-xs text-white/50 block">建議方案：</span>
+                  <span id="report-solution" class="text-xs text-primary font-medium">更換新品</span>
+                </div>
+                <div class="space-y-0.5">
+                  <span class="text-xs text-white/50 block">預估報價：</span>
+                  <span id="report-price" class="text-xs text-white font-bold font-mono">NT$ 1,200 起</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-outline-variant/50 mt-auto flex gap-4">
+        <button class="flex-grow bg-[#F9BD2A] text-background px-6 py-3.5 rounded-xl font-bold text-sm hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5" onclick="window.location.href='./booking.html'">
+          立即預約專業維修
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+        <button class="border border-outline hover:bg-white/5 text-white/70 text-sm px-6 py-3.5 rounded-xl transition-all" id="close-diagnostic-modal-bottom">
+          返回項目
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1125,6 +1338,183 @@
             }
 
             modalContent.addEventListener('scroll', updateBatteryFit, { passive: true });
+        })();
+
+        // ─── 互動式手機問題偵測儀互動邏輯 ───
+        (function() {
+            const btnOpen = document.getElementById('btn-learn-diagnostic');
+            const modal = document.getElementById('diagnostic-modal');
+            const btnCloseHeader = document.getElementById('close-diagnostic-modal');
+            const btnCloseBottom = document.getElementById('close-diagnostic-modal-bottom');
+            
+            const scanContainer = document.getElementById('diagnostic-scan-container');
+            const phoneWrapper = document.getElementById('diagnostic-phone-wrapper');
+            const xrayLayer = document.getElementById('diagnostic-xray-layer');
+            const hudLens = document.getElementById('diagnostic-hud-lens');
+            const hudLensText = document.getElementById('hud-lens-text');
+            const statusText = document.getElementById('diagnostic-status-text');
+            
+            const reportGuide = document.getElementById('report-guide');
+            const reportDetails = document.getElementById('report-details');
+            const reportPartTitle = document.getElementById('report-part-title');
+            const reportPartIcon = document.getElementById('report-part-icon');
+            const reportPartCode = document.getElementById('report-part-code');
+            const reportDescription = document.getElementById('report-description');
+            const reportSolution = document.getElementById('report-solution');
+            const reportPrice = document.getElementById('report-price');
+
+            if (!btnOpen || !modal || !scanContainer || !phoneWrapper || !xrayLayer || !hudLens) return;
+
+            const diagnosticData = {
+                camera: {
+                    title: "三鏡頭相機模組",
+                    icon: "photo_camera",
+                    code: "MODULE: CAM-A17",
+                    desc: "超廣角與主鏡頭防手震馬達因重力撞擊發生位移。感光元件邊緣檢測到微量水分氣體氧化，防手震（OIS）功能暫時失效。",
+                    sol: "相機模組精密重組校正 / 更換損壞鏡頭模組",
+                    price: "NT$ 2,500 - 4,800"
+                },
+                motherboard: {
+                    title: "主機板精密電路",
+                    icon: "memory",
+                    code: "MODULE: CPU-A17-PRO",
+                    desc: "PMU 電源管理晶片旁高頻濾波電容被擊穿短路，導致主供電線路阻抗偏低，開機出現大電流漏電並伴隨局部發燙（發熱集中於 CPU 右側）。",
+                    sol: "主機板晶片級電路修復 / 故障電容重焊",
+                    price: "NT$ 3,500 - 6,500"
+                },
+                wireless: {
+                    title: "Qi 無線充電與背蓋",
+                    icon: "settings_input_antenna",
+                    code: "MODULE: Qi-COIL-W1",
+                    desc: "背板磨砂玻璃呈放射狀碎裂，並刺穿內部無線充電線圈。Qi 銅線圈部分斷裂，導致充電阻抗過高，無線充電時發熱嚴重且效率低落。",
+                    sol: "更換高質感後蓋玻璃 + Qi 無線充電線圈組件",
+                    price: "NT$ 1,800 - 3,200"
+                },
+                port: {
+                    title: "充電尾插排線",
+                    icon: "usb",
+                    code: "MODULE: PORT-TYPEC",
+                    desc: "USB-C 充電孔內接腳有明顯金屬氧化與形變。下方音訊編碼排線受潮，導致接孔接觸不良、充電斷續且通話麥克風有雜音。",
+                    sol: "更換尾插排線總成 / 清理接口並加固",
+                    price: "NT$ 1,200 - 2,200"
+                }
+            };
+
+            let lastPart = null;
+
+            btnOpen.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                resetDiagnostic();
+            });
+
+            const closeModal = () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+                const globalRing = document.getElementById('cursor-ring');
+                const globalDot = document.getElementById('cursor-dot');
+                if (globalRing) globalRing.style.opacity = '1';
+                if (globalDot) globalDot.style.opacity = '1';
+            };
+
+            btnCloseHeader.addEventListener('click', closeModal);
+            btnCloseBottom.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            function resetDiagnostic() {
+                xrayLayer.style.opacity = '0';
+                hudLens.style.opacity = '0';
+                hudLensText.innerText = "Ready";
+                statusText.innerText = "HUD SYSTEM READY";
+                statusText.className = "text-xs font-mono font-bold text-primary tracking-widest animate-pulse";
+                
+                reportGuide.classList.remove('hidden');
+                reportDetails.classList.add('hidden');
+                lastPart = null;
+            }
+
+            scanContainer.addEventListener('mousemove', (e) => {
+                const rect = scanContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const globalRing = document.getElementById('cursor-ring');
+                const globalDot = document.getElementById('cursor-dot');
+                if (globalRing) globalRing.style.opacity = '0';
+                if (globalDot) globalDot.style.opacity = '0';
+
+                hudLens.style.opacity = '1';
+                xrayLayer.style.opacity = '1';
+
+                hudLens.style.transform = `translate3d(${x - 80}px, ${y - 80}px, 0)`;
+
+                const phoneRect = phoneWrapper.getBoundingClientRect();
+                const phoneX = e.clientX - phoneRect.left;
+                const phoneY = e.clientY - phoneRect.top;
+
+                const scanX = Math.round((phoneX / phoneRect.width) * 100);
+                const scanY = Math.round((phoneY / phoneRect.height) * 100);
+                
+                phoneWrapper.style.setProperty('--scan-x', scanX + '%');
+                phoneWrapper.style.setProperty('--scan-y', scanY + '%');
+
+                const isOverPhone = phoneX >= 0 && phoneX <= phoneRect.width && phoneY >= 0 && phoneY <= phoneRect.height;
+
+                if (isOverPhone) {
+                    statusText.innerText = "SCANNING HARDWARE...";
+                    statusText.className = "text-xs font-mono font-bold text-primary tracking-widest";
+                    
+                    let part = "";
+                    if (scanY < 25) {
+                        part = "camera";
+                    } else if (scanY >= 25 && scanY < 50) {
+                        part = "motherboard";
+                    } else if (scanY >= 50 && scanY < 75) {
+                        part = "wireless";
+                    } else {
+                        part = "port";
+                    }
+
+                    if (part !== lastPart) {
+                        lastPart = part;
+                        showDiagnosticReport(part);
+                    }
+                } else {
+                    statusText.innerText = "HUD ACTIVE / LENS STANDBY";
+                    hudLensText.innerText = "Standby";
+                }
+            });
+
+            scanContainer.addEventListener('mouseleave', () => {
+                resetDiagnostic();
+            });
+
+            function showDiagnosticReport(partKey) {
+                const data = diagnosticData[partKey];
+                if (!data) return;
+
+                hudLensText.innerText = data.title;
+                statusText.innerText = `DIAGNOSING: ${data.title.toUpperCase()}`;
+                statusText.className = "text-xs font-mono font-bold text-[#F9BD2A] tracking-widest animate-pulse";
+
+                reportGuide.classList.add('hidden');
+                reportDetails.classList.remove('hidden');
+
+                reportPartTitle.innerText = data.title;
+                reportPartIcon.innerText = data.icon;
+                reportPartCode.innerText = data.code;
+                reportDescription.innerText = data.desc;
+                reportSolution.innerText = data.sol;
+                reportPrice.innerText = data.price;
+                
+                reportDetails.classList.add('scale-[0.98]', 'opacity-80');
+                setTimeout(() => {
+                    reportDetails.classList.remove('scale-[0.98]', 'opacity-80');
+                }, 150);
+            }
         })();
     </script>
 <script src="./scroll-plug.js"></script>
